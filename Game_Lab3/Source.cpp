@@ -5,7 +5,7 @@
 #include <exception>
 #include <vector>
 
-#include "Game.hpp"
+#include "Game.h"
 
 using namespace Game;
 using namespace std;
@@ -55,17 +55,11 @@ public:
 int main(int argc, char** argv) {
 
 	Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
-	cout << "1";
 	Game_Handler g;
-	cout << 2;
 	g.Create_Window(wp);
-	cout << 3;
 	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	cout << 4;
 	Sprite* player = new Sprite("janitor.PNG", SDL_Rect_(0, 0, 200, 200), visible);
-	cout << 5;
 	Sprite* background = new Sprite("janitor.PNG", SDL_Rect_(0, 0, 1000, 800), visible);
-	cout << 6;
 	std::vector<Sprite*> sprites;
 	unsigned int size = 75;
 	for (size_t i = 0; i < 10; ++i) {
@@ -73,14 +67,10 @@ int main(int argc, char** argv) {
 			sprites.push_back(new Sprite("janitor.PNG", SDL_Rect_(j * size, i * size, size, size), visible));
 		}
 	}
-	cout << 7;
 
 	g.Set_Sprites(player, background, sprites);
-	cout << 8;
 	Game::Sprite_Controller* sc = new Sp(player);
-	cout << 9;
 	g.mainloop(sc);
-	cout << 10;
 
 	delete sc;
 
