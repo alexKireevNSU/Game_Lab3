@@ -10,9 +10,41 @@
 using namespace Game;
 
 class Sp : public Game::Sprite_Controller {
+	Sprite* player;
+	Uint8 right = 0;
+	Uint8 left = 0;
+	Uint8 up = 0;
+	Uint8 down = 0;
 public:
+	Sp(Sprite* player) {
+		this->player = player;
+	}
+
 	void handle_sprites() {
-		return;
+		const Uint8* key_state = SDL_GetKeyboardState(NULL);
+		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
+			player->rect.x += player->rect.w;
+			if (player->flip != SDL_FLIP_NONE) {
+				player->flip = SDL_FLIP_NONE;
+			}
+		}
+		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
+			player->rect.x -= player->rect.w;
+			if (player->flip != SDL_FLIP_HORIZONTAL) {
+				player->flip = SDL_FLIP_HORIZONTAL;
+			}
+		}
+		if (key_state[SDL_SCANCODE_UP] && !up) {
+			player->rect.y -= player->rect.h;
+		}
+		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
+			player->rect.y += player->rect.h;
+		}
+
+		right = key_state[SDL_SCANCODE_RIGHT];
+		left = key_state[SDL_SCANCODE_LEFT];
+		up = key_state[SDL_SCANCODE_UP];
+		down = key_state[SDL_SCANCODE_DOWN];
 	}
 };
 
@@ -39,7 +71,7 @@ int main(int argc, char** argv) {
 
 	g.Set_Sprites(player, background, sprites);
 
-	Game::Sprite_Controller* sc = new Sp();
+	Game::Sprite_Controller* sc = new Sp(player);
 
 	g.mainloop(sc);
 

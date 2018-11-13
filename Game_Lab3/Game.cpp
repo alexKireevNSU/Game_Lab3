@@ -24,13 +24,13 @@ Sprite::Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noex
 
 	flip = SDL_FLIP_NONE;
 }
-void Sprite::Hide_Sprite() {
+void Sprite::Hide() {
 	sprite_state = invisible;
 }
-void Sprite::Fog_Sprite() {
+void Sprite::Fog() {
 	sprite_state = fog;
 }
-void Sprite::Show_Sprite() {
+void Sprite::Show() {
 	sprite_state = visible;
 }
 void Sprite::Load_Texture(SDL_Renderer* renderer) {
@@ -154,9 +154,10 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 		{
 			SDL_PumpEvents();
 			if (event.type == SDL_QUIT) quit = true;
-		}
 
-		sprite_controller->handle_sprites();
+			sprite_controller->handle_sprites();
+			//_sleep(1000);
+		}
 		renderer_handler->Update_Render();
 	}
 }
@@ -167,6 +168,7 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 
 void Sprite_Controller::handle_sprites(){}
 Sprite_Controller::~Sprite_Controller() {}
+
 
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------

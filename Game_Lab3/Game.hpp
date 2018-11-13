@@ -42,9 +42,9 @@ namespace Game {
 
 		Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noexcept;
 
-		void Hide_Sprite();
-		void Fog_Sprite();
-		void Show_Sprite();
+		void Hide();
+		void Fog();
+		void Show();
 
 		void Load_Texture(SDL_Renderer* renderer);
 
@@ -114,5 +114,4 @@ namespace Game {
 		void mainloop(Sprite_Controller* sprite_controller);
 	};
 
-	
 }
