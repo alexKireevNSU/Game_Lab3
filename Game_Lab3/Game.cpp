@@ -35,6 +35,8 @@ void Sprite::Show() {
 }
 void Sprite::Load_Texture(SDL_Renderer* renderer) {
 	texture = IMG_LoadTexture(renderer, path);
+
+	
 	if (texture == nullptr) {
 		throw Game_Exception(IMG_GetError());
 	}
@@ -79,12 +81,12 @@ void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* background, std::vect
 	this->player = player;
 	this->background = background;
 	this->sprites = sprites;
-
 	this->player->Load_Texture(renderer);
 	this->background->Load_Texture(renderer);
 	for (size_t i = 0; i < sprites.size(); ++i) {
 		this->sprites[i]->Load_Texture(renderer);
 	}
+
 }
 void Renderer_Handler::Add_Sprites(Sprite* sprite) {
 	sprites.push_back(sprite);
@@ -172,4 +174,42 @@ Sprite_Controller::~Sprite_Controller() {}
 
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
-//----------------------------------------------------------------------------
+//----------------------------Robot-------------------------------------------
+void Robot_Collector::move(movement m) {
+	switch (m) {
+		case right: {
+			block b = this->map.get_data(this->my_x + 1, this->my_y);
+			if (b == rock) {
+				return;
+			}
+			++this->my_x;
+		}
+		case left: {
+			block b = this->map.get_data(this->my_x - 1, this->my_y);
+			if (b == rock) {
+				return;
+			}
+			--this->my_x;
+		}
+		case down: {
+			block b = this->map.get_data(this->my_x, this->my_y - 1);
+			if (b == rock) {
+				return;
+			}
+			--this->my_y;
+		}
+		case up: {
+			block b = this->map.get_data(this->my_x, this->my_y + 1);
+			if (b == rock) {
+				return;
+			}
+			++this->my_y;
+		}
+		default: { return; }
+	}
+}
+
+void Robot_Collector::Grab() {
+
+}
+
