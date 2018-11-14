@@ -8,35 +8,57 @@ using namespace Robots;
 //----------------------------------------------------------------------------
 
 Playground::Playground() {
-	this->length = 0;
-	this->width = 0;
-	this->map = nullptr;
+	this->length = 3;
+	this->width = 3;
+	this->shift_x = 1;
+	this->shift_y = 1;
+	this->map = new block*[this->length];
+	for (size_t i = 0; i < this->length; ++i) {
+		this->map[i] = new block[this->width];
+	}
+	for (size_t i = 0; i < this->length; ++i) {
+		for (size_t j = 0; j < this->width; ++j) {
+			this->map[i][j] = unknown;
+		}
+	}
 }
 Playground::Playground(FILE* fin) {
 	fscanf(fin, "%d %d", &this->length, &this->width);
-	this->map = new block[this->length * this->width];
+	this->shift_x = 0;
+	this->shift_y = 0;
+	this->map = new block*[this->length];
+
+	for (size_t i = 0; i < this->length; ++i) {
+		this->map[i] = new block[this->width];
+	}
+
 	for (size_t i = 0; i < this->length; ++i) {
 		for (size_t j = 0; j < this->width; ++j) {
 			char buff;
 			fscanf(fin, "%c", &buff);
-			block da;
+			block b;
 			switch (buff) {
-				case ' ': { da = empty; break; }
-				case '#': { da = rock; break; }
-				case 'a': { da = apple; break; }
-				case 'b': { da = bomb; break; }
+				case ' ': { b = empty; break; }
+				case '#': { b = rock; break; }
+				case 'a': { b = apple; break; }
+				case 'b': { b = bomb; break; }
 			}
-			this->map[i*this->length + j] = da;
+			this->map[i][j] = b;
 		}
 	}
 }
 Playground::Playground(Playground & pg){
 	this->length = pg.length;
 	this->width = pg.width;
-	this->map = new block[this->length * this->width];
+	this->map = new block*[this->length];
+
+	for (size_t i = 0; i < this->length; ++i) {
+		this->map[i] = new block[this->width];
+	}
+
 	for (size_t i = 0; i < this->length; ++i) {
 		for (size_t j = 0; j < this->width; ++j) {
-			this->map[i*this->length + j] = pg.map[i * this->length + j];
+			this->map[i][j] = pg.map[i][j];
 		}
 	}
 }
@@ -46,13 +68,138 @@ Playground::~Playground() {
 	}
 	this->map = nullptr;
 }
+
+void Playground::increase_map(movement m) {
+	block** prev = this->map;
+
+	switch (m) {
+		case left: {
+			this->map = new block*[this->length + 1];
+
+			for (size_t i = 0; i < this->length + 1; ++i) {
+				this->map[i] = new block[this->width];
+			}
+			for (size_t i = 0; i < this->length + 1; ++i) {
+				for (size_t j = 0; j < this->width; ++j) {
+					this->map[i][j] = unknown;
+				}
+			}
+			
+			for (size_t i = 0; i < this->length; ++i) {
+				for (size_t j = 0; j < this->width; ++j) {
+					this->map[i + 1][j] = prev[i][j];
+				}
+			}
+
+			for (size_t i = 0; i < this->length; ++i) {
+				delete[] prev[i];
+			}
+			delete[] prev;
+
+			++this->length;
+			++this->shift_x;
+			return;
+		}
+
+		case right: {
+			this->map = new block*[this->length + 1];
+
+			for (size_t i = 0; i < this->length + 1; ++i) {
+				this->map[i] = new block[this->width];
+			}
+			for (size_t i = 0; i < this->length + 1; ++i) {
+				for (size_t j = 0; j < this->width; ++j) {
+					this->map[i][j] = unknown;
+				}
+			}
+			for (size_t i = 0; i < this->length; ++i) {
+				for (size_t j = 0; j < this->width; ++j) {
+					this->map[i][j] = prev[i][j];
+				}
+			}
+
+			for (size_t i = 0; i < this->length; ++i) {
+				delete[] prev[i];
+			}
+			delete[] prev;
+
+			++this->length;
+			return;
+		}
+
+		case up: {
+			this->map = new block*[this->length];
+
+			for (size_t i = 0; i < this->length; ++i) {
+				this->map[i] = new block[this->width + 1];
+			}
+			for (size_t i = 0; i < this->length; ++i) {
+				for (size_t j = 0; j < this->width + 1; ++j) {
+					this->map[i][j] = unknown;
+				}
+			}
+
+			for (size_t i = 0; i < this->length; ++i) {
+				for (size_t j = 0; j < this->width; ++j) {
+					this->map[i][j + 1] = prev[i][j];
+				}
+			}
+
+			for (size_t i = 0; i < this->length; ++i) {
+				delete[] prev[i];
+			}
+			delete[] prev;
+
+			++this->width;
+			++this->shift_y;
+			
+			return;
+		}
+
+		case down: {
+			this->map = new block*[this->length];
+
+			for (size_t i = 0; i < this->length; ++i) {
+				this->map[i] = new block[this->width + 1];
+			}
+			for (size_t i = 0; i < this->length; ++i) {
+				for (size_t j = 0; j < this->width + 1; ++j) {
+					this->map[i][j] = unknown;
+				}
+			}
+
+			for (size_t i = 0; i < this->length; ++i) {
+				for (size_t j = 0; j < this->width; ++j) {
+					this->map[i][j] = prev[i][j];
+				}
+			}
+			for (size_t i = 0; i < this->length; ++i) {
+				delete[] prev[i];
+			}
+			delete[] prev;
+
+			++this->width;
+			return;
+		}
+	}
+
+}
+
 block Playground::get_data(size_t pos_x, size_t pos_y) {
-	return this->map[pos_x * this->length + pos_y];
+	return this->map[pos_x + this->shift_x][pos_y + this->shift_y];
 }
 
 void Playground::put(size_t pos_x, size_t pos_y, block b) {
-	this->map[pos_x * this->length + pos_y];
+	this->map[pos_x + this->shift_x][pos_y + this->shift_y] = b;
 	return;
+}
+
+size_t Playground::get_length() {
+	return this->length;
+}
+
+size_t Playground::get_width() {
+	return this->width;
 }
 
 //----------------------------------------------------------------------------
@@ -60,9 +207,6 @@ void Playground::put(size_t pos_x, size_t pos_y, block b) {
 //----------------------------------------------------------------------------
 
 Robot::Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) : Sprite(path, rect, sprite_state) {
-}
-Robot::~Robot() {
-
 }
 
 //----------------------------------------------------------------------------
@@ -115,13 +259,15 @@ void Robot_Collector::move(movement m) {
 }
 
 void Robot_Collector::scan(size_t N) {
-
+	
 }
 
 void Robot_Collector::grab() {
 	if (this->map->get_data(this->my_x, this->my_y) == apple) {
 		++this->apples;
+		this->map->put(this->my_x, this->my_y ,empty);
 	}
+	return;
 }
 
 Playground* Robot_Collector::get_map() {
@@ -147,6 +293,10 @@ Robot_Sapper::~Robot_Sapper() {
 
 }
 
+std::vector<movement> Robot_Sapper::find_way() {
+
+}
+
 void Robot_Sapper::demine() {
 	if (this->map->get_data(this->my_x, this->my_y) == bomb) {
 		this->map->put(this->my_x, this->my_y, empty);
@@ -157,3 +307,26 @@ void Robot_Sapper::demine() {
 //----------------------------------------------------------------------------
 //----------------------God methods-------------------------------------------
 //----------------------------------------------------------------------------
+
+God::God() {
+	
+}
+
+God::God(Playground * pg) {
+
+}
+
+Robot_Collector* God::create_Robot_Collector() {
+	size_t x, y;
+	while (true) {
+		x = rand() % this->main_map->get_length();
+		y = rand() % this->main_map->get_width();
+		block b = this->main_map->get_data(x, y);
+		if (b != rock && b != bomb) {
+			break;
+		}
+	}
+	this->coll_x = x;
+	this->coll_y = y;
+	return new Robot_Collector(nullptr, SDL_Rect_(0, 0, 0, 0), visible);
+}

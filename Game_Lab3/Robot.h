@@ -3,60 +3,33 @@
 #include <vector>
 using namespace Game;
 namespace Robots {
-	enum block { rock, empty, apple, bomb };
+	enum block { rock, empty, apple, bomb, unknown };
 	enum movement { right, left, up, down };
 
 	class Playground {
 	private:
-		block* map;
+		block** map;
 		size_t length, width;
+		size_t shift_x, shift_y;
 
+		void increase_map(movement m);
 	public:
 		Playground();
 		Playground(FILE* fin);
 		Playground(Playground & pg);
 		block get_data(size_t, size_t);
 		void put(size_t, size_t, block);
+		size_t get_length();
+		size_t get_width();
 		virtual ~Playground();
 	};
-
-	class God {
-	private:
-		Playground main_map;
-		size_t coll_x, coll_y;
-	public:
-		God();
-		God(Playground & pg);
-		void Create_Robot_Collector(size_t x, size_t y);
-		std::vector<block> get_robot_area();
-		void Move_Robot_Collector(movement m);
-	};
-
-	class Robot : public Game::Sprite {
-	public:
-		Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
-		virtual ~Robot() = 0;
-	};
-
-
 
 	class Robot_Collector : public Robot {
 	private:
 		Playground* map;
 		size_t my_x, my_y;
+		size_t shift_x, shidt_y;
 		size_t apples;
-		//class Scan {
-		//	Scan();
-		//	void doing(size_t N);
-		//};
-		//class Move {
-		//	Move();
-		//	void doing(movement m);
-		//};
-		//class Grab {
-		//	Grab();
-		//	void doing();
-		//};
 	public:
 		Robot_Collector(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
 		void move(movement m);
@@ -70,21 +43,35 @@ namespace Robots {
 	private:
 		Playground* map;
 		size_t my_x, my_y;
+		size_t shift_x, shidt_y;
 
-		//class Demine {
-		//	Demine();
-		//	~Demine();
-		//	void doing();
-		//};
-
+		std::vector<movement> find_way();
 	public:
 		Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
 		void load_playground(Playground * pg);
 
-		//Robot_Sapper(Robot_Collector & rc);
 		void demine();
 
 		virtual ~Robot_Sapper();
+	};
+
+
+	class God {
+	private:
+		Playground* main_map;
+		size_t coll_x, coll_y, sapper_x, sapper_y;
+	public:
+		God();
+		God(Playground * pg);
+		Robot_Collector* create_Robot_Collector();
+		//std::vector<block> get_robot_area();
+		void move_Robot_Collector(movement m);
+	};
+
+	class Robot : public Game::Sprite {
+	public:
+		Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
+		virtual ~Robot() = 0;
 	};
 
 	
