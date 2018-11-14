@@ -15,8 +15,8 @@ namespace Robots {
 		Playground();
 		Playground(FILE* fin);
 		Playground(Playground & pg);
-		block get_data(size_t, size_t) { return empty; }
-
+		block get_data(size_t, size_t);
+		void put(size_t, size_t, block);
 		virtual ~Playground();
 	};
 
@@ -34,7 +34,7 @@ namespace Robots {
 
 	class Robot : public Game::Sprite {
 	public:
-		Robot();
+		Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
 		virtual ~Robot() = 0;
 	};
 
@@ -42,46 +42,48 @@ namespace Robots {
 
 	class Robot_Collector : public Robot {
 	private:
-		Playground map;
+		Playground* map;
 		size_t my_x, my_y;
-		class Scan {
-			Scan();
-			void doing(size_t N);
-		};
-		class Move {
-			Move();
-			void doing(movement m);
-		};
-		class Grab {
-			Grab();
-			void doing();
-		};
+		size_t apples;
+		//class Scan {
+		//	Scan();
+		//	void doing(size_t N);
+		//};
+		//class Move {
+		//	Move();
+		//	void doing(movement m);
+		//};
+		//class Grab {
+		//	Grab();
+		//	void doing();
+		//};
 	public:
-		Robot_Collector(size_t my_x, size_t my_y);
+		Robot_Collector(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
 		void move(movement m);
 		void scan(size_t N);
-		void Grab();
+		void grab();
+		Playground* get_map();
 		virtual ~Robot_Collector();
 	};
 
-	/*class Robot_Sapper : public Robot {
+	class Robot_Sapper : public Robot {
 	private:
-		Playground map;
+		Playground* map;
 		size_t my_x, my_y;
 
-		class Demine {
-			Demine();
-			~Demine();
-			void doing();
-		};
+		//class Demine {
+		//	Demine();
+		//	~Demine();
+		//	void doing();
+		//};
 
 	public:
-		Robot_Sapper();
-		Robot_Sapper(Robot_Collector & rc);
-		Demine demine;
+		Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
+		//Robot_Sapper(Robot_Collector & rc);
+		void demine();
 
 		virtual ~Robot_Sapper();
-	};*/
+	};
 
 	
 }

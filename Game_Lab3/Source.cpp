@@ -6,9 +6,11 @@
 #include <vector>
 
 #include "Game.h"
+#include "Robot.h"
 
 using namespace Game;
 using namespace std;
+using namespace Robots;
 
 class Sp : public Game::Sprite_Controller {
 	Sprite* player;
@@ -58,7 +60,8 @@ int main(int argc, char** argv) {
 	Game_Handler g;
 	g.Create_Window(wp);
 	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	Sprite* player = new Sprite("janitor.PNG", SDL_Rect_(0, 0, 200, 200), visible);
+	Robot_Collector* r = new Robot_Collector("janitor.PNG", SDL_Rect_(0, 0, 75, 75), visible); //it works
+	//Sprite* player = new Sprite("janitor.PNG", SDL_Rect_(0, 0, 200, 200), visible);
 	Sprite* background = new Sprite("janitor.PNG", SDL_Rect_(0, 0, 1000, 800), visible);
 	std::vector<Sprite*> sprites;
 	unsigned int size = 75;
@@ -68,8 +71,8 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	g.Set_Sprites(player, background, sprites);
-	Game::Sprite_Controller* sc = new Sp(player);
+	g.Set_Sprites(r, background, sprites);
+	Game::Sprite_Controller* sc = new Sp(r);
 	g.mainloop(sc);
 
 	delete sc;

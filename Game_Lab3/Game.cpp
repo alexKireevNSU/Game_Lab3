@@ -27,9 +27,6 @@ Sprite::Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noex
 void Sprite::Hide() {
 	sprite_state = invisible;
 }
-void Sprite::Fog() {
-	sprite_state = fog;
-}
 void Sprite::Show() {
 	sprite_state = visible;
 }

@@ -25,7 +25,7 @@ namespace Game {
 	};
 
 	enum Sprite_State {
-		invisible, fog, visible
+		invisible, visible
 	};
 
 	struct Sprite {
@@ -43,12 +43,11 @@ namespace Game {
 		Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noexcept;
 
 		void Hide();
-		void Fog();
 		void Show();
 
 		void Load_Texture(SDL_Renderer* renderer);
 
-		~Sprite();
+		virtual ~Sprite();
 	};
 
 	struct Window_Properties {
