@@ -79,6 +79,8 @@ namespace Robots {
 
 	public:
 		Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
+		void load_playground(Playground * pg);
+
 		//Robot_Sapper(Robot_Collector & rc);
 		void demine();
 

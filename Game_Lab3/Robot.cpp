@@ -138,6 +138,11 @@ Robot_Sapper::Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite
 	this->map = new Playground();
 }
 
+void Robot_Sapper::load_playground(Playground * pg) {
+	this->map = pg;
+	return;
+}
+
 Robot_Sapper::~Robot_Sapper() {
 
 }
