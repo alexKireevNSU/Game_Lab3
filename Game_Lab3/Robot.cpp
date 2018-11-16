@@ -261,13 +261,16 @@ void Robot_Collector::move(movement m) {
 void Robot_Collector::scan(size_t N) {
 	
 }
-
-void Robot_Collector::grab() {
+std::pair<size_t, size_t> Robot_Collector::get_coords() {
+	return std::pair<size_t, size_t>(this->my_x, this->my_y);
+}
+bool Robot_Collector::grab() {
 	if (this->map->get_data(this->my_x, this->my_y) == apple) {
 		++this->apples;
 		this->map->put(this->my_x, this->my_y ,empty);
+		return true;
 	}
-	return;
+	return false;
 }
 
 Playground* Robot_Collector::get_map() {
@@ -329,4 +332,17 @@ Robot_Collector* God::create_Robot_Collector() {
 	this->coll_x = x;
 	this->coll_y = y;
 	return new Robot_Collector(nullptr, SDL_Rect_(0, 0, 0, 0), visible);
+}
+
+void God::move_Robot_Collector(movement m) {
+
+}
+
+std::vector<block> God::get_robot_area() {
+	std::vector<block> result;
+	result.push_back(this->main_map->get_data(this->coll_x - 1, this->coll_y));
+	result.push_back(this->main_map->get_data(this->coll_x, this->coll_y + 1));
+	result.push_back(this->main_map->get_data(this->coll_x + 1, this->coll_y));
+	result.push_back(this->main_map->get_data(this->coll_x, this->coll_y - 1));
+	return result;
 }
