@@ -1,14 +1,16 @@
 #include "Game.h"
+#include "Robot.h"
+#include <vector>
 using namespace Game;
 //----------------------------------------------------------------------------
 //----------------------SDL_RECT_ methods-------------------------------------
 //----------------------------------------------------------------------------
 
 SDL_Rect_::SDL_Rect_(int x, int y, int w, int h) {
-		this->x = x;
-		this->y = y;
-		this->w = w;
-		this->h = h;
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
 }
 
 //----------------------------------------------------------------------------
@@ -33,7 +35,7 @@ void Sprite::Show() {
 void Sprite::Load_Texture(SDL_Renderer* renderer) {
 	texture = IMG_LoadTexture(renderer, path);
 
-	
+
 	if (texture == nullptr) {
 		throw Game_Exception(IMG_GetError());
 	}
@@ -91,14 +93,14 @@ void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, 
 void Renderer_Handler::Add_Sprites(Sprite* sprite) {
 	//sprites.push_back(sprite);
 }
-void Renderer_Handler::Update_Render() {
+void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map) {
 	SDL_RenderClear(renderer);
 
 	if (background != nullptr)
 		SDL_RenderCopyEx(renderer, background->texture, NULL,
 			&background->rect, background->angle, &background->point, background->flip);
 
-	
+
 	if (player != nullptr)
 		SDL_RenderCopyEx(renderer, player->texture, NULL,
 			&player->rect, player->angle, &player->point, player->flip);
@@ -148,16 +150,16 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 	bool quit = false;
 	SDL_Event event;
 	while (!quit) {
-		
+		std::vector<std::vector<block>> render_map;
 		while (SDL_PollEvent(&event))
 		{
 			SDL_PumpEvents();
 			if (event.type == SDL_QUIT) quit = true;
 
-			sprite_controller->handle_sprites();
+			render_map = sprite_controller->handle_sprites();
 			//_sleep(1000);
 		}
-		renderer_handler->Update_Render();
+		renderer_handler->Update_Render(render_map);
 	}
 }
 
@@ -165,6 +167,6 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 //----------------------Sprite_Controller methods-----------------------------
 //----------------------------------------------------------------------------
 
-void Sprite_Controller::handle_sprites(){}
+std::vector<std::vector<block>> Sprite_Controller::handle_sprites() { return std::vector<std::vector<block>>{}; }
 Sprite_Controller::~Sprite_Controller() {}
 

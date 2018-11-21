@@ -7,6 +7,9 @@
 #include <vector>
 
 namespace Game {
+
+	enum block { rock, empty, apple, bomb, unknown };
+
 	class Game_Exception : public std::exception {
 		std::string whatStr;
 	public:
@@ -83,12 +86,12 @@ namespace Game {
 		~Renderer_Handler();
 		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background);
 		void Add_Sprites(Sprite* sprite);
-		void Update_Render();
+		void Update_Render(std::vector<std::vector<block>> render_map);
 	};
 
 	class Sprite_Controller {
 	public:
-		virtual void handle_sprites();
+		virtual std::vector<std::vector<block>> handle_sprites();
 		virtual ~Sprite_Controller();
 	};
 

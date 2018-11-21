@@ -3,7 +3,6 @@
 #include <vector>
 using namespace Game;
 namespace Robots {
-	enum block { rock, empty, apple, bomb, unknown };
 	enum movement { right, left, up, down };
 
 	class Playground {
@@ -30,7 +29,7 @@ namespace Robots {
 	class Robot : public Game::Sprite {
 	public:
 		Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
-		virtual ~Robot() = 0;
+		//virtual ~Robot() = 0;
 	};
 
 	class Robot_Collector : public Robot {
@@ -46,7 +45,7 @@ namespace Robots {
 		bool grab();
 		
 		Playground* get_map();
-		virtual ~Robot_Collector();
+		//virtual ~Robot_Collector();
 	};
 
 	class Robot_Sapper : public Robot {
@@ -61,7 +60,7 @@ namespace Robots {
 
 		void demine();
 
-		virtual ~Robot_Sapper();
+		//virtual ~Robot_Sapper();
 	};
 
 

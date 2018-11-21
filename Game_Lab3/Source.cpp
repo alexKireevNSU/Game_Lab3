@@ -45,10 +45,11 @@ public:
 		this->da = da;
 	}
 
-	void handle_sprites() {
+	std::vector<std::vector<block>> handle_sprites() {
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
 		controll_robot_collector(key_state);
 		check_drawing_area_out();
+		return  std::vector<std::vector<block>>{};
 	}
 
 	void check_drawing_area_out() {
@@ -129,9 +130,9 @@ int main(int argc, char** argv) {
 	}*/
 	Robot_Collector* robot_collector = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
 
-	Sprite* apple;
-	Sprite* rock;
-	Sprite* unknown;
+	Sprite* apple = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
+	Sprite* rock = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
+	Sprite* unknown = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
 
 	g.Set_Sprites(robot_collector, apple, rock, unknown, background);
 
