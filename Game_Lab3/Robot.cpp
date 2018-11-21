@@ -224,46 +224,50 @@ Robot_Collector::~Robot_Collector() {
 	delete this->map;
 }
 
-void Robot_Collector::move(movement m) {
+bool Robot_Collector::move(movement m) {
 	switch (m) {
-	case right: {
-		block b = this->map->get_data(this->my_x + 1, this->my_y);
-		if (b == rock) {
-			return;
+		case right: {
+			block b = this->map->get_data(this->my_x + 1, this->my_y);
+			if (b == rock) {
+				return false;
+			}
+			++this->my_x;
 		}
-		++this->my_x;
-	}
-	case left: {
-		block b = this->map->get_data(this->my_x - 1, this->my_y);
-		if (b == rock) {
-			return;
+		case left: {
+			block b = this->map->get_data(this->my_x - 1, this->my_y);
+			if (b == rock) {
+				return false;
+			}
+			--this->my_x;
 		}
-		--this->my_x;
-	}
-	case down: {
-		block b = this->map->get_data(this->my_x, this->my_y - 1);
-		if (b == rock) {
-			return;
+		case down: {
+			block b = this->map->get_data(this->my_x, this->my_y - 1);
+			if (b == rock) {
+				return false;
+			}
+			--this->my_y;
 		}
-		--this->my_y;
-	}
-	case up: {
-		block b = this->map->get_data(this->my_x, this->my_y + 1);
-		if (b == rock) {
-			return;
+		case up: {
+			block b = this->map->get_data(this->my_x, this->my_y + 1);
+			if (b == rock) {
+				return false;
+			}
+			++this->my_y;
 		}
-		++this->my_y;
+		default: { return false; }
 	}
-	default: { return; }
-	}
+	return true;
 }
 
 void Robot_Collector::scan(size_t N) {
 	
 }
-std::pair<size_t, size_t> Robot_Collector::get_coords() {
-	return std::pair<size_t, size_t>(this->my_x, this->my_y);
+
+void Robot_Collector::scan(std::vector<block>) {
+
+
 }
+
 bool Robot_Collector::grab() {
 	if (this->map->get_data(this->my_x, this->my_y) == apple) {
 		++this->apples;
@@ -335,6 +339,10 @@ Robot_Collector* God::create_Robot_Collector() {
 }
 
 void God::move_Robot_Collector(movement m) {
+
+}
+
+void God::update_robot_coords(movement m) {
 
 }
 

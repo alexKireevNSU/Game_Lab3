@@ -25,18 +25,26 @@ namespace Robots {
 		virtual ~Playground();
 	};
 
+
+
+	class Robot : public Game::Sprite {
+	public:
+		Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
+		virtual ~Robot() = 0;
+	};
+
 	class Robot_Collector : public Robot {
 	private:
 		Playground* map;
 		size_t my_x, my_y;
-		size_t shift_x, shift_y;
 		size_t apples;
 	public:
 		Robot_Collector(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
-		void move(movement m);
+		bool move(movement m);
 		void scan(size_t N);
+		void scan(std::vector<block> );
 		bool grab();
-		std::pair<size_t, size_t> get_coords();
+		
 		Playground* get_map();
 		virtual ~Robot_Collector();
 	};
@@ -45,7 +53,6 @@ namespace Robots {
 	private:
 		Playground* map;
 		size_t my_x, my_y;
-		size_t shift_x, shift_y;
 
 		std::vector<movement> find_way();
 	public:
@@ -70,12 +77,5 @@ namespace Robots {
 		void update_robot_coords(movement m);
 		void move_Robot_Collector(movement m);
 	};
-
-	class Robot : public Game::Sprite {
-	public:
-		Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
-		virtual ~Robot() = 0;
-	};
-
 	
 }

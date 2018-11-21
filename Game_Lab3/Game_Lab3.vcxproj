@@ -40,6 +40,9 @@
     <Image Include="janitor.PNG" />
     <Image Include="jd.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="map1.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9b50a57d-ccf7-4923-84d8-8785270663a5}</ProjectGuid>
