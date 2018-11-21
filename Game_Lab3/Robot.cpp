@@ -220,9 +220,9 @@ Robot_Collector::Robot_Collector(const char* path, SDL_Rect_ rect, Sprite_State 
 	this->map = new Playground();
 }
 
-Robot_Collector::~Robot_Collector() {
-	delete this->map;
-}
+//Robot_Collector::~Robot_Collector() {
+//	delete this->map;
+//}
 
 void Robot_Collector::move(movement m) {
 	switch (m) {
@@ -292,13 +292,13 @@ void Robot_Sapper::load_playground(Playground * pg) {
 	return;
 }
 
-Robot_Sapper::~Robot_Sapper() {
+//Robot_Sapper::~Robot_Sapper() {
+//
+//}
 
-}
-
-std::vector<movement> Robot_Sapper::find_way() {
-
-}
+//std::vector<movement> Robot_Sapper::find_way() {
+//	return std::vector<movement>{};
+//}
 
 void Robot_Sapper::demine() {
 	if (this->map->get_data(this->my_x, this->my_y) == bomb) {

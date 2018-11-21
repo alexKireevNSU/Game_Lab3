@@ -73,13 +73,15 @@ namespace Game {
 
 	class Renderer_Handler {
 		SDL_Renderer* renderer;
-		std::vector<Sprite*> sprites;
 		Sprite* player;
+		Sprite* apple;
+		Sprite* rock;
+		Sprite* unknown;
 		Sprite* background;
 	public:
 		Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags);
 		~Renderer_Handler();
-		void Set_Sprites(Sprite* player, Sprite* background, std::vector<Sprite*> sprites);
+		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background);
 		void Add_Sprites(Sprite* sprite);
 		void Update_Render();
 	};
@@ -106,7 +108,7 @@ namespace Game {
 
 		void Create_Renderer(int driver_index, Uint32 renderer_flags);
 
-		void Set_Sprites(Sprite* player, Sprite* background, std::vector<Sprite*> sprites) noexcept;
+		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background) noexcept;
 
 		void Add_Sprite(Sprite* sprite);
 

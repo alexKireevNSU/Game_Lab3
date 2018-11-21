@@ -74,19 +74,22 @@ Renderer_Handler::~Renderer_Handler()
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
 }
-void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* background, std::vector<Sprite*> sprites) {
+void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background) {
 	this->player = player;
+	this->apple = apple;
+	this->rock = rock;
+	this->unknown = unknown;
 	this->background = background;
-	this->sprites = sprites;
+
 	this->player->Load_Texture(renderer);
+	this->apple->Load_Texture(renderer);
+	this->rock->Load_Texture(renderer);
+	this->unknown->Load_Texture(renderer);
 	this->background->Load_Texture(renderer);
-	for (size_t i = 0; i < sprites.size(); ++i) {
-		this->sprites[i]->Load_Texture(renderer);
-	}
 
 }
 void Renderer_Handler::Add_Sprites(Sprite* sprite) {
-	sprites.push_back(sprite);
+	//sprites.push_back(sprite);
 }
 void Renderer_Handler::Update_Render() {
 	SDL_RenderClear(renderer);
@@ -95,11 +98,7 @@ void Renderer_Handler::Update_Render() {
 		SDL_RenderCopyEx(renderer, background->texture, NULL,
 			&background->rect, background->angle, &background->point, background->flip);
 
-	for (size_t i = 0; i < sprites.size(); ++i) {
-		if (sprites[i] != nullptr)
-			SDL_RenderCopyEx(renderer, sprites[i]->texture, NULL,
-				&sprites[i]->rect, sprites[i]->angle, &sprites[i]->point, sprites[i]->flip);
-	}
+	
 	if (player != nullptr)
 		SDL_RenderCopyEx(renderer, player->texture, NULL,
 			&player->rect, player->angle, &player->point, player->flip);
@@ -137,8 +136,8 @@ void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags) {
 	}
 	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags); //TODO
 }
-void Game_Handler::Set_Sprites(Sprite* player, Sprite* background, std::vector<Sprite*> sprites) noexcept {
-	renderer_handler->Set_Sprites(player, background, (sprites));
+void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background) noexcept {
+	renderer_handler->Set_Sprites(player, apple, rock, unknown, background);
 }
 void Game_Handler::Add_Sprite(Sprite* sprite) {
 	renderer_handler->Add_Sprites(sprite);
@@ -149,6 +148,7 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 	bool quit = false;
 	SDL_Event event;
 	while (!quit) {
+		
 		while (SDL_PollEvent(&event))
 		{
 			SDL_PumpEvents();
