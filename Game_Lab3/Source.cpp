@@ -133,7 +133,7 @@ int main(int argc, char** argv) {
 	Sprite* apple = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
 	Sprite* rock = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
 	Sprite* unknown = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
-
+//
 	g.Set_Sprites(robot_collector, apple, rock, unknown, background);
 
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, da);
