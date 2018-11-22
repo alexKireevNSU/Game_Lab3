@@ -37,8 +37,12 @@
     <ClInclude Include="Robot.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="apple.png" />
+    <Image Include="bomb.png" />
     <Image Include="janitor.PNG" />
-    <Image Include="jd.jpg" />
+    <Image Include="robot1.png" />
+    <Image Include="rock.png" />
+    <Image Include="unknown.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="map1.txt" />

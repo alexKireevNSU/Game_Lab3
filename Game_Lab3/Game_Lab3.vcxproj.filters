@@ -63,7 +63,19 @@
     <Image Include="janitor.PNG">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="jd.jpg">
+    <Image Include="rock.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="apple.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="bomb.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="unknown.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="robot1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

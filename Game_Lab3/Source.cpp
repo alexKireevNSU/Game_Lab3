@@ -127,15 +127,15 @@ int main(int argc, char** argv) {
 	g.Create_Window(wp);
 	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	Sprite* background = new Sprite("background.jpg", SDL_Rect_(0, 0, 1000 * 75, 1000 * 75), visible);
+	Sprite* background = new Sprite("background.png", SDL_Rect_(-512*75, -512*75, 1024 * 75, 1024 * 75), visible);
 
 	Drawing_Area da(
-		wp.w - (wp.w % 75) / 2,
-		(wp.w % 75) / 2,
-		wp.h - (wp.h % 75) / 2,
-		(wp.h % 75) / 2,
-		wp.w/2 - ((wp.w/2) % 75) / 2,
-		wp.h/2 - ((wp.h/2) % 75) / 2);
+		wp.w,
+		/*(wp.w % 75) / 2*/0,
+		wp.h,
+		/*(wp.h % 75) / 2*/0,
+		wp.w / 2,
+		wp.h / 2);
 
 	//std::vector<Sprite*> sprites;
 	/*int size = 75;
@@ -144,12 +144,12 @@ int main(int argc, char** argv) {
 			sprites.push_back(new Sprite("jd.jpg", SDL_Rect_(j, i, size, size), visible));
 		}
 	}*/
-	Robot_Collector* robot_collector = new Robot_Collector("janitor.PNG", SDL_Rect_(da.center_x, da.center_y, 75, 75), visible);
+	Robot_Collector* robot_collector = new Robot_Collector("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, 75, 75), visible);
 
-	Sprite* apple = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* bomb = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* rock = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* unknown = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* apple = new Robot_Collector("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* bomb = new Robot_Collector("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* rock = new Robot_Collector("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* unknown = new Robot_Collector("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da);
 
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
