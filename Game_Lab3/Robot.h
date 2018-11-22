@@ -9,7 +9,6 @@ namespace Robots {
 	private:
 		block** map;
 		size_t length, width;
-		size_t shift_x, shift_y;
 		void increase_map(movement m);
 
 	public:
@@ -40,6 +39,21 @@ namespace Robots {
 		~Main_map();
 	};
 
+	class Robot_Playground{
+	private:
+		Playground* map;
+		size_t shift_x, shift_y;
+	public:
+		Robot_Playground();
+		Robot_Playground(Robot_Playground & pg);
+
+		block get_data(size_t, size_t);
+		void put(size_t, size_t, block);
+		size_t get_length();
+		size_t get_width();
+		virtual ~Robot_Playground();
+	};
+
 
 	class Robot : public Game::Sprite {
 	public:
@@ -49,7 +63,7 @@ namespace Robots {
 
 	class Robot_Collector : public Robot {
 	private:
-		Playground* map;
+		Robot_Playground* map;
 		size_t my_x, my_y;
 		size_t apples;
 		std::vector<movement> find_way();
@@ -62,23 +76,28 @@ namespace Robots {
 		bool grab();
 		std::pair<size_t, size_t> get_coord_on_his_own_map();
 		
-		Playground* get_map();
+		Robot_Playground* get_map();
 		//virtual ~Robot_Collector();
 	};
 
 	class Robot_Sapper : public Robot {
 	private:
-		Playground* map;
+		Robot_Playground* map;
 		size_t my_x, my_y;
 
 		std::vector<movement> find_way();
 	public:
 		Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite_state);
-		void load_playground(Playground * pg);
+		void load_playground(Robot_Playground * pg);
 
 		std::pair<size_t, size_t> get_coord_on_his_own_map();
 		bool demine();
 
 		//virtual ~Robot_Sapper();
+	};
+
+	class Playgound_converter {
+	public:
+		std::vector<std::vector<block>> convert(Playground* p, Robot_Collector* rc);
 	};
 }

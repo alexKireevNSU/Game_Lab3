@@ -10,8 +10,6 @@ using namespace Robots;
 Playground::Playground() {
 	this->length = 3;
 	this->width = 3;
-	this->shift_x = 1;
-	this->shift_y = 1;
 	this->map = new block*[this->length];
 	for (size_t i = 0; i < this->length; ++i) {
 		this->map[i] = new block[this->width];
@@ -24,8 +22,6 @@ Playground::Playground() {
 }
 Playground::Playground(FILE* fin) {
 	fscanf(fin, "%d %d", &this->length, &this->width);
-	this->shift_x = 0;
-	this->shift_y = 0;
 	this->map = new block*[this->length];
 
 	for (size_t i = 0; i < this->length; ++i) {
@@ -97,7 +93,6 @@ void Playground::increase_map(movement m) {
 			delete[] prev;
 
 			++this->length;
-			++this->shift_x;
 			return;
 		}
 
@@ -151,7 +146,6 @@ void Playground::increase_map(movement m) {
 			delete[] prev;
 
 			++this->width;
-			++this->shift_y;
 			
 			return;
 		}
@@ -186,11 +180,11 @@ void Playground::increase_map(movement m) {
 }
 
 block Playground::get_data(size_t pos_x, size_t pos_y) {
-	return this->map[pos_x + this->shift_x][pos_y + this->shift_y];
+	return this->map[pos_x][pos_y];
 }
 
 void Playground::put(size_t pos_x, size_t pos_y, block b) {
-	this->map[pos_x + this->shift_x][pos_y + this->shift_y] = b;
+	this->map[pos_x][pos_y] = b;
 	return;
 }
 
@@ -201,6 +195,8 @@ size_t Playground::get_length() {
 size_t Playground::get_width() {
 	return this->width;
 }
+
+
 
 //----------------------------------------------------------------------------
 //----------------------Main_map methods--------------------------------------
@@ -274,6 +270,45 @@ void Main_map::update_map(size_t x, size_t y, block b) {
 }
 
 //----------------------------------------------------------------------------
+//----------------------Robot_Playground methods------------------------------
+//----------------------------------------------------------------------------
+
+Robot_Playground::Robot_Playground() {
+	this->map = new Playground();
+	this->shift_x = 1;
+	this->shift_y = 1;
+}
+
+Robot_Playground::Robot_Playground(Robot_Playground & pg) {
+	this->map = pg.map;
+	this->shift_x = pg.shift_x;
+	this->shift_y = pg.shift_y;
+}
+Robot_Playground::~Robot_Playground() {
+	if (this->map != nullptr) {
+		delete[] this->map;
+	}
+	this->map = nullptr;
+}
+
+block Robot_Playground::get_data(size_t pos_x, size_t pos_y) {
+	return this->map->get_data(pos_x + this->shift_x, pos_y + this->shift_y);
+}
+
+void Robot_Playground::put(size_t pos_x, size_t pos_y, block b) {
+	this->map->put(pos_x + this->shift_x, pos_y + this->shift_y, b);
+	return;
+}
+
+size_t Robot_Playground::get_length() {
+	return this->map->get_length();
+}
+
+size_t Robot_Playground::get_width() {
+	return this->map->get_width();
+}
+
+//----------------------------------------------------------------------------
 //----------------------Robot methods-----------------------------------------
 //----------------------------------------------------------------------------
 
@@ -288,7 +323,7 @@ Robot_Collector::Robot_Collector(const char* path, SDL_Rect_ rect, Sprite_State 
 	this->apples = 0;
 	this->my_x = 0;
 	this->my_y = 0;
-	this->map = new Playground();
+	this->map = new Robot_Playground();
 }
 
 //Robot_Collector::~Robot_Collector() {
@@ -351,7 +386,7 @@ bool Robot_Collector::grab() {
 	return false;
 }
 
-Playground* Robot_Collector::get_map() {
+Robot_Playground* Robot_Collector::get_map() {
 	return this->map;
 }
 
@@ -370,10 +405,10 @@ std::vector<movement> Robot_Collector::find_way() {
 Robot_Sapper::Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) : Robot(path, rect, sprite_state) {
 	this->my_x = 0;
 	this->my_y = 0;
-	this->map = new Playground();
+	this->map = new Robot_Playground();
 }
 
-void Robot_Sapper::load_playground(Playground * pg) {
+void Robot_Sapper::load_playground(Robot_Playground * pg) {
 	this->map = pg;
 	return;
 }
@@ -396,4 +431,23 @@ bool Robot_Sapper::demine() {
 
 std::pair<size_t, size_t> Robot_Sapper::get_coord_on_his_own_map() {
 	return std::pair<size_t, size_t> { this->my_x, this->my_y };
+}
+
+
+
+
+std::vector<std::vector<block>> Playgound_converter::convert(Playground* p, Robot_Collector* rc) {
+	std::vector<std::vector<block>> result = { };
+	size_t width = p->get_width();
+	size_t length = p->get_length();
+	result.resize(length);
+	for (size_t j = 0; j < length; ++j) {
+		result[j].resize(width);
+	}
+	for (size_t i = 0; i < length; ++i) {
+		for (size_t j = 0; i < width; ++j) {
+			result[i][j] = p->get_data(i, j);
+		}
+	}
+	return result;
 }

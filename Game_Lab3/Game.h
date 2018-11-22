@@ -8,7 +8,7 @@
 
 namespace Game {
 
-	enum block { rock, empty, apple, bomb, unknown };
+	enum block { rock, empty, apple, bomb, unknown, rc};
 
 	class Game_Exception : public std::exception {
 		std::string whatStr;
