@@ -76,17 +76,19 @@ Renderer_Handler::~Renderer_Handler()
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
 }
-void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background) {
+void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background) {
 	this->player = player;
 	this->apple = apple;
 	this->rock = rock;
 	this->unknown = unknown;
+	this->bomb = bomb;
 	this->background = background;
 
 	this->player->Load_Texture(renderer);
 	this->apple->Load_Texture(renderer);
 	this->rock->Load_Texture(renderer);
 	this->unknown->Load_Texture(renderer);
+	this->bomb->Load_Texture(renderer);
 	this->background->Load_Texture(renderer);
 
 }
@@ -100,6 +102,38 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 		SDL_RenderCopyEx(renderer, background->texture, NULL,
 			&background->rect, background->angle, &background->point, background->flip);
 
+	for (size_t x = 0; x < render_map.size(); ++x) {
+		for (size_t y = 0; y < render_map[x].size(); ++y) {
+			if (render_map[x][y] == block::rock) {
+				SDL_Rect rect(rock->rect);
+				rect.x += 75 * x;
+				rect.y += 75 * y;
+				SDL_RenderCopyEx(renderer, rock->texture, NULL,
+					&rect, rock->angle, &rock->point, rock->flip);
+			}
+			if (render_map[x][y] == block::apple) {
+				SDL_Rect rect(apple->rect);
+				rect.x += 75 * x;
+				rect.y += 75 * y;
+				SDL_RenderCopyEx(renderer, apple->texture, NULL,
+					&rect, apple->angle, &apple->point, apple->flip);
+			}
+			if (render_map[x][y] == block::unknown) {
+				SDL_Rect rect(unknown->rect);
+				rect.x += 75 * x;
+				rect.y += 75 * y;
+				SDL_RenderCopyEx(renderer, unknown->texture, NULL,
+					&rect, unknown->angle, &unknown->point, unknown->flip);
+			}
+			if (render_map[x][y] == block::bomb) {
+				SDL_Rect rect(bomb->rect);
+				rect.x += 75 * x;
+				rect.y += 75 * y;
+				SDL_RenderCopyEx(renderer, bomb->texture, NULL,
+					&rect, bomb->angle, &bomb->point, bomb->flip);
+			}
+		}
+	}
 
 	if (player != nullptr)
 		SDL_RenderCopyEx(renderer, player->texture, NULL,
@@ -138,8 +172,8 @@ void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags) {
 	}
 	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags); //TODO
 }
-void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* background) noexcept {
-	renderer_handler->Set_Sprites(player, apple, rock, unknown, background);
+void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background) noexcept {
+	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background);
 }
 void Game_Handler::Add_Sprite(Sprite* sprite) {
 	renderer_handler->Add_Sprites(sprite);
@@ -149,8 +183,9 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 		throw Game_Exception("mainloop error: no renderer_handler");
 	bool quit = false;
 	SDL_Event event;
+
+	std::vector<std::vector<block>> render_map;
 	while (!quit) {
-		std::vector<std::vector<block>> render_map;
 		while (SDL_PollEvent(&event))
 		{
 			SDL_PumpEvents();

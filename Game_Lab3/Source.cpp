@@ -18,15 +18,21 @@ struct Drawing_Area {
 	int left_border;
 	int top_border;
 	int bot_border;
+	int center_x;
+	int center_y;
 	Drawing_Area(
 		int right_border,
 		int left_border,
 		int top_border,
-		int bot_border) :
+		int bot_border,
+		int center_x,
+		int center_y) :
 		right_border(right_border),
 		left_border(left_border),
 		top_border(top_border),
-		bot_border(bot_border) {}
+		bot_border(bot_border),
+		center_x(center_x),
+		center_y(center_y){}
 	Drawing_Area() {}
 };
 
@@ -49,7 +55,9 @@ public:
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
 		controll_robot_collector(key_state);
 		check_drawing_area_out();
-		return  std::vector<std::vector<block>>{};
+		return std::vector<std::vector<block>>{std::vector<block> {rock},
+			std::vector<block> {apple}, std::vector<block> {bomb},
+			std::vector<block> {block::unknown}, std::vector<block> {block::empty}};
 	}
 
 	void check_drawing_area_out() {
@@ -119,7 +127,9 @@ int main(int argc, char** argv) {
 		wp.w - (wp.w % 75) / 2,
 		(wp.w % 75) / 2,
 		wp.h - (wp.h % 75) / 2,
-		(wp.h % 75) / 2);
+		(wp.h % 75) / 2,
+		wp.w/2 - ((wp.w/2) % 75) / 2,
+		wp.h/2 - ((wp.h/2) % 75) / 2);
 
 	//std::vector<Sprite*> sprites;
 	/*int size = 75;
@@ -128,13 +138,13 @@ int main(int argc, char** argv) {
 			sprites.push_back(new Sprite("jd.jpg", SDL_Rect_(j, i, size, size), visible));
 		}
 	}*/
-	Robot_Collector* robot_collector = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
+	Robot_Collector* robot_collector = new Robot_Collector("janitor.PNG", SDL_Rect_(da.center_x, da.center_y, 75, 75), visible);
 
-	Sprite* apple = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
-	Sprite* rock = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
-	Sprite* unknown = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.top_border, 75, 75), visible);
-//
-	g.Set_Sprites(robot_collector, apple, rock, unknown, background);
+	Sprite* apple = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* bomb = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* rock = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* unknown = new Robot_Collector("janitor.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
 
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, da);
 	g.mainloop(main_controller);
