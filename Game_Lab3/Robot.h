@@ -16,6 +16,7 @@ namespace Robots {
 		Playground(FILE* fin);
 		Playground(Playground & pg);
 
+		std::vector<std::vector<block>> get_renderer_map();
 		block get_data(size_t, size_t);
 		void put(size_t, size_t, block);
 		size_t get_length();
@@ -46,9 +47,10 @@ namespace Robots {
 	public:
 		Robot_Playground();
 		Robot_Playground(Robot_Playground & pg);
-
+		std::vector<std::vector<block>> get_renderer_map();
 		block get_data(size_t, size_t);
 		void put(size_t, size_t, block);
+		std::pair<size_t, size_t> get_shift();
 		size_t get_length();
 		size_t get_width();
 		virtual ~Robot_Playground();
@@ -77,6 +79,7 @@ namespace Robots {
 		std::pair<size_t, size_t> get_coord_on_his_own_map();
 		
 		Robot_Playground* get_map();
+		
 		//virtual ~Robot_Collector();
 	};
 
@@ -96,8 +99,4 @@ namespace Robots {
 		//virtual ~Robot_Sapper();
 	};
 
-	class Playgound_converter {
-	public:
-		std::vector<std::vector<block>> convert(Playground* p, Robot_Collector* rc);
-	};
 }

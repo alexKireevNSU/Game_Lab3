@@ -196,7 +196,22 @@ size_t Playground::get_width() {
 	return this->width;
 }
 
+std::vector<std::vector<block>> Playground::get_renderer_map() {
+	std::vector<std::vector<block>> result = { };
+	size_t width = this->width;
+	size_t length = this->length;
+	result.resize(length);
+	for (size_t j = 0; j < length; ++j) {
+		result[j].resize(width);
+	}
 
+	for (size_t i = 0; i < length; ++i) {
+		for (size_t j = 0; j < width; ++j) {
+			result[i][j] = this->map[i][j];
+		}
+	}
+	return result;
+}
 
 //----------------------------------------------------------------------------
 //----------------------Main_map methods--------------------------------------
@@ -300,12 +315,20 @@ void Robot_Playground::put(size_t pos_x, size_t pos_y, block b) {
 	return;
 }
 
+std::pair<size_t,size_t> Robot_Playground::get_shift() {
+	return std::pair<size_t, size_t> ( this->shift_x, this->shift_y );
+}
+
 size_t Robot_Playground::get_length() {
 	return this->map->get_length();
 }
 
 size_t Robot_Playground::get_width() {
 	return this->map->get_width();
+}
+
+std::vector<std::vector<block>> Robot_Playground::get_renderer_map() {
+	return this->map->get_renderer_map();
 }
 
 //----------------------------------------------------------------------------
@@ -433,21 +456,3 @@ std::pair<size_t, size_t> Robot_Sapper::get_coord_on_his_own_map() {
 	return std::pair<size_t, size_t> { this->my_x, this->my_y };
 }
 
-
-
-
-std::vector<std::vector<block>> Playgound_converter::convert(Playground* p, Robot_Collector* rc) {
-	std::vector<std::vector<block>> result = { };
-	size_t width = p->get_width();
-	size_t length = p->get_length();
-	result.resize(length);
-	for (size_t j = 0; j < length; ++j) {
-		result[j].resize(width);
-	}
-	for (size_t i = 0; i < length; ++i) {
-		for (size_t j = 0; i < width; ++j) {
-			result[i][j] = p->get_data(i, j);
-		}
-	}
-	return result;
-}
