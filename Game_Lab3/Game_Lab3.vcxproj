@@ -40,6 +40,7 @@
     <Image Include="apple.png" />
     <Image Include="bomb.png" />
     <Image Include="janitor.PNG" />
+    <Image Include="plan.jpg" />
     <Image Include="robot1.png" />
     <Image Include="rock.png" />
     <Image Include="unknown.png" />

@@ -78,6 +78,9 @@
     <Image Include="robot1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="plan.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="map1.txt">
