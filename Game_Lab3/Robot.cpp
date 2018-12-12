@@ -436,10 +436,6 @@ void Robot_Sapper::load_playground(Robot_Playground * pg) {
 	return;
 }
 
-//Robot_Sapper::~Robot_Sapper() {
-//
-//}
-
 std::vector<movement> Robot_Sapper::find_way() {
 	return std::vector<movement> { };
 }

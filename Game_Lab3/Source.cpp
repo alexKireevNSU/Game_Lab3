@@ -55,38 +55,31 @@ public:
 
 	std::vector<std::vector<block>> handle_sprites() {
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
+		
+		unsigned int n = check_command(key_state); // сомнительная вещь
+
 		controll_robot_collector(key_state);
-		//check_drawing_area_out();
 		return std::vector<std::vector<block>>{std::vector<block> {rock},
 			std::vector<block> {apple}, std::vector<block> {bomb},
 			std::vector<block> {block::unknown}, std::vector<block> {block::empty}};
 	}
 
-	void check_drawing_area_out() {
-		if (robot_collector->rect.x + robot_collector->rect.w > da.right_border) {
-			robot_collector->rect.x = da.left_border;
+	inline unsigned int check_command(const Uint8* key_state) {
+		unsigned int n = 0;
+		if (key_state[SDL_SCANCODE_N]) {
+			cin >> n;
 		}
-		if (robot_collector->rect.x < da.left_border) {
-			robot_collector->rect.x = da.right_border - robot_collector->rect.w;
-		}
-		if (robot_collector->rect.y + robot_collector->rect.h > da.top_border) {
-			robot_collector->rect.y = da.bot_border;
-		}
-		if (robot_collector->rect.y < da.bot_border) {
-			robot_collector->rect.y = da.top_border - robot_collector->rect.h;
-		}
+		return n;
 	}
 
-	void controll_robot_collector(const Uint8* key_state) {
+	inline void controll_robot_collector(const Uint8* key_state) {
 		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
-			//robot_collector->rect.x += robot_collector->rect.w;
 			background->rect.x -= 75;
 			if (robot_collector->flip != SDL_FLIP_NONE) {
 				robot_collector->flip = SDL_FLIP_NONE;
 			}
 		}
 		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
-			//robot_collector->rect.x -= robot_collector->rect.w;
 			background->rect.x += 75;
 			if (robot_collector->flip != SDL_FLIP_HORIZONTAL) {
 				robot_collector->flip = SDL_FLIP_HORIZONTAL;
@@ -94,11 +87,9 @@ public:
 		}
 		if (key_state[SDL_SCANCODE_UP] && !up) {
 			background->rect.y += 75;
-			//robot_collector->rect.y -= robot_collector->rect.h;
 		}
 		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
 			background->rect.y -= 75;
-			//robot_collector->rect.y += robot_collector->rect.h;
 		}
 		if (key_state[SDL_SCANCODE_ESCAPE]) {
 			exit(0);
@@ -109,6 +100,22 @@ public:
 		up = key_state[SDL_SCANCODE_UP];
 		down = key_state[SDL_SCANCODE_DOWN];
 	}
+
+
+	//void check_drawing_area_out() {
+	//	if (robot_collector->rect.x + robot_collector->rect.w > da.right_border) {
+	//		robot_collector->rect.x = da.left_border;
+	//	}
+	//	if (robot_collector->rect.x < da.left_border) {
+	//		robot_collector->rect.x = da.right_border - robot_collector->rect.w;
+	//	}
+	//	if (robot_collector->rect.y + robot_collector->rect.h > da.top_border) {
+	//		robot_collector->rect.y = da.bot_border;
+	//	}
+	//	if (robot_collector->rect.y < da.bot_border) {
+	//		robot_collector->rect.y = da.top_border - robot_collector->rect.h;
+	//	}
+	//}
 };
 
 int main(int argc, char** argv) {
