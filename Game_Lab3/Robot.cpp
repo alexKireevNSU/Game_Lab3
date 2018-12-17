@@ -255,14 +255,6 @@ void Main_map::update_robot_sapper_existence(bool flag) {
 	return;
 }
 
-//bool Main_map::check_robot_alive() {
-//	if (this->map->get_data(robot_collector_x, robot_collector_y) == bomb) {
-//		this->collector_exist = false;
-//		return false;
-//	}
-//	return true;
-	//return (this->map->get_data(robot_collector_x, robot_collector_y) == bomb) ? false : true;
-//}
 
 std::vector<block> Main_map::get_robot_collector_neibourhood() {
 	std::vector<block> neibourhood = {};
