@@ -570,10 +570,6 @@ bool Robot_Sapper::move(movement m) {
 //
 //}
 
-std::vector<movement> Robot_Sapper::find_way() {
-	return std::vector<movement> { };
-}
-
 bool Robot_Sapper::demine() {
 	if (this->map->get_data(this->my_x, this->my_y) == bomb) {
 		this->map->put(this->my_x, this->my_y, empty);
