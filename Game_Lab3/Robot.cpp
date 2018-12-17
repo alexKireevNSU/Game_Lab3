@@ -233,6 +233,37 @@ Main_map::Main_map(FILE* fin) {
 	this->robot_sapper_y = 0;
 }
 
+
+
+bool Main_map::robot_sapper_exist() {
+	return this->sapper_exist;
+}
+
+bool Main_map::robot_collector_exist() {
+	return this->collector_exist;
+}
+
+void Main_map::update_robot_collector_existence() {
+	if (this->map->get_data(robot_collector_x, robot_collector_y) == bomb) {
+		this->collector_exist = false;
+	}
+	return;
+}
+
+void Main_map::update_robot_sapper_existence(bool flag) {
+	this->sapper_exist = flag;
+	return;
+}
+
+//bool Main_map::check_robot_alive() {
+//	if (this->map->get_data(robot_collector_x, robot_collector_y) == bomb) {
+//		this->collector_exist = false;
+//		return false;
+//	}
+//	return true;
+	//return (this->map->get_data(robot_collector_x, robot_collector_y) == bomb) ? false : true;
+//}
+
 std::vector<block> Main_map::get_robot_collector_neibourhood() {
 	std::vector<block> neibourhood = {};
 	neibourhood.push_back(this->map->get_data(this->robot_collector_x - 1, robot_collector_y));
@@ -242,17 +273,58 @@ std::vector<block> Main_map::get_robot_collector_neibourhood() {
 	return neibourhood;
 }
 
-void Main_map::move_collector(movement m) {
+void Main_map::move_robot_collector(movement m) {
 	switch (m) {
-
+		case up: {
+			++this->robot_collector_y;
+			return;
+		}
+		case down: {
+			--this->robot_collector_y;
+			return;
+		}
+		case right: {
+			++this->robot_collector_x;
+			return;
+		}
+		case left: {
+			--this->robot_collector_x;
+			return;
+		}
+		default: {
+			return;
+		}
 	}
+	return;
 }
 
-void Main_map::move_sapper(movement m) {
-
+void Main_map::move_robot_sapper(movement m) {
+	switch (m) {
+		case up: {
+			++this->robot_sapper_y;
+			return;
+		}
+		case down: {
+			--this->robot_sapper_y;
+			return;
+		}
+		case right: {
+			++this->robot_sapper_x;
+			return;
+		}
+		case left: {
+			--this->robot_sapper_x;
+			return;
+		}
+		default: {
+			return;
+		}
+	}
+	return;
 }
 
 void Main_map::create_robot_collector() {
+	this->collector_exist = true;
 	size_t length = this->map->get_length();
 	size_t width = this->map->get_width();
 	while (true) {
@@ -268,10 +340,20 @@ void Main_map::create_robot_collector() {
 }
 
 void Main_map::create_robot_sapper(size_t x, size_t y) {
+	this->sapper_exist = true;
 	this->robot_sapper_x = x;
 	this->robot_sapper_y = y;
 	return;
 }
+
+void Main_map::demine() {
+	this->update_map(this->robot_sapper_x, this->robot_sapper_y, empty);
+}
+
+void Main_map::grab() {
+	this->update_map(this->robot_collector_x, this->robot_collector_y, empty);
+}
+
 Main_map::~Main_map() {
 	if (this->map != nullptr) {
 		delete this->map;
@@ -335,14 +417,14 @@ std::vector<std::vector<block>> Robot_Playground::get_renderer_map() {
 //----------------------Robot methods-----------------------------------------
 //----------------------------------------------------------------------------
 
-Robot::Robot(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) : Sprite(path, rect, sprite_state) {
+Robot::Robot() {
 }
 
 //----------------------------------------------------------------------------
 //----------------------Robot Collector methods-------------------------------
 //----------------------------------------------------------------------------
 
-Robot_Collector::Robot_Collector(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) : Robot(path, rect, sprite_state) {
+Robot_Collector::Robot_Collector() {
 	this->apples = 0;
 	this->my_x = 0;
 	this->my_y = 0;
@@ -388,9 +470,9 @@ bool Robot_Collector::move(movement m) {
 	return true;
 }
 
-void Robot_Collector::scan(size_t N) {
-	return;
-}
+//void Robot_Collector::scan(size_t N) {
+//	return;
+//}
 
 void Robot_Collector::scan(std::vector<block> neighbourhood) {
 	this->map->put(this->my_x - 1, this->my_y, neighbourhood[0]);
@@ -417,15 +499,28 @@ std::pair<size_t, size_t> Robot_Collector::get_coord_on_his_own_map() {
 	return std::pair<size_t, size_t> { this->my_x, this->my_y };
 }
 
-std::vector<movement> Robot_Collector::find_way() {
-	return std::vector<movement> { };
+std::pair<size_t, size_t> Robot_Collector::coords_for_spawn_sapper() {
+	int width = this->map->get_width();
+	int length = this->map->get_length();
+	int collector_x = this->my_x;
+	int collector_y = this->my_y;
+	std::pair<size_t, size_t> shift = this->map->get_shift();
+	int result_x, result_y;
+	while (true) {
+		result_x = rand() % width - shift.first;
+		result_y = rand() % length - shift.second;
+		if (result_x != collector_x && result_y != collector_y && this->map->get_data(result_x, result_y) != rock) {
+			break;
+		}
+	}
+	return std::pair<size_t, size_t>(result_x, result_y);
 }
 
 //----------------------------------------------------------------------------
 //----------------------Robot Sapper methods----------------------------------
 //----------------------------------------------------------------------------
 
-Robot_Sapper::Robot_Sapper(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) : Robot(path, rect, sprite_state) {
+Robot_Sapper::Robot_Sapper() {
 	this->my_x = 0;
 	this->my_y = 0;
 	this->map = new Robot_Playground();
@@ -436,13 +531,44 @@ void Robot_Sapper::load_playground(Robot_Playground * pg) {
 	return;
 }
 
+bool Robot_Sapper::move(movement m) {
+	switch (m) {
+	case right: {
+		block b = this->map->get_data(this->my_x + 1, this->my_y);
+		if (b == rock) {
+			return false;
+		}
+		++this->my_x;
+	}
+	case left: {
+		block b = this->map->get_data(this->my_x - 1, this->my_y);
+		if (b == rock) {
+			return false;
+		}
+		--this->my_x;
+	}
+	case down: {
+		block b = this->map->get_data(this->my_x, this->my_y - 1);
+		if (b == rock) {
+			return false;
+		}
+		--this->my_y;
+	}
+	case up: {
+		block b = this->map->get_data(this->my_x, this->my_y + 1);
+		if (b == rock) {
+			return false;
+		}
+		++this->my_y;
+	}
+	default: { return false; }
+	}
+	return true;
+}
+
 //Robot_Sapper::~Robot_Sapper() {
 //
 //}
-
-std::vector<movement> Robot_Sapper::find_way() {
-	return std::vector<movement> { };
-}
 
 bool Robot_Sapper::demine() {
 	if (this->map->get_data(this->my_x, this->my_y) == bomb) {
