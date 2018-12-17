@@ -9,13 +9,11 @@ namespace Robots {
 	private:
 		block** map;
 		size_t length, width;
-		void increase_map(movement m);
-
 	public:
 		Playground();
 		Playground(FILE* fin);
 		Playground(Playground & pg);
-
+		void increase_map(movement m);
 		std::vector<std::vector<block>> get_renderer_map();
 		block get_data(size_t, size_t);
 		void put(size_t, size_t, block);
@@ -36,7 +34,6 @@ namespace Robots {
 		Main_map(FILE* fin);
 		void move_robot_collector(movement m);
 		void move_robot_sapper(movement m);
-
 		//block get_robot_block();
 		void update_robot_collector_existence();
 		void update_robot_sapper_existence(bool flag);
@@ -59,7 +56,9 @@ namespace Robots {
 	public:
 		Robot_Playground();
 		Robot_Playground(Robot_Playground & pg);
+		void increase_map(movement m);
 		std::vector<std::vector<block>> get_renderer_map();
+		bool robot_on_border(size_t robot_x, size_t robot_y);
 		block get_data(size_t, size_t);
 		void put(size_t, size_t, block);
 		std::pair<size_t, size_t> get_shift();
@@ -98,9 +97,8 @@ namespace Robots {
 	private:
 		Robot_Playground* map;
 		size_t my_x, my_y;
-
 	public:
-		Robot_Sapper();
+		Robot_Sapper(size_t my_x, size_t my_y);
 		void load_playground(Robot_Playground * pg);
 		bool move(movement m);
 		std::pair<size_t, size_t> get_coord_on_his_own_map();

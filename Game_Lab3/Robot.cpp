@@ -213,6 +213,7 @@ std::vector<std::vector<block>> Playground::get_renderer_map() {
 	return result;
 }
 
+
 //----------------------------------------------------------------------------
 //----------------------Main_map methods--------------------------------------
 //----------------------------------------------------------------------------
@@ -405,6 +406,20 @@ std::vector<std::vector<block>> Robot_Playground::get_renderer_map() {
 	return this->map->get_renderer_map();
 }
 
+bool Robot_Playground::robot_on_border(size_t robot_x, size_t robot_y) {
+	if (robot_x + shift_x == (this->map->get_length() - 1) || robot_x + shift_x == 0) {
+		return true;
+	}
+	if (robot_y + shift_y == (this->map->get_width() - 1) || robot_y + shift_y == 0) {
+		return true;
+	}
+	return false;
+}
+
+void Robot_Playground::increase_map(movement m) {
+	this->map->increase_map(m);
+}
+
 //----------------------------------------------------------------------------
 //----------------------Robot methods-----------------------------------------
 //----------------------------------------------------------------------------
@@ -435,6 +450,9 @@ bool Robot_Collector::move(movement m) {
 				return false;
 			}
 			++this->my_x;
+			if (this->map->robot_on_border(this->my_x, this->my_y)) {
+				this->map->increase_map(m);
+			}
 		}
 		case left: {
 			block b = this->map->get_data(this->my_x - 1, this->my_y);
@@ -442,6 +460,9 @@ bool Robot_Collector::move(movement m) {
 				return false;
 			}
 			--this->my_x;
+			if (this->map->robot_on_border(this->my_x, this->my_y)) {
+				this->map->increase_map(m);
+			}
 		}
 		case down: {
 			block b = this->map->get_data(this->my_x, this->my_y - 1);
@@ -449,6 +470,9 @@ bool Robot_Collector::move(movement m) {
 				return false;
 			}
 			--this->my_y;
+			if (this->map->robot_on_border(this->my_x, this->my_y)) {
+				this->map->increase_map(m);
+			}
 		}
 		case up: {
 			block b = this->map->get_data(this->my_x, this->my_y + 1);
@@ -456,6 +480,9 @@ bool Robot_Collector::move(movement m) {
 				return false;
 			}
 			++this->my_y;
+			if (this->map->robot_on_border(this->my_x, this->my_y)) {
+				this->map->increase_map(m);
+			}
 		}
 		default: { return false; }
 	}
@@ -512,9 +539,9 @@ std::pair<size_t, size_t> Robot_Collector::coords_for_spawn_sapper() {
 //----------------------Robot Sapper methods----------------------------------
 //----------------------------------------------------------------------------
 
-Robot_Sapper::Robot_Sapper() {
-	this->my_x = 0;
-	this->my_y = 0;
+Robot_Sapper::Robot_Sapper(size_t my_x, size_t my_y) {
+	this->my_x = my_x;
+	this->my_y = my_y;
 	this->map = new Robot_Playground();
 }
 

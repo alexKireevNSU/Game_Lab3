@@ -59,6 +59,16 @@ class MAIN {
 			}
 		}
 
+		void render_map() {
+			Robot_Playground* rpg = this->RC->get_map();
+			std::vector<std::vector<block>> rendering_map = rpg->get_renderer_map();
+			std::pair<size_t, size_t> shift = rpg->get_shift();
+			std::pair<size_t, size_t> rc_coords = this->RC->get_coord_on_his_own_map();
+			int length = rpg->get_length();
+			int width = rpg->get_width();
+
+		}
+
 		void move_sapper(movement m) {
 			if (RS->move(m) == true) {
 				main_map->move_robot_sapper(m);
