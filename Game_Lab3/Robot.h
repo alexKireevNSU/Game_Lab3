@@ -71,7 +71,7 @@ namespace Robots {
 	class Robot{
 	public:
 		Robot();
-		virtual ~Robot() = 0;
+		//virtual ~Robot() = 0;
 	};
 
 	class Robot_Collector : public Robot {
