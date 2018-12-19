@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -8,6 +9,7 @@
 
 #include "Game.h"
 #include "Robot.h"
+#include "test.cpp"
 
 using namespace Game;
 using namespace std;
@@ -39,6 +41,7 @@ struct Drawing_Area {
 
 
 class Main_Controller : public Game::Sprite_Controller {
+	Robot_Controller* robot_controller = new Robot_Controller();
 	Sprite* robot_collector;
 	Sprite* background;
 	Drawing_Area da;
@@ -61,10 +64,11 @@ class Main_Controller : public Game::Sprite_Controller {
 	};
 
 public:
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da) {
+	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Robot_Controller* robot_controller) {
 		this->robot_collector = robot_collector;
 		this->background = background;
 		this->da = da;
+		this->robot_controller = robot_controller;
 	}
 
 	std::vector<std::vector<block>> handle_sprites() {
@@ -74,10 +78,11 @@ public:
 			cout << n << endl;
 		}
 
+
+
 		controll_robot_collector(key_state);
-		return std::vector<std::vector<block>>{std::vector<block> {rock},
-			std::vector<block> {apple}, std::vector<block> {bomb},
-			std::vector<block> {block::unknown}, std::vector<block> {block::empty}};
+		cout << da.right_border / 75 << ' ' << da.top_border / 75 << endl;
+		return robot_controller->render_map(da.right_border / 75, da.top_border / 75);
 	}
 
 	int get_only_digit(char ch) {
@@ -117,21 +122,25 @@ public:
 
 	inline void controll_robot_collector(const Uint8* key_state) {
 		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
+			robot_controller->move_collector(movement::right);
 			background->rect.x -= 75;
 			if (robot_collector->flip != SDL_FLIP_NONE) {
 				robot_collector->flip = SDL_FLIP_NONE;
 			}
 		}
 		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
+			robot_controller->move_collector(movement::left);
 			background->rect.x += 75;
 			if (robot_collector->flip != SDL_FLIP_HORIZONTAL) {
 				robot_collector->flip = SDL_FLIP_HORIZONTAL;
 			}
 		}
 		if (key_state[SDL_SCANCODE_UP] && !up) {
+			robot_controller->move_collector(movement::up);
 			background->rect.y += 75;
 		}
 		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
+			robot_controller->move_collector(movement::down);
 			background->rect.y -= 75;
 		}
 		if (key_state[SDL_SCANCODE_ESCAPE]) {
@@ -200,7 +209,12 @@ int main(int argc, char** argv) {
 	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
 	Sprite* rock = new Sprite("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
 	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da);
+	//FILE * mappp = fopen("map1.txt", "r");
+	Robot_Controller* robot_controller = new Robot_Controller();
+	robot_controller->main_map = new Main_map();
+	robot_controller->create_RC();
+
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller);
 
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
 

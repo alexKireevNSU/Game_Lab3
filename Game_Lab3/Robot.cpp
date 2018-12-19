@@ -32,7 +32,7 @@ Playground::Playground(FILE* fin) {
 		for (size_t j = 0; j < this->width; ++j) {
 			char buff;
 			fscanf(fin, "%c", &buff);
-			block b;
+			block b = empty;
 			switch (buff) {
 				case ' ': { b = empty; break; }
 				case '#': { b = rock; break; }

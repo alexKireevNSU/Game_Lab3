@@ -7,7 +7,7 @@ using namespace Game;
 using namespace std;
 using namespace Robots;
 
-class MAIN {
+class Robot_Controller {
 	private:
 		bool check_move(movement m) {
 			vector<block> neibours = main_map->get_robot_collector_neibourhood();
@@ -66,12 +66,13 @@ class MAIN {
 			std::pair<size_t, size_t> rc_coords = this->RC->get_coord_on_his_own_map();
 			int length = rpg->get_length();
 			int width = rpg->get_width();
-			std::vector<std::vector<block>> result(render_length, std::vector<block>(render_width));
-			for (int i = 0; i < render_length; ++i) {
-				for (int j = 0; j < render_width; ++j) {
-					result[i][j] = block::empty;
-				}
-			}
+			std::vector<std::vector<block>> result(render_length, std::vector<block>(render_width, block::rock));
+			//for (int i = 0; i < render_length; ++i) {
+			//	for (int j = 0; j < render_width; ++j) {
+			//		result[i][j] = block::bomb;
+			//	}
+			//}
+			cout << length << ' ' << width << endl;
 			for (int i = 0; i < length; ++i) {
 				for (int j = 0; j < width; ++j) {
 					int x = (render_length / 2 + 1) + i - rc_coords.first - shift.first;
@@ -80,7 +81,9 @@ class MAIN {
 						continue;
 					}
 					else {
+						cout << "da" << endl;
 						result[x][y] = robot_map[i][j];
+						cout << "net" << endl;
 					}
 				}
 			}
@@ -91,7 +94,7 @@ class MAIN {
 			if (RS->move(m) == true) {
 				main_map->move_robot_sapper(m);
 				//main_map->update_robot_collector_existence();
-					RC->scan(main_map->get_robot_collector_neibourhood());
+				//RC->scan(main_map->get_robot_collector_neibourhood());
 				return;
 			}
 			else {
