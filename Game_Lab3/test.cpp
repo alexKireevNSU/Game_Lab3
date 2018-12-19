@@ -59,14 +59,32 @@ class MAIN {
 			}
 		}
 
-		void render_map() {
+		std::vector<std::vector<block>> render_map(size_t render_length, size_t render_width) {
 			Robot_Playground* rpg = this->RC->get_map();
-			std::vector<std::vector<block>> rendering_map = rpg->get_renderer_map();
+			std::vector<std::vector<block>> robot_map = rpg->get_renderer_map();
 			std::pair<size_t, size_t> shift = rpg->get_shift();
 			std::pair<size_t, size_t> rc_coords = this->RC->get_coord_on_his_own_map();
 			int length = rpg->get_length();
 			int width = rpg->get_width();
-
+			std::vector<std::vector<block>> result(render_length, std::vector<block>(render_width));
+			for (int i = 0; i < render_length; ++i) {
+				for (int j = 0; j < render_width; ++j) {
+					result[i][j] = block::empty;
+				}
+			}
+			for (int i = 0; i < length; ++i) {
+				for (int j = 0; j < width; ++j) {
+					int x = (render_length / 2 + 1) + i - rc_coords.first - shift.first;
+					int y = (render_width / 2 + 1) + j - rc_coords.second - shift.second;
+					if (x < 0 || x > render_length || j < 0 || j > render_width) {
+						continue;
+					}
+					else {
+						result[x][y] = robot_map[i][j];
+					}
+				}
+			}
+			return result;
 		}
 
 		void move_sapper(movement m) {
