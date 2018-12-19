@@ -32,13 +32,13 @@ struct Drawing_Area {
 		top_border(top_border),
 		bot_border(bot_border),
 		center_x(center_x),
-		center_y(center_y){}
+		center_y(center_y) {}
 	Drawing_Area() {}
 };
 
 
 
-class Main_Controller: public Game::Sprite_Controller {
+class Main_Controller : public Game::Sprite_Controller {
 	Sprite* robot_collector;
 	Sprite* background;
 	Drawing_Area da;
@@ -46,6 +46,20 @@ class Main_Controller: public Game::Sprite_Controller {
 	Uint8 left = 0;
 	Uint8 up = 0;
 	Uint8 down = 0;
+
+	vector<pair<Uint8, char>> num_keys = {
+		pair<Uint8, char>(SDL_SCANCODE_0, 0),
+		pair<Uint8, char>(SDL_SCANCODE_1, 1),
+		pair<Uint8, char>(SDL_SCANCODE_2, 2),
+		pair<Uint8, char>(SDL_SCANCODE_3, 3),
+		pair<Uint8, char>(SDL_SCANCODE_4, 4),
+		pair<Uint8, char>(SDL_SCANCODE_5, 5),
+		pair<Uint8, char>(SDL_SCANCODE_6, 6),
+		pair<Uint8, char>(SDL_SCANCODE_7, 7),
+		pair<Uint8, char>(SDL_SCANCODE_8, 8),
+		pair<Uint8, char>(SDL_SCANCODE_9, 9)
+	};
+
 public:
 	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da) {
 		this->robot_collector = robot_collector;
@@ -55,8 +69,10 @@ public:
 
 	std::vector<std::vector<block>> handle_sprites() {
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
-		
-		unsigned int n = check_command(key_state); // сомнительная вещь
+		if (key_state[SDL_SCANCODE_N]) {
+			unsigned int n = check_command(); // сомнительная вещь
+			cout << n << endl;
+		}
 
 		controll_robot_collector(key_state);
 		return std::vector<std::vector<block>>{std::vector<block> {rock},
@@ -64,15 +80,36 @@ public:
 			std::vector<block> {block::unknown}, std::vector<block> {block::empty}};
 	}
 
-	inline unsigned int check_command(const Uint8* key_state) {
+	int get_only_digit(char ch) {
+		char digits[] = {
+			'0', '1', '2', '3', '4',
+			'5', '6', '7', '8', '9'
+		};
+		for (int i = 0; i < 10; i++) {
+			if (digits[i] == ch) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	inline unsigned int check_command() {
 		unsigned int n = 0;
-		if (key_state[SDL_SCANCODE_N]) {
-			bool is_return = false;
-			while (!is_return) {
+
+		bool is_return = false;
+		SDL_Event Event;
+
+		while (!is_return) {
+			while (SDL_PollEvent(&Event)) {
+				SDL_PumpEvents();
 				const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
 				if (t_key_state[SDL_SCANCODE_RETURN]) {
-					return 0;
+					is_return = true;
+					return n;
 				}
+				int digit = get_only_digit(Event.text.text[0]);
+				if (digit != -1)
+					n = n * 10 + digit;
 			}
 		}
 		return n;
@@ -140,7 +177,7 @@ int main(int argc, char** argv) {
 	g.Create_Window(wp);
 	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	Sprite* background = new Sprite("background.png", SDL_Rect_(-512*75, -512*75, 1024 * 75, 1024 * 75), visible);
+	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * 75, -512 * 75, 1024 * 75, 1024 * 75), visible);
 
 	Drawing_Area da(
 		wp.w,
