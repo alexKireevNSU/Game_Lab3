@@ -70,7 +70,7 @@ public:
 	std::vector<std::vector<block>> handle_sprites() {
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
 		if (key_state[SDL_SCANCODE_N]) {
-			unsigned int n = check_command(); // сомнительная вещь
+			unsigned int n = check_command(); // тут можно вытащить введённое число
 			cout << n << endl;
 		}
 
