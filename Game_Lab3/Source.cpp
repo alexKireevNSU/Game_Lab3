@@ -67,7 +67,13 @@ public:
 	inline unsigned int check_command(const Uint8* key_state) {
 		unsigned int n = 0;
 		if (key_state[SDL_SCANCODE_N]) {
-			cin >> n;
+			bool is_return = false;
+			while (!is_return) {
+				const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
+				if (t_key_state[SDL_SCANCODE_RETURN]) {
+					return 0;
+				}
+			}
 		}
 		return n;
 	}
@@ -151,12 +157,12 @@ int main(int argc, char** argv) {
 			sprites.push_back(new Sprite("jd.jpg", SDL_Rect_(j, i, size, size), visible));
 		}
 	}*/
-	Robot_Collector* robot_collector = new Robot_Collector("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, 75, 75), visible);
+	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, 75, 75), visible);
 
-	Sprite* apple = new Robot_Collector("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* bomb = new Robot_Collector("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* rock = new Robot_Collector("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* unknown = new Robot_Collector("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* rock = new Sprite("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da);
 
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
