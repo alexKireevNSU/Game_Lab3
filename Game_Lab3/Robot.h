@@ -8,27 +8,27 @@ namespace Robots {
 	class Playground {
 	private:
 		block** map;
-		size_t length, width;
+		int length, width;
 	public:
 		Playground();
 		Playground(FILE* fin);
 		Playground(Playground & pg);
 		void increase_map(movement m);
 		std::vector<std::vector<block>> get_renderer_map();
-		block get_data(size_t, size_t);
-		void put(size_t, size_t, block);
-		size_t get_length();
-		size_t get_width();
+		block get_data(int, int);
+		void put(int, int, block);
+		int get_length();
+		int get_width();
 		virtual ~Playground();
 	};
 
 	class Main_map {
 	private:
 		Playground* map;
-		size_t robot_collector_x, robot_collector_y, robot_sapper_x, robot_sapper_y;
+		int robot_collector_x, robot_collector_y, robot_sapper_x, robot_sapper_y;
 		bool collector_exist, sapper_exist;
 
-		void update_map(size_t x, size_t y, block b);
+		void update_map(int x, int y, block b);
 	public:
 		Main_map();
 		Main_map(FILE* fin);
@@ -42,7 +42,7 @@ namespace Robots {
 
 		std::vector<block> get_robot_collector_neibourhood();
 		void create_robot_collector();
-		void create_robot_sapper(size_t x, size_t y);
+		void create_robot_sapper(int x, int y);
 
 		void demine();
 		void grab();
@@ -52,18 +52,18 @@ namespace Robots {
 	class Robot_Playground{
 	private:
 		Playground* map;
-		size_t shift_x, shift_y;
+		int shift_x, shift_y;
 	public:
 		Robot_Playground();
 		Robot_Playground(Robot_Playground & pg);
 		void increase_map(movement m);
 		std::vector<std::vector<block>> get_renderer_map();
-		bool robot_on_border(size_t robot_x, size_t robot_y);
-		block get_data(size_t, size_t);
-		void put(size_t, size_t, block);
-		std::pair<size_t, size_t> get_shift();
-		size_t get_length();
-		size_t get_width();
+		bool robot_on_border(int robot_x, int robot_y);
+		block get_data(int, int);
+		void put(int, int, block);
+		std::pair<int, int> get_shift();
+		int get_length();
+		int get_width();
 		virtual ~Robot_Playground();
 	};
 
@@ -77,17 +77,17 @@ namespace Robots {
 	class Robot_Collector : public Robot {
 	private:
 		Robot_Playground* map;
-		size_t my_x, my_y;
-		size_t apples;
+		int my_x, my_y;
+		int apples;
 
 	public:
 		Robot_Collector();
 		bool move(movement m);
-		//void scan(size_t N);
+		//void scan(int N);
 		void scan(std::vector<block> neighbourhood);
 		bool grab();
-		std::pair<size_t, size_t> get_coord_on_his_own_map();
-		std::pair<size_t, size_t> coords_for_spawn_sapper();
+		std::pair<int, int> get_coord_on_his_own_map();
+		std::pair<int, int> coords_for_spawn_sapper();
 		Robot_Playground* get_map();
 		
 		//virtual ~Robot_Collector();
@@ -96,12 +96,12 @@ namespace Robots {
 	class Robot_Sapper : public Robot {
 	private:
 		Robot_Playground* map;
-		size_t my_x, my_y;
+		int my_x, my_y;
 	public:
-		Robot_Sapper(size_t my_x, size_t my_y);
+		Robot_Sapper(int my_x, int my_y);
 		void load_playground(Robot_Playground * pg);
 		bool move(movement m);
-		std::pair<size_t, size_t> get_coord_on_his_own_map();
+		std::pair<int, int> get_coord_on_his_own_map();
 		bool demine();
 
 		//virtual ~Robot_Sapper();

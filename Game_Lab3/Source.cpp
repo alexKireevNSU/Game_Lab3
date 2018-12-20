@@ -78,11 +78,12 @@ public:
 			cout << n << endl;
 		}
 
-
+		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
-		cout << da.right_border / 75 << ' ' << da.top_border / 75 << endl;
-		return robot_controller->render_map(da.right_border / 75, da.top_border / 75);
+		//cout << da.right_border / 75 << ' ' << da.top_border / 75 << endl;
+		return robot_controller->render_map(5, 5);
+		//return hz;
 	}
 
 	int get_only_digit(char ch) {

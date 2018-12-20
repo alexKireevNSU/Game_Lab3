@@ -11,11 +11,11 @@ Playground::Playground() {
 	this->length = 3;
 	this->width = 3;
 	this->map = new block*[this->length];
-	for (size_t i = 0; i < this->length; ++i) {
+	for (int i = 0; i < this->length; ++i) {
 		this->map[i] = new block[this->width];
 	}
-	for (size_t i = 0; i < this->length; ++i) {
-		for (size_t j = 0; j < this->width; ++j) {
+	for (int i = 0; i < this->length; ++i) {
+		for (int j = 0; j < this->width; ++j) {
 			this->map[i][j] = unknown;
 		}
 	}
@@ -24,12 +24,12 @@ Playground::Playground(FILE* fin) {
 	fscanf(fin, "%d %d", &this->length, &this->width);
 	this->map = new block*[this->length];
 
-	for (size_t i = 0; i < this->length; ++i) {
+	for (int i = 0; i < this->length; ++i) {
 		this->map[i] = new block[this->width];
 	}
 
-	for (size_t i = 0; i < this->length; ++i) {
-		for (size_t j = 0; j < this->width; ++j) {
+	for (int i = 0; i < this->length; ++i) {
+		for (int j = 0; j < this->width; ++j) {
 			char buff;
 			fscanf(fin, "%c", &buff);
 			block b = empty;
@@ -48,12 +48,12 @@ Playground::Playground(Playground & pg){
 	this->width = pg.width;
 	this->map = new block*[this->length];
 
-	for (size_t i = 0; i < this->length; ++i) {
+	for (int i = 0; i < this->length; ++i) {
 		this->map[i] = new block[this->width];
 	}
 
-	for (size_t i = 0; i < this->length; ++i) {
-		for (size_t j = 0; j < this->width; ++j) {
+	for (int i = 0; i < this->length; ++i) {
+		for (int j = 0; j < this->width; ++j) {
 			this->map[i][j] = pg.map[i][j];
 		}
 	}
@@ -72,22 +72,22 @@ void Playground::increase_map(movement m) {
 		case left: {
 			this->map = new block*[this->length + 1];
 
-			for (size_t i = 0; i < this->length + 1; ++i) {
+			for (int i = 0; i < this->length + 1; ++i) {
 				this->map[i] = new block[this->width];
 			}
-			for (size_t i = 0; i < this->length + 1; ++i) {
-				for (size_t j = 0; j < this->width; ++j) {
+			for (int i = 0; i < this->length + 1; ++i) {
+				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = unknown;
 				}
 			}
 			
-			for (size_t i = 0; i < this->length; ++i) {
-				for (size_t j = 0; j < this->width; ++j) {
+			for (int i = 0; i < this->length; ++i) {
+				for (int j = 0; j < this->width; ++j) {
 					this->map[i + 1][j] = prev[i][j];
 				}
 			}
 
-			for (size_t i = 0; i < this->length; ++i) {
+			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
@@ -99,21 +99,21 @@ void Playground::increase_map(movement m) {
 		case right: {
 			this->map = new block*[this->length + 1];
 
-			for (size_t i = 0; i < this->length + 1; ++i) {
+			for (int i = 0; i < this->length + 1; ++i) {
 				this->map[i] = new block[this->width];
 			}
-			for (size_t i = 0; i < this->length + 1; ++i) {
-				for (size_t j = 0; j < this->width; ++j) {
+			for (int i = 0; i < this->length + 1; ++i) {
+				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = unknown;
 				}
 			}
-			for (size_t i = 0; i < this->length; ++i) {
-				for (size_t j = 0; j < this->width; ++j) {
+			for (int i = 0; i < this->length; ++i) {
+				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = prev[i][j];
 				}
 			}
 
-			for (size_t i = 0; i < this->length; ++i) {
+			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
@@ -125,22 +125,22 @@ void Playground::increase_map(movement m) {
 		case up: {
 			this->map = new block*[this->length];
 
-			for (size_t i = 0; i < this->length; ++i) {
+			for (int i = 0; i < this->length; ++i) {
 				this->map[i] = new block[this->width + 1];
 			}
-			for (size_t i = 0; i < this->length; ++i) {
-				for (size_t j = 0; j < this->width + 1; ++j) {
+			for (int i = 0; i < this->length; ++i) {
+				for (int j = 0; j < this->width + 1; ++j) {
 					this->map[i][j] = unknown;
 				}
 			}
 
-			for (size_t i = 0; i < this->length; ++i) {
-				for (size_t j = 0; j < this->width; ++j) {
+			for (int i = 0; i < this->length; ++i) {
+				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j + 1] = prev[i][j];
 				}
 			}
 
-			for (size_t i = 0; i < this->length; ++i) {
+			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
@@ -153,21 +153,21 @@ void Playground::increase_map(movement m) {
 		case down: {
 			this->map = new block*[this->length];
 
-			for (size_t i = 0; i < this->length; ++i) {
+			for (int i = 0; i < this->length; ++i) {
 				this->map[i] = new block[this->width + 1];
 			}
-			for (size_t i = 0; i < this->length; ++i) {
-				for (size_t j = 0; j < this->width + 1; ++j) {
+			for (int i = 0; i < this->length; ++i) {
+				for (int j = 0; j < this->width + 1; ++j) {
 					this->map[i][j] = unknown;
 				}
 			}
 
-			for (size_t i = 0; i < this->length; ++i) {
-				for (size_t j = 0; j < this->width; ++j) {
+			for (int i = 0; i < this->length; ++i) {
+				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = prev[i][j];
 				}
 			}
-			for (size_t i = 0; i < this->length; ++i) {
+			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
@@ -179,34 +179,34 @@ void Playground::increase_map(movement m) {
 
 }
 
-block Playground::get_data(size_t pos_x, size_t pos_y) {
+block Playground::get_data(int pos_x, int pos_y) {
 	return this->map[pos_x][pos_y];
 }
 
-void Playground::put(size_t pos_x, size_t pos_y, block b) {
+void Playground::put(int pos_x, int pos_y, block b) {
 	this->map[pos_x][pos_y] = b;
 	return;
 }
 
-size_t Playground::get_length() {
+int Playground::get_length() {
 	return this->length;
 }
 
-size_t Playground::get_width() {
+int Playground::get_width() {
 	return this->width;
 }
 
 std::vector<std::vector<block>> Playground::get_renderer_map() {
 	std::vector<std::vector<block>> result = { };
-	size_t width = this->width;
-	size_t length = this->length;
+	int width = this->width;
+	int length = this->length;
 	result.resize(length);
-	for (size_t j = 0; j < length; ++j) {
+	for (int j = 0; j < length; ++j) {
 		result[j].resize(width);
 	}
 
-	for (size_t i = 0; i < length; ++i) {
-		for (size_t j = 0; j < width; ++j) {
+	for (int i = 0; i < length; ++i) {
+		for (int j = 0; j < width; ++j) {
 			result[i][j] = this->map[i][j];
 		}
 	}
@@ -318,11 +318,11 @@ void Main_map::move_robot_sapper(movement m) {
 
 void Main_map::create_robot_collector() {
 	this->collector_exist = true;
-	size_t length = this->map->get_length();
-	size_t width = this->map->get_width();
+	int length = this->map->get_length();
+	int width = this->map->get_width();
 	while (true) {
-		size_t x = (rand() % (length - 1)) + 1;
-		size_t y = (rand() % (width - 1)) + 1;
+		int x = (rand() % (length - 1)) + 1;
+		int y = (rand() % (width - 1)) + 1;
 		block b = this->map->get_data(x, y);
 		if (b != bomb && b != rock) {
 			this->robot_collector_x = x;
@@ -332,7 +332,7 @@ void Main_map::create_robot_collector() {
 	}
 }
 
-void Main_map::create_robot_sapper(size_t x, size_t y) {
+void Main_map::create_robot_sapper(int x, int y) {
 	this->sapper_exist = true;
 	this->robot_sapper_x = x;
 	this->robot_sapper_y = y;
@@ -354,7 +354,7 @@ Main_map::~Main_map() {
 	this->map = nullptr;
 }
 
-void Main_map::update_map(size_t x, size_t y, block b) {
+void Main_map::update_map(int x, int y, block b) {
 	this->map->put(x, y, b);
 	return;
 }
@@ -381,24 +381,24 @@ Robot_Playground::~Robot_Playground() {
 	this->map = nullptr;
 }
 
-block Robot_Playground::get_data(size_t pos_x, size_t pos_y) {
+block Robot_Playground::get_data(int pos_x, int pos_y) {
 	return this->map->get_data(pos_x + this->shift_x, pos_y + this->shift_y);
 }
 
-void Robot_Playground::put(size_t pos_x, size_t pos_y, block b) {
+void Robot_Playground::put(int pos_x, int pos_y, block b) {
 	this->map->put(pos_x + this->shift_x, pos_y + this->shift_y, b);
 	return;
 }
 
-std::pair<size_t,size_t> Robot_Playground::get_shift() {
-	return std::pair<size_t, size_t> ( this->shift_x, this->shift_y );
+std::pair<int,int> Robot_Playground::get_shift() {
+	return std::pair<int, int> ( this->shift_x, this->shift_y );
 }
 
-size_t Robot_Playground::get_length() {
+int Robot_Playground::get_length() {
 	return this->map->get_length();
 }
 
-size_t Robot_Playground::get_width() {
+int Robot_Playground::get_width() {
 	return this->map->get_width();
 }
 
@@ -406,7 +406,7 @@ std::vector<std::vector<block>> Robot_Playground::get_renderer_map() {
 	return this->map->get_renderer_map();
 }
 
-bool Robot_Playground::robot_on_border(size_t robot_x, size_t robot_y) {
+bool Robot_Playground::robot_on_border(int robot_x, int robot_y) {
 	if (robot_x + shift_x == (this->map->get_length() - 1) || robot_x + shift_x == 0) {
 		return true;
 	}
@@ -417,6 +417,18 @@ bool Robot_Playground::robot_on_border(size_t robot_x, size_t robot_y) {
 }
 
 void Robot_Playground::increase_map(movement m) {
+	switch (m) {
+		case movement::left: {
+			++this->shift_x;
+			break;
+		}
+		case movement::up: {
+			++this->shift_y;
+			break;
+		}
+		default: {break; }
+
+	}
 	this->map->increase_map(m);
 }
 
@@ -453,6 +465,7 @@ bool Robot_Collector::move(movement m) {
 			if (this->map->robot_on_border(this->my_x, this->my_y)) {
 				this->map->increase_map(m);
 			}
+			return true;
 		}
 		case left: {
 			block b = this->map->get_data(this->my_x - 1, this->my_y);
@@ -463,6 +476,7 @@ bool Robot_Collector::move(movement m) {
 			if (this->map->robot_on_border(this->my_x, this->my_y)) {
 				this->map->increase_map(m);
 			}
+			return true;
 		}
 		case down: {
 			block b = this->map->get_data(this->my_x, this->my_y - 1);
@@ -473,6 +487,7 @@ bool Robot_Collector::move(movement m) {
 			if (this->map->robot_on_border(this->my_x, this->my_y)) {
 				this->map->increase_map(m);
 			}
+			return true;
 		}
 		case up: {
 			block b = this->map->get_data(this->my_x, this->my_y + 1);
@@ -483,16 +498,16 @@ bool Robot_Collector::move(movement m) {
 			if (this->map->robot_on_border(this->my_x, this->my_y)) {
 				this->map->increase_map(m);
 			}
+			return true;
 		}
 		default: { return false; }
 	}
 	return true;
 }
 
-//void Robot_Collector::scan(size_t N) {
+//void Robot_Collector::scan(int N) {
 //	return;
 //}
-
 void Robot_Collector::scan(std::vector<block> neighbourhood) {
 	this->map->put(this->my_x - 1, this->my_y, neighbourhood[0]);
 	this->map->put(this->my_x, this->my_y + 1, neighbourhood[1]);
@@ -514,16 +529,16 @@ Robot_Playground* Robot_Collector::get_map() {
 	return this->map;
 }
 
-std::pair<size_t, size_t> Robot_Collector::get_coord_on_his_own_map() {
-	return std::pair<size_t, size_t> { this->my_x, this->my_y };
+std::pair<int, int> Robot_Collector::get_coord_on_his_own_map() {
+	return std::pair<int, int> { this->my_x, this->my_y };
 }
 
-std::pair<size_t, size_t> Robot_Collector::coords_for_spawn_sapper() {
+std::pair<int, int> Robot_Collector::coords_for_spawn_sapper() {
 	int width = this->map->get_width();
 	int length = this->map->get_length();
 	int collector_x = this->my_x;
 	int collector_y = this->my_y;
-	std::pair<size_t, size_t> shift = this->map->get_shift();
+	std::pair<int, int> shift = this->map->get_shift();
 	int result_x, result_y;
 	while (true) {
 		result_x = rand() % width - shift.first;
@@ -532,14 +547,14 @@ std::pair<size_t, size_t> Robot_Collector::coords_for_spawn_sapper() {
 			break;
 		}
 	}
-	return std::pair<size_t, size_t>(result_x, result_y);
+	return std::pair<int, int>(result_x, result_y);
 }
 
 //----------------------------------------------------------------------------
 //----------------------Robot Sapper methods----------------------------------
 //----------------------------------------------------------------------------
 
-Robot_Sapper::Robot_Sapper(size_t my_x, size_t my_y) {
+Robot_Sapper::Robot_Sapper(int my_x, int my_y) {
 	this->my_x = my_x;
 	this->my_y = my_y;
 	this->map = new Robot_Playground();
@@ -597,7 +612,7 @@ bool Robot_Sapper::demine() {
 	return false;
 }
 
-std::pair<size_t, size_t> Robot_Sapper::get_coord_on_his_own_map() {
-	return std::pair<size_t, size_t> { this->my_x, this->my_y };
+std::pair<int, int> Robot_Sapper::get_coord_on_his_own_map() {
+	return std::pair<int, int> { this->my_x, this->my_y };
 }
 
