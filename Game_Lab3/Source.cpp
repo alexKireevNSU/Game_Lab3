@@ -15,6 +15,8 @@ using namespace Game;
 using namespace std;
 using namespace Robots;
 
+const int sprite_size = 75;
+
 struct Drawing_Area {
 	int right_border;
 	int left_border;
@@ -81,8 +83,8 @@ public:
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
-		cout << da.right_border / 75 << ' ' << da.top_border / 75 << endl;
-		return robot_controller->render_map(da.right_border / 75, da.top_border / 75);
+		cout << da.right_border / sprite_size << ' ' << da.top_border / sprite_size << endl;
+		return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size);
 		//return hz;
 	}
 
@@ -124,25 +126,25 @@ public:
 	inline void controll_robot_collector(const Uint8* key_state) {
 		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
 			robot_controller->move_collector(movement::right);
-			background->rect.x -= 75;
+			background->rect.x -= sprite_size;
 			if (robot_collector->flip != SDL_FLIP_NONE) {
 				robot_collector->flip = SDL_FLIP_NONE;
 			}
 		}
 		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
 			robot_controller->move_collector(movement::left);
-			background->rect.x += 75;
+			background->rect.x += sprite_size;
 			if (robot_collector->flip != SDL_FLIP_HORIZONTAL) {
 				robot_collector->flip = SDL_FLIP_HORIZONTAL;
 			}
 		}
 		if (key_state[SDL_SCANCODE_UP] && !up) {
 			robot_controller->move_collector(movement::up);
-			background->rect.y += 75;
+			background->rect.y += sprite_size;
 		}
 		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
 			robot_controller->move_collector(movement::down);
-			background->rect.y -= 75;
+			background->rect.y -= sprite_size;
 		}
 		if (key_state[SDL_SCANCODE_ESCAPE]) {
 			exit(0);
@@ -181,35 +183,35 @@ int main(int argc, char** argv) {
 		throw Game_Exception("SDL_Init_error");
 	}
 
-	Window_Properties wp("LOL", 50, 50, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
+	Window_Properties wp("LOL", 0, 0, display_mode.w/2, display_mode.h/2, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
 	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
 
 	g.Create_Window(wp);
 	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * 75, -512 * 75, 1024 * 75, 1024 * 75), visible);
+	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * sprite_size, -512 * sprite_size, 1024 * sprite_size, 1024 * sprite_size), visible);
 
 	Drawing_Area da(
-		wp.w,
-		/*(wp.w % 75) / 2*/0,
-		wp.h,
-		/*(wp.h % 75) / 2*/0,
-		wp.w / 2,
-		wp.h / 2);
+		wp.w + sprite_size,
+		/*(wp.w % sprite_size) / 2*/0,
+		wp.h + sprite_size,
+		/*(wp.h % sprite_size) / 2*/0,
+		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size),
+		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size));
 
 	//std::vector<Sprite*> sprites;
-	/*int size = 75;
+	/*int size = sprite_size;
 	for (int i = da.bot_border; i < da.top_border; i += size) {
 		for (int j = da.left_border; j < da.right_border; j += size) {
 			sprites.push_back(new Sprite("jd.jpg", SDL_Rect_(j, i, size, size), visible));
 		}
 	}*/
-	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, 75, 75), visible);
+	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
-	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* rock = new Sprite("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
-	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, 75, 75), visible);
+	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
+	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
+	Sprite* rock = new Sprite("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
+	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	//FILE * mappp = fopen("map1.txt", "r");
 	Robot_Controller* robot_controller = new Robot_Controller();
 	robot_controller->main_map = new Main_map();
