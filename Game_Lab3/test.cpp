@@ -37,24 +37,14 @@ class Robot_Controller {
 
 
 		void create_RC() {
-			this->RC = new Robot_Collector();//test
+			this->RC = new Robot_Collector();
 			main_map->create_robot_collector();
 		}
 
 		bool move_collector(movement m) {
-			//cout << endl << endl << "movement " << endl << endl;
-			//bool ss = RC->move(m);
-
-			//RC->scan(std::vector<block>(4, block::bomb));
-			//return;
-			//if (ss == true) { cout << "truee" << endl; }
-			//else { cout << "false" << endl; }
-
 			if (RC->move(m) == true) {
-				//cout << "_________________________________scan_______________________________________" << endl;
 				main_map->move_robot_collector(m);
 				main_map->update_robot_collector_existence();
-				//RC->scan(std::vector<block>(4, block::bomb));
 				if (main_map->robot_collector_exist() == false) {
 					cout << "jopda" << endl;
 				}

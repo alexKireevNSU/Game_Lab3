@@ -24,7 +24,6 @@ Playground::Playground() {
 Playground::Playground(const char* path) {
 	FILE* fin = fopen(path, "r");
 	fscanf(fin, "%d %d", &this->length, &this->width);
-	std::cout << this->length << ' ' << this->width << std::endl;
 	this->map = new block*[this->length];
 
 	for (int i = 0; i < this->length; ++i) {
@@ -32,12 +31,10 @@ Playground::Playground(const char* path) {
 	}
 	char tmp;
 	fscanf(fin, "%c", &tmp);
-	//fscanf(fin, "%c", &tmp);
 	for (int i = 0; i < this->length; ++i) {
 		for (int j = 0; j < this->width; ++j) {
 			char buff;
 			fscanf(fin, "%c", &buff);
-			//std::cout << buff << std::endl;
 			block b = empty;
 			switch (buff) {
 			case ' ': { b = empty; break; }
@@ -50,11 +47,6 @@ Playground::Playground(const char* path) {
 		fscanf(fin, "%c", &tmp);
 	}
 
-	//for (int i = 0; i < this->length; ++i) {
-	//	for (int j = 0; j < this->width / 2; ++j) {
-	//		blo
-	//	}
-	//}
 	fclose(fin);
 }
 
@@ -423,22 +415,16 @@ std::vector<std::vector<block>> Robot_Playground::get_renderer_map() {
 }
 
 bool Robot_Playground::robot_on_border(int robot_x, int robot_y) {
-	//std::cout << "robot_x on map:" << robot_x + shift_x << std::endl;
-	//std::cout << "robot_y on map:" << robot_y + shift_y << std::endl;
-	//std::cout << "map_size:" << this->get_length() << ' ' << this->get_width() << std::endl;
-
 	if (((robot_x + shift_x) == (this->get_length() - 1)) || ((robot_x + shift_x) == 0)) {
 		return true;
 	}
 	if (((robot_y + shift_y) == (this->get_width() - 1)) || ((robot_y + shift_y) == 0)) {
 		return true;
 	}
-	//std::cout << "not_on_border" << std::endl;
 	return false;
 }
 
 void Robot_Playground::increase_map(movement m) {
-	//std::cout << "increasing" << std::endl;
 	switch (m) {
 		case movement::left: {
 			++this->shift_x;
@@ -473,10 +459,6 @@ Robot_Collector::Robot_Collector() {
 	this->map = new Robot_Playground();
 }
 
-//Robot_Collector::~Robot_Collector() {
-//	delete this->map;
-//}
-
 bool Robot_Collector::move(movement m) {
 	switch (m) {
 		case right: {
@@ -488,7 +470,6 @@ bool Robot_Collector::move(movement m) {
 			if (this->map->robot_on_border(this->my_x, this->my_y)) {
 				this->map->increase_map(m);
 			}
-			//std::cout << "true" << std::endl;
 			return true;
 		}
 		case left: {
@@ -528,9 +509,6 @@ bool Robot_Collector::move(movement m) {
 	}
 }
 
-//void Robot_Collector::scan(int N) {
-//	return;
-//}
 void Robot_Collector::scan(std::vector<block> neighbourhood) {
 	this->map->put(this->my_x - 1, this->my_y, neighbourhood[0]);
 	this->map->put(this->my_x, this->my_y + 1, neighbourhood[1]);
@@ -639,4 +617,3 @@ bool Robot_Sapper::demine() {
 std::pair<int, int> Robot_Sapper::get_coord_on_his_own_map() {
 	return std::pair<int, int> { this->my_x, this->my_y };
 }
-
