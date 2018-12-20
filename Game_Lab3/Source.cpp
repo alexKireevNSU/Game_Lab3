@@ -81,8 +81,8 @@ public:
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
-		//cout << da.right_border / 75 << ' ' << da.top_border / 75 << endl;
-		return robot_controller->render_map(5, 5);
+		cout << da.right_border / 75 << ' ' << da.top_border / 75 << endl;
+		return robot_controller->render_map(da.right_border / 75, da.top_border / 75);
 		//return hz;
 	}
 
@@ -181,7 +181,7 @@ int main(int argc, char** argv) {
 		throw Game_Exception("SDL_Init_error");
 	}
 
-	Window_Properties wp("LOL", 50, 50, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP);
+	Window_Properties wp("LOL", 50, 50, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
 	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
 
 	g.Create_Window(wp);

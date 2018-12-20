@@ -75,11 +75,12 @@ class Robot_Controller {
 			cout << "size: " << length << ' ' << width << endl;
 			cout << "shift: " << shift.first << ' ' << shift.second << endl;
 			cout << "rc_coords: " << rc_coords.first << ' ' << rc_coords.second << endl;
-			return result;
+			//return result;
 			for (int i = 0; i < length; ++i) {
 				for (int j = 0; j < width; ++j) {
 					int x = (render_length / 2 + 1) + i - rc_coords.first - shift.first;
 					int y = (render_width / 2 + 1) + j - rc_coords.second - shift.second;
+					
 					if (x < 0 || x > render_length || j < 0 || j > render_width) {
 						continue;
 					}
