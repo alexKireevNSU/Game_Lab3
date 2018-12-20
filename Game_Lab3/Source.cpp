@@ -125,25 +125,34 @@ public:
 
 	inline void controll_robot_collector(const Uint8* key_state) {
 		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
-			robot_controller->move_collector(movement::right);
+			if (!robot_controller->move_collector(movement::right)) {
+				return;
+			}
 			background->rect.x -= sprite_size;
 			if (robot_collector->flip != SDL_FLIP_NONE) {
 				robot_collector->flip = SDL_FLIP_NONE;
 			}
 		}
 		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
-			robot_controller->move_collector(movement::left);
+			if(!robot_controller->move_collector(movement::left)){
+				return;
+			}
+
 			background->rect.x += sprite_size;
 			if (robot_collector->flip != SDL_FLIP_HORIZONTAL) {
 				robot_collector->flip = SDL_FLIP_HORIZONTAL;
 			}
 		}
 		if (key_state[SDL_SCANCODE_UP] && !up) {
-			robot_controller->move_collector(movement::up);
+			if(!robot_controller->move_collector(movement::up)) {
+				return;
+			}
 			background->rect.y += sprite_size;
 		}
 		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
-			robot_controller->move_collector(movement::down);
+			if(!robot_controller->move_collector(movement::down)) {
+				return;
+			}
 			background->rect.y -= sprite_size;
 		}
 		if (key_state[SDL_SCANCODE_ESCAPE]) {
@@ -214,9 +223,11 @@ int main(int argc, char** argv) {
 	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	//FILE * mappp = fopen("map1.txt", "r");
 	Robot_Controller* robot_controller = new Robot_Controller();
-	robot_controller->main_map = new Main_map();
+	robot_controller->main_map = new Main_map("map1.txt");
 	robot_controller->create_RC();
-
+	robot_controller->main_map->create_robot_collector();
+	robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
+	//robot_controller->scan(1);
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller);
 
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);

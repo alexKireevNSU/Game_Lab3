@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Robot.h"
+#include <time.h>
 
 using namespace Robots;
 
@@ -23,28 +24,40 @@ Playground::Playground() {
 Playground::Playground(const char* path) {
 	FILE* fin = fopen(path, "r");
 	fscanf(fin, "%d %d", &this->length, &this->width);
+	std::cout << this->length << ' ' << this->width << std::endl;
 	this->map = new block*[this->length];
 
 	for (int i = 0; i < this->length; ++i) {
 		this->map[i] = new block[this->width];
 	}
-
+	char tmp;
+	fscanf(fin, "%c", &tmp);
+	//fscanf(fin, "%c", &tmp);
 	for (int i = 0; i < this->length; ++i) {
 		for (int j = 0; j < this->width; ++j) {
 			char buff;
 			fscanf(fin, "%c", &buff);
+			//std::cout << buff << std::endl;
 			block b = empty;
 			switch (buff) {
-				case ' ': { b = empty; break; }
-				case '#': { b = rock; break; }
-				case 'a': { b = apple; break; }
-				case 'b': { b = bomb; break; }
+			case ' ': { b = empty; break; }
+			case '#': { b = rock; break; }
+			case 'a': { b = apple; break; }
+			case 'b': { b = bomb; break; }
 			}
-			this->map[i][j] = b;
+			this->map[j][this->length - i - 1] = b;
 		}
+		fscanf(fin, "%c", &tmp);
 	}
+
+	//for (int i = 0; i < this->length; ++i) {
+	//	for (int j = 0; j < this->width / 2; ++j) {
+	//		blo
+	//	}
+	//}
 	fclose(fin);
 }
+
 Playground::Playground(Playground & pg){
 	this->length = pg.length;
 	this->width = pg.width;
@@ -264,6 +277,7 @@ std::vector<block> Main_map::get_robot_collector_neibourhood() {
 	neibourhood.push_back(this->map->get_data(this->robot_collector_x, robot_collector_y + 1));
 	neibourhood.push_back(this->map->get_data(this->robot_collector_x + 1, robot_collector_y));
 	neibourhood.push_back(this->map->get_data(this->robot_collector_x, robot_collector_y - 1));
+	neibourhood.push_back(this->map->get_data(this->robot_collector_x, robot_collector_y));
 	return neibourhood;
 }
 
@@ -318,12 +332,13 @@ void Main_map::move_robot_sapper(movement m) {
 }
 
 void Main_map::create_robot_collector() {
+	srand(time(NULL));
 	this->collector_exist = true;
 	int length = this->map->get_length();
 	int width = this->map->get_width();
 	while (true) {
-		int x = (rand() % (length - 1)) + 1;
-		int y = (rand() % (width - 1)) + 1;
+		int x = (rand() % (length));
+		int y = (rand() % (width));
 		block b = this->map->get_data(x, y);
 		if (b != bomb && b != rock) {
 			this->robot_collector_x = x;
@@ -521,6 +536,7 @@ void Robot_Collector::scan(std::vector<block> neighbourhood) {
 	this->map->put(this->my_x, this->my_y + 1, neighbourhood[1]);
 	this->map->put(this->my_x + 1, this->my_y, neighbourhood[2]);
 	this->map->put(this->my_x, this->my_y - 1, neighbourhood[3]);
+	this->map->put(this->my_x, this->my_y, neighbourhood[4]);
 	return;
 }
 

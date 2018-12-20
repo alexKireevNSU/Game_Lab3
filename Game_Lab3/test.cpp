@@ -41,7 +41,7 @@ class Robot_Controller {
 			main_map->create_robot_collector();
 		}
 
-		void move_collector(movement m) {
+		bool move_collector(movement m) {
 			//cout << endl << endl << "movement " << endl << endl;
 			//bool ss = RC->move(m);
 
@@ -52,21 +52,20 @@ class Robot_Controller {
 
 			if (RC->move(m) == true) {
 				//cout << "_________________________________scan_______________________________________" << endl;
-				//main_map->move_robot_collector(m);
-				//main_map->update_robot_collector_existence();
-				RC->scan(std::vector<block>(4, block::bomb));
+				main_map->move_robot_collector(m);
+				main_map->update_robot_collector_existence();
+				//RC->scan(std::vector<block>(4, block::bomb));
 				if (main_map->robot_collector_exist() == false) {
-					//cout << "jopda" << endl;
+					cout << "jopda" << endl;
 				}
 				else {
-					
-					//RC->scan(main_map->get_robot_collector_neibourhood());
+					RC->scan(main_map->get_robot_collector_neibourhood());
 				}
-				return;
+				return true;
 			}
 			else {
 				cout << "nothing" << endl;
-				return;
+				return false;
 			}
 		}
 
@@ -77,12 +76,12 @@ class Robot_Controller {
 			std::pair<int, int> rc_coords = this->RC->get_coord_on_his_own_map();
 			int length = rpg->get_length();
 			int width = rpg->get_width();
-			std::vector<std::vector<block>> result(render_length, std::vector<block>(render_width, block::rock));
+			std::vector<std::vector<block>> result(render_length, std::vector<block>(render_width, block::unknown));
 			//for (int i = 0; i < render_length; ++i) {
 			//	for (int j = 0; j < render_width; ++j) {
 			//		result[i][j] = block::bomb;
 			//	}
-			//}
+			//}e
 			//cout << "size: " << length << ' ' << width << endl;
 			//cout << "shift: " << shift.first << ' ' << shift.second << endl;
 			//cout << "rc_coords: " << rc_coords.first << ' ' << rc_coords.second << endl;
