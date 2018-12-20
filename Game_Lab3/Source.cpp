@@ -183,7 +183,7 @@ int main(int argc, char** argv) {
 		throw Game_Exception("SDL_Init_error");
 	}
 
-	Window_Properties wp("LOL", 0, 0, display_mode.w/2, display_mode.h/2, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
+	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
 	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
 
 	g.Create_Window(wp);
@@ -192,12 +192,12 @@ int main(int argc, char** argv) {
 	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * sprite_size, -512 * sprite_size, 1024 * sprite_size, 1024 * sprite_size), visible);
 
 	Drawing_Area da(
-		wp.w + sprite_size,
-		/*(wp.w % sprite_size) / 2*/0,
-		wp.h + sprite_size,
-		/*(wp.h % sprite_size) / 2*/0,
-		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size),
-		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size));
+		wp.w + sprite_size - (wp.w % sprite_size) / 2, // right
+		-(wp.w % sprite_size) / 2,						// left
+		wp.h + sprite_size - (wp.w % sprite_size) / 2,	// top
+		-(wp.h % sprite_size) / 2,						// bot
+		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2,
+		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2);
 
 	//std::vector<Sprite*> sprites;
 	/*int size = sprite_size;
