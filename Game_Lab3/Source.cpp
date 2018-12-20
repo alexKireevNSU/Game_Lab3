@@ -84,7 +84,7 @@ public:
 
 		controll_robot_collector(key_state);
 		cout << da.right_border / sprite_size << ' ' << da.top_border / sprite_size << endl;
-		return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, 5, 3);
+		return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size + 1);
 		//return hz;
 	}
 
