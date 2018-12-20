@@ -20,7 +20,8 @@ Playground::Playground() {
 		}
 	}
 }
-Playground::Playground(FILE* fin) {
+Playground::Playground(const char* path) {
+	FILE* fin = fopen(path, "r");
 	fscanf(fin, "%d %d", &this->length, &this->width);
 	this->map = new block*[this->length];
 
@@ -42,6 +43,7 @@ Playground::Playground(FILE* fin) {
 			this->map[i][j] = b;
 		}
 	}
+	fclose(fin);
 }
 Playground::Playground(Playground & pg){
 	this->length = pg.length;
@@ -226,8 +228,8 @@ Main_map::Main_map() {
 	this->robot_sapper_y = 0;
 }
 
-Main_map::Main_map(FILE* fin) {
-	this->map = new Playground(fin);
+Main_map::Main_map(const char* path) {
+	this->map = new Playground(path);
 	this->robot_collector_x = 0;
 	this->robot_collector_y = 0;
 	this->robot_sapper_x = 0;

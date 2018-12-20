@@ -11,7 +11,7 @@ namespace Robots {
 		int length, width;
 	public:
 		Playground();
-		Playground(FILE* fin);
+		Playground(const char* path);
 		Playground(Playground & pg);
 		void increase_map(movement m);
 		std::vector<std::vector<block>> get_renderer_map();
@@ -31,7 +31,7 @@ namespace Robots {
 		void update_map(int x, int y, block b);
 	public:
 		Main_map();
-		Main_map(FILE* fin);
+		Main_map(const char* path);
 		void move_robot_collector(movement m);
 		void move_robot_sapper(movement m);
 		//block get_robot_block();

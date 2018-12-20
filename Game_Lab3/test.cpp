@@ -78,16 +78,16 @@ class Robot_Controller {
 			//return result;
 			for (int i = 0; i < length; ++i) {
 				for (int j = 0; j < width; ++j) {
-					int x = (render_length / 2 + 1) + i - rc_coords.first - shift.first;
-					int y = (render_width / 2 + 1) + j - rc_coords.second - shift.second;
+					int x = (render_length / 2 ) + i - rc_coords.first - shift.first;
+					int y = (render_width / 2) + j - rc_coords.second - shift.second;
 					
 					if (x < 0 || x > render_length || j < 0 || j > render_width) {
 						continue;
 					}
 					else {
-						cout << "da" << endl;
+						//cout << "da" << endl;
 						result[x][y] = robot_map[i][j];
-						cout << "net" << endl;
+						//cout << "net" << endl;
 					}
 				}
 			}
