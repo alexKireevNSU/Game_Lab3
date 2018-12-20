@@ -59,7 +59,7 @@ class Robot_Controller {
 			}
 		}
 
-		std::vector<std::vector<block>> render_map(int render_length, int render_width) {
+		std::vector<std::vector<block>> render_map(int render_length, int render_width, int robot_screen_x, int robot_screen_y) {
 			Robot_Playground* rpg = this->RC->get_map();
 			std::vector<std::vector<block>> robot_map = rpg->get_renderer_map();
 			std::pair<int, int> shift = rpg->get_shift();
@@ -78,16 +78,14 @@ class Robot_Controller {
 			//return result;
 			for (int i = 0; i < length; ++i) {
 				for (int j = 0; j < width; ++j) {
-					int x = (render_length / 2 ) + i - rc_coords.first - shift.first;
-					int y = (render_width / 2) + j - rc_coords.second - shift.second;
+					int x = robot_screen_x + i - rc_coords.first - shift.first;
+					int y = robot_screen_y + j - rc_coords.second - shift.second;
 					
-					if (x < 0 || x > render_length || j < 0 || j > render_width) {
-						continue;
+					if ((x >= 0) && (x <= (render_length - 1)) && (y >= 0) && (y <= (render_width - 1))) {
+						result[x][y] = robot_map[i][j];
 					}
 					else {
-						//cout << "da" << endl;
-						result[x][y] = robot_map[i][j];
-						//cout << "net" << endl;
+						continue;
 					}
 				}
 			}
