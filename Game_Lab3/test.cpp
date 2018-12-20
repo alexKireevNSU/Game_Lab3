@@ -42,13 +42,24 @@ class Robot_Controller {
 		}
 
 		void move_collector(movement m) {
+			//cout << endl << endl << "movement " << endl << endl;
+			//bool ss = RC->move(m);
+
+			//RC->scan(std::vector<block>(4, block::bomb));
+			//return;
+			//if (ss == true) { cout << "truee" << endl; }
+			//else { cout << "false" << endl; }
+
 			if (RC->move(m) == true) {
+				//cout << "_________________________________scan_______________________________________" << endl;
 				//main_map->move_robot_collector(m);
 				//main_map->update_robot_collector_existence();
+				RC->scan(std::vector<block>(4, block::bomb));
 				if (main_map->robot_collector_exist() == false) {
 					//cout << "jopda" << endl;
 				}
 				else {
+					
 					//RC->scan(main_map->get_robot_collector_neibourhood());
 				}
 				return;
@@ -72,9 +83,9 @@ class Robot_Controller {
 			//		result[i][j] = block::bomb;
 			//	}
 			//}
-			cout << "size: " << length << ' ' << width << endl;
-			cout << "shift: " << shift.first << ' ' << shift.second << endl;
-			cout << "rc_coords: " << rc_coords.first << ' ' << rc_coords.second << endl;
+			//cout << "size: " << length << ' ' << width << endl;
+			//cout << "shift: " << shift.first << ' ' << shift.second << endl;
+			//cout << "rc_coords: " << rc_coords.first << ' ' << rc_coords.second << endl;
 			//return result;
 			for (int i = 0; i < length; ++i) {
 				for (int j = 0; j < width; ++j) {
@@ -87,6 +98,14 @@ class Robot_Controller {
 					else {
 						continue;
 					}
+				}
+			}
+
+			for (int i = 0; i < render_length; ++i) {
+				for (int j = 0; j < render_width / 2; ++j) {
+					block buff = result[i][j];
+					result[i][j] = result[i][render_width - j - 1];
+					result[i][render_width - j - 1] = buff;
 				}
 			}
 			return result;

@@ -76,8 +76,6 @@ void Playground::increase_map(movement m) {
 
 			for (int i = 0; i < this->length + 1; ++i) {
 				this->map[i] = new block[this->width];
-			}
-			for (int i = 0; i < this->length + 1; ++i) {
 				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = unknown;
 				}
@@ -89,13 +87,14 @@ void Playground::increase_map(movement m) {
 				}
 			}
 
+
 			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
 
 			++this->length;
-			return;
+			break;
 		}
 
 		case right: {
@@ -103,17 +102,17 @@ void Playground::increase_map(movement m) {
 
 			for (int i = 0; i < this->length + 1; ++i) {
 				this->map[i] = new block[this->width];
-			}
-			for (int i = 0; i < this->length + 1; ++i) {
 				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = unknown;
 				}
 			}
+
 			for (int i = 0; i < this->length; ++i) {
 				for (int j = 0; j < this->width; ++j) {
 					this->map[i][j] = prev[i][j];
 				}
 			}
+
 
 			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
@@ -121,16 +120,14 @@ void Playground::increase_map(movement m) {
 			delete[] prev;
 
 			++this->length;
-			return;
+			break;
 		}
-
-		case up: {
+	
+		case down: {
 			this->map = new block*[this->length];
 
 			for (int i = 0; i < this->length; ++i) {
 				this->map[i] = new block[this->width + 1];
-			}
-			for (int i = 0; i < this->length; ++i) {
 				for (int j = 0; j < this->width + 1; ++j) {
 					this->map[i][j] = unknown;
 				}
@@ -142,23 +139,21 @@ void Playground::increase_map(movement m) {
 				}
 			}
 
+
 			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
 
 			++this->width;
-			
-			return;
+			break;
 		}
 
-		case down: {
+		case up: {
 			this->map = new block*[this->length];
 
 			for (int i = 0; i < this->length; ++i) {
 				this->map[i] = new block[this->width + 1];
-			}
-			for (int i = 0; i < this->length; ++i) {
 				for (int j = 0; j < this->width + 1; ++j) {
 					this->map[i][j] = unknown;
 				}
@@ -169,16 +164,20 @@ void Playground::increase_map(movement m) {
 					this->map[i][j] = prev[i][j];
 				}
 			}
+
+
 			for (int i = 0; i < this->length; ++i) {
 				delete[] prev[i];
 			}
 			delete[] prev;
 
 			++this->width;
-			return;
+			break;
 		}
 	}
 
+
+	return;
 }
 
 block Playground::get_data(int pos_x, int pos_y) {
@@ -409,29 +408,36 @@ std::vector<std::vector<block>> Robot_Playground::get_renderer_map() {
 }
 
 bool Robot_Playground::robot_on_border(int robot_x, int robot_y) {
-	if (robot_x + shift_x == (this->map->get_length() - 1) || robot_x + shift_x == 0) {
+	//std::cout << "robot_x on map:" << robot_x + shift_x << std::endl;
+	//std::cout << "robot_y on map:" << robot_y + shift_y << std::endl;
+	//std::cout << "map_size:" << this->get_length() << ' ' << this->get_width() << std::endl;
+
+	if (((robot_x + shift_x) == (this->get_length() - 1)) || ((robot_x + shift_x) == 0)) {
 		return true;
 	}
-	if (robot_y + shift_y == (this->map->get_width() - 1) || robot_y + shift_y == 0) {
+	if (((robot_y + shift_y) == (this->get_width() - 1)) || ((robot_y + shift_y) == 0)) {
 		return true;
 	}
+	//std::cout << "not_on_border" << std::endl;
 	return false;
 }
 
 void Robot_Playground::increase_map(movement m) {
+	//std::cout << "increasing" << std::endl;
 	switch (m) {
 		case movement::left: {
 			++this->shift_x;
 			break;
 		}
-		case movement::up: {
+		case movement::down: {
 			++this->shift_y;
 			break;
 		}
 		default: {break; }
-
 	}
+
 	this->map->increase_map(m);
+	return;
 }
 
 //----------------------------------------------------------------------------
@@ -467,6 +473,7 @@ bool Robot_Collector::move(movement m) {
 			if (this->map->robot_on_border(this->my_x, this->my_y)) {
 				this->map->increase_map(m);
 			}
+			//std::cout << "true" << std::endl;
 			return true;
 		}
 		case left: {
@@ -504,7 +511,6 @@ bool Robot_Collector::move(movement m) {
 		}
 		default: { return false; }
 	}
-	return true;
 }
 
 //void Robot_Collector::scan(int N) {

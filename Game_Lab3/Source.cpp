@@ -83,8 +83,8 @@ public:
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
-		cout << da.right_border / sprite_size << ' ' << da.top_border / sprite_size << endl;
-		return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size + 1);
+		//cout << da.right_border / sprite_size << ' ' << da.top_border / sprite_size << endl;
+		return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size );
 		//return hz;
 	}
 
