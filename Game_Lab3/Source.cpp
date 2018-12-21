@@ -15,8 +15,6 @@ using namespace Game;
 using namespace std;
 using namespace Robots;
 
-const int sprite_size = 75;
-
 struct Drawing_Area {
 	int right_border;
 	int left_border;
@@ -203,8 +201,8 @@ int main(int argc, char** argv) {
 		-(wp.w % sprite_size) / 2,						// left
 		wp.h + sprite_size - (wp.w % sprite_size) / 2,	// top
 		-(wp.h % sprite_size) / 2,						// bot
-		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2,
-		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2);
+		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2, // center x
+		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2); // center y
 
 	//std::vector<Sprite*> sprites;
 	/*int size = sprite_size;
@@ -220,20 +218,20 @@ int main(int argc, char** argv) {
 	Sprite* rock = new Sprite("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	//FILE * mappp = fopen("map1.txt", "r");
+
 	Robot_Controller* robot_controller = new Robot_Controller();
-	robot_controller->main_map = new Main_map("map1.txt");
+		robot_controller->main_map = new Main_map("map1.txt");
 	robot_controller->create_RC();
 	robot_controller->main_map->create_robot_collector();
 	robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
 	//robot_controller->scan(2);
+
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller);
-
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
-
 	g.mainloop(main_controller);
 
 	delete main_controller;
-
+	delete robot_collector, apple, bomb, rock, unknown, robot_controller;
 
 	return 0;
 }

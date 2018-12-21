@@ -106,29 +106,29 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 		for (size_t y = 0; y < render_map[x].size(); ++y) {
 			if (render_map[x][y] == block::rock) {
 				SDL_Rect rect(rock->rect);
-				rect.x += 75 * x;
-				rect.y += 75 * y;
+				rect.x += sprite_size * x;
+				rect.y += sprite_size * y;
 				SDL_RenderCopyEx(renderer, rock->texture, NULL,
 					&rect, rock->angle, &rock->point, rock->flip);
 			}
 			if (render_map[x][y] == block::apple) {
 				SDL_Rect rect(apple->rect);
-				rect.x += 75 * x;
-				rect.y += 75 * y;
+				rect.x += sprite_size * x;
+				rect.y += sprite_size * y;
 				SDL_RenderCopyEx(renderer, apple->texture, NULL,
 					&rect, apple->angle, &apple->point, apple->flip);
 			}
 			if (render_map[x][y] == block::unknown) {
 				SDL_Rect rect(unknown->rect);
-				rect.x += 75 * x;
-				rect.y += 75 * y;
+				rect.x += sprite_size * x;
+				rect.y += sprite_size * y;
 				SDL_RenderCopyEx(renderer, unknown->texture, NULL,
 					&rect, unknown->angle, &unknown->point, unknown->flip);
 			}
 			if (render_map[x][y] == block::bomb) {
 				SDL_Rect rect(bomb->rect);
-				rect.x += 75 * x;
-				rect.y += 75 * y;
+				rect.x += sprite_size * x;
+				rect.y += sprite_size * y;
 				SDL_RenderCopyEx(renderer, bomb->texture, NULL,
 					&rect, bomb->angle, &bomb->point, bomb->flip);
 			}
