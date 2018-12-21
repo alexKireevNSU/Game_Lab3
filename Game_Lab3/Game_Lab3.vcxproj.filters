@@ -77,7 +77,7 @@
     <ClCompile Include="Main_map.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Text_Sprite.cpp">
+    <ClCompile Include="Context.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,6 +99,15 @@
     </ClInclude>
     <ClInclude Include="Text_Sprite.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2_ttf_2.0.9\include\SDL_ttf.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2_image\include\SDL_image.h">
+      <Filter>Заголовки SDL</Filter>
     </ClInclude>
     <ClInclude Include="..\SDL\SDL2\include\begin_code.h">
       <Filter>Заголовки SDL</Filter>
@@ -347,12 +356,6 @@
       <Filter>Заголовки SDL</Filter>
     </ClInclude>
     <ClInclude Include="..\SDL\SDL2\include\SDL_vulkan.h">
-      <Filter>Заголовки SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SDL\SDL2_image\include\SDL_image.h">
-      <Filter>Заголовки SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SDL\SDL2_ttf_2.0.9\include\SDL_ttf.h">
       <Filter>Заголовки SDL</Filter>
     </ClInclude>
   </ItemGroup>
