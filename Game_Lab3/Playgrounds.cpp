@@ -24,10 +24,10 @@ Playground::Playground() {
 Playground::Playground(const char* path) {
 	FILE* fin = fopen(path, "r");
 	fscanf(fin, "%d %d", &this->length, &this->width);
-	this->map = new block*[this->length];
+	this->map = new block*[this->width];
 
-	for (int i = 0; i < this->length; ++i) {
-		this->map[i] = new block[this->width];
+	for (int i = 0; i < this->width; ++i) {
+		this->map[i] = new block[this->length];
 	}
 	char tmp;
 	fscanf(fin, "%c", &tmp);
