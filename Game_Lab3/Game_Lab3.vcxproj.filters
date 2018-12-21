@@ -19,6 +19,12 @@
     <Filter Include="Заголовки SDL">
       <UniqueIdentifier>{8af93563-a715-4cca-afda-642aab4cd1a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LIB">
+      <UniqueIdentifier>{197e65ee-1aed-421a-a93c-df14a4347897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LIB\x86">
+      <UniqueIdentifier>{52fd40a2-907e-4bed-9acb-e1ded8f76222}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="libjpeg-9.dll">
@@ -386,5 +392,22 @@
     <Text Include="map1.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\SDL\SDL2_ttf_2.0.9\lib\SDL_ttf.lib">
+      <Filter>LIB\x86</Filter>
+    </Library>
+    <Library Include="..\SDL\SDL2_image\lib\x86\SDL2_image.lib">
+      <Filter>LIB\x86</Filter>
+    </Library>
+    <Library Include="..\SDL\SDL2\lib\x86\SDL2.lib">
+      <Filter>LIB\x86</Filter>
+    </Library>
+    <Library Include="..\SDL\SDL2\lib\x86\SDL2main.lib">
+      <Filter>LIB\x86</Filter>
+    </Library>
+    <Library Include="..\SDL\SDL2\lib\x86\SDL2test.lib">
+      <Filter>LIB\x86</Filter>
+    </Library>
   </ItemGroup>
 </Project>
