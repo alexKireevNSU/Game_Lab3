@@ -1,21 +1,39 @@
 #include "Robot.h"
 #include <iostream>
 #include <vector>
-#include "Game.h"
+#include "enums.h"
+#include "Main_map.h"
 
-using namespace Game;
 using namespace std;
 using namespace Robots;
 
 class Robot_Controller {
 	private:
 		bool check_move(movement m) {
-			vector<block> neibours = main_map->get_robot_collector_neibourhood();
+			Robot_Playground* rpg = this->RC->get_map();
+			std::pair<int, int> robot_coords = this->RC->get_coord_on_his_own_map();
+			//vector<block> neibours = main_map->get_robot_collector_neibourhood();
 			switch (m) {
-			case movement::left: return (neibours[0] != bomb && neibours[0] != rock);
-			case movement::up: return (neibours[1] != bomb && neibours[1] != rock);
-			case movement::right: return (neibours[2] != bomb && neibours[2] != rock);
-			case movement::down: return (neibours[3] != bomb && neibours[3] != rock);
+			case movement::left:{ 
+				std::cout << "check_left" << std::endl;
+				block b = rpg->get_data(robot_coords.first - 1, robot_coords.second);
+				return (b != bomb && b != rock); 
+			}
+			case movement::up: {
+				std::cout << "check_up" << std::endl;
+				block b = rpg->get_data(robot_coords.first, robot_coords.second + 1);
+				return (b != bomb && b != rock);
+			}
+			case movement::right: {
+				std::cout << "check_right" << std::endl;
+				block b = rpg->get_data(robot_coords.first + 1, robot_coords.second);
+				return (b != bomb && b != rock);
+			}
+			case movement::down: {
+				std::cout << "check_down" << std::endl;
+				block b = rpg->get_data(robot_coords.first, robot_coords.second - 1);
+				return (b != bomb && b != rock);
+			}
 			default: return false;
 			}
 		}
@@ -23,10 +41,22 @@ class Robot_Controller {
 		void DFS(int depth, int N, movement unmove) {
 			if (depth == N || depth < N) this->move_collector(unmove);
 
-			if (unmove != movement::left && check_move(movement::left)) DFS(depth + 1, N, movement::right);
-			if (unmove != movement::up && check_move(movement::up)) DFS(depth + 1, N, movement::down);
-			if (unmove != movement::right && check_move(movement::right)) DFS(depth + 1, N, movement::left);
-			if (unmove != movement::down && check_move(movement::down)) DFS(depth + 1, N, movement::up);
+			if (unmove != movement::left && check_move(movement::left)) {
+				this->move_collector(movement::left);
+				DFS(depth + 1, N, movement::right);
+			}
+			if (unmove != movement::up && check_move(movement::up)) {
+				this->move_collector(movement::up);
+				DFS(depth + 1, N, movement::down);
+			}
+			if (unmove != movement::right && check_move(movement::right)) {
+				this->move_collector(movement::right);
+				DFS(depth + 1, N, movement::left);
+			}
+			if (unmove != movement::down && check_move(movement::down)) {
+				this->move_collector(movement::down);
+				DFS(depth + 1, N, movement::up);
+			}
 
 			this->move_collector(unmove);
 		}
@@ -54,7 +84,7 @@ class Robot_Controller {
 				return true;
 			}
 			else {
-				cout << "nothing" << endl;
+				//cout << "nothing" << endl;
 				return false;
 			}
 		}
@@ -67,15 +97,7 @@ class Robot_Controller {
 			int length = rpg->get_length();
 			int width = rpg->get_width();
 			std::vector<std::vector<block>> result(render_length, std::vector<block>(render_width, block::unknown));
-			//for (int i = 0; i < render_length; ++i) {
-			//	for (int j = 0; j < render_width; ++j) {
-			//		result[i][j] = block::bomb;
-			//	}
-			//}e
-			//cout << "size: " << length << ' ' << width << endl;
-			//cout << "shift: " << shift.first << ' ' << shift.second << endl;
-			//cout << "rc_coords: " << rc_coords.first << ' ' << rc_coords.second << endl;
-			//return result;
+			
 			for (int i = 0; i < length; ++i) {
 				for (int j = 0; j < width; ++j) {
 					int x = robot_screen_x + i - rc_coords.first - shift.first;
@@ -100,24 +122,33 @@ class Robot_Controller {
 			return result;
 		}
 
-		void move_sapper(movement m) {
+		bool move_sapper(movement m) {
 			if (RS->move(m) == true) {
 				main_map->move_robot_sapper(m);
-				//main_map->update_robot_collector_existence();
-				//RC->scan(main_map->get_robot_collector_neibourhood());
-				return;
+				return true;
 			}
 			else {
-				cout << "nothing" << endl;
-				return;
+				return false;
 			}
 		}
 
 		void scan(int N){
-			if (check_move(movement::left)) DFS(1, N, movement::left);
-			if (check_move(movement::up)) DFS(1, N, movement::up);
-			if (check_move(movement::right)) DFS(1, N, movement::right);
-			if (check_move(movement::down)) DFS(1, N, movement::down);
+			if (check_move(movement::left)) { 
+				this->move_collector(movement::left); 
+				DFS(1, N, movement::right); 
+			}
+			if (check_move(movement::up)) {
+				this->move_collector(movement::up);
+				DFS(1, N, movement::down);
+			}
+			if (check_move(movement::right)) {
+				this->move_collector(movement::right);
+				DFS(1, N, movement::left);
+			}
+			if (check_move(movement::down)) {
+				this->move_collector(movement::down);
+				DFS(1, N, movement::up);
+			}
 			return;
 		}
 

@@ -225,7 +225,7 @@ int main(int argc, char** argv) {
 	robot_controller->create_RC();
 	robot_controller->main_map->create_robot_collector();
 	robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
-	//robot_controller->scan(1);
+	//robot_controller->scan(2);
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller);
 
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);

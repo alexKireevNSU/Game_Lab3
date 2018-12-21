@@ -29,12 +29,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main_map.cpp" />
+    <ClCompile Include="Playgrounds.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enums.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Main_map.h" />
+    <ClInclude Include="Playgrounds.h" />
     <ClInclude Include="Robot.h" />
   </ItemGroup>
   <ItemGroup>

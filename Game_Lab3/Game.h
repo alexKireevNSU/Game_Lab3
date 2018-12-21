@@ -5,10 +5,9 @@
 #include <iostream>
 #include <exception>
 #include <vector>
+#include "enums.h"
 
 namespace Game {
-
-	enum block { rock, empty, apple, bomb, unknown, rc};
 
 	class Game_Exception : public std::exception {
 		std::string whatStr;
