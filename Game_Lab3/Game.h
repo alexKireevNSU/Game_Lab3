@@ -5,6 +5,7 @@
 #include <iostream>
 #include <exception>
 #include <vector>
+#include <string>
 #include "enums.h"
 
 namespace Game {
@@ -42,12 +43,14 @@ namespace Game {
 
 		SDL_Texture* texture;
 
-		Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noexcept;
+		Sprite() {};
+		Sprite(SDL_Rect_ rect, Sprite_State sprite_state = visible) noexcept;
+		Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state = visible) noexcept;
 
 		void Hide();
 		void Show();
 
-		void Load_Texture(SDL_Renderer* renderer);
+		virtual void Load_Texture(SDL_Renderer* renderer);
 
 		virtual ~Sprite();
 	};

@@ -16,6 +16,9 @@
     <Filter Include="DLL">
       <UniqueIdentifier>{f7688573-4800-4bc4-89d0-4d6acfb011fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовки SDL">
+      <UniqueIdentifier>{8af93563-a715-4cca-afda-642aab4cd1a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="libjpeg-9.dll">
@@ -39,6 +42,21 @@
     <None Include="zlib1.dll">
       <Filter>DLL</Filter>
     </None>
+    <None Include="SDL_ttf.dll">
+      <Filter>DLL</Filter>
+    </None>
+    <None Include="libfreetype-6.dll">
+      <Filter>DLL</Filter>
+    </None>
+    <None Include="..\SDL\SDL2\include\SDL_config.h.cmake">
+      <Filter>Заголовки SDL</Filter>
+    </None>
+    <None Include="..\SDL\SDL2\include\SDL_config.h.in">
+      <Filter>Заголовки SDL</Filter>
+    </None>
+    <None Include="..\SDL\SDL2\include\SDL_config_macosx.h.orig">
+      <Filter>Заголовки SDL</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -59,10 +77,7 @@
     <ClCompile Include="Main_map.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Сontrollers.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Context.cpp">
+    <ClCompile Include="Text_Sprite.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -82,11 +97,263 @@
     <ClInclude Include="Main_map.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Controllers.h">
+    <ClInclude Include="Text_Sprite.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Context.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="..\SDL\SDL2\include\begin_code.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\close_code.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_assert.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_atomic.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_audio.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_bits.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_blendmode.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_clipboard.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_android.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_iphoneos.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_macosx.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_minimal.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_pandora.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_psp.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_windows.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_winrt.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_config_wiz.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_copying.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_cpuinfo.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_egl.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_endian.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_error.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_events.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_filesystem.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_gamecontroller.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_gesture.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_haptic.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_hints.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_joystick.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_keyboard.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_keycode.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_loadso.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_log.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_main.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_messagebox.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_mouse.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_mutex.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_name.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengl.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengl_glext.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengles.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengles2.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengles2_gl2.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengles2_gl2ext.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengles2_gl2platform.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_opengles2_khrplatform.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_pixels.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_platform.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_power.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_quit.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_rect.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_render.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_revision.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_rwops.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_scancode.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_sensor.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_shape.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_stdinc.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_surface.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_system.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_syswm.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_assert.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_common.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_compare.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_crc32.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_font.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_fuzzer.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_harness.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_images.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_log.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_md5.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_memory.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_test_random.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_thread.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_timer.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_touch.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_types.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_version.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_video.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2\include\SDL_vulkan.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2_image\include\SDL_image.h">
+      <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL\SDL2_ttf_2.0.9\include\SDL_ttf.h">
+      <Filter>Заголовки SDL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

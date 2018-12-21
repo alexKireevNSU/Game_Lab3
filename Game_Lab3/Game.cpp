@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Robot.h"
 #include <vector>
+#include <string>
 using namespace Game;
 //----------------------------------------------------------------------------
 //----------------------SDL_RECT_ methods-------------------------------------
@@ -17,7 +18,15 @@ SDL_Rect_::SDL_Rect_(int x, int y, int w, int h) {
 //----------------------Sprite methods----------------------------------------
 //----------------------------------------------------------------------------
 
-Sprite::Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noexcept {
+Game::Sprite::Sprite(SDL_Rect_ rect, Sprite_State sprite_state) noexcept {
+	this->rect = rect;
+	this->sprite_state = sprite_state;
+	point.x = rect.x / 2;
+	point.y = rect.y / 2;
+
+	flip = SDL_FLIP_NONE;
+}
+Game::Sprite::Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_statee) noexcept{
 	this->path = path;
 	this->rect = rect;
 	this->sprite_state = sprite_state;
@@ -26,26 +35,29 @@ Sprite::Sprite(const char* path, SDL_Rect_ rect, Sprite_State sprite_state) noex
 
 	flip = SDL_FLIP_NONE;
 }
-void Sprite::Hide() {
+
+void Game::Sprite::Hide() {
 	sprite_state = invisible;
 }
-void Sprite::Show() {
+void Game::Sprite::Show() {
 	sprite_state = visible;
 }
-void Sprite::Load_Texture(SDL_Renderer* renderer) {
-	texture = IMG_LoadTexture(renderer, path);
-
-
+void Game::Sprite::Load_Texture(SDL_Renderer* renderer) {
+	try {
+		texture = IMG_LoadTexture(renderer, path);
+	}
+	catch (...) {
+		throw Game_Exception(IMG_GetError());
+	}
 	if (texture == nullptr) {
 		throw Game_Exception(IMG_GetError());
 	}
 }
-Sprite::~Sprite()
+Game::Sprite::~Sprite()
 {
 	SDL_DestroyTexture(texture);
 	texture = nullptr;
 }
-
 //----------------------------------------------------------------------------
 //----------------------Window_Handler methods--------------------------------
 //----------------------------------------------------------------------------
@@ -204,4 +216,3 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 
 std::vector<std::vector<block>> Sprite_Controller::handle_sprites() { return std::vector<std::vector<block>>{}; }
 Sprite_Controller::~Sprite_Controller() {}
-

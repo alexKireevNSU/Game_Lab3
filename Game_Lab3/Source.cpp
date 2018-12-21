@@ -160,22 +160,6 @@ public:
 		up = key_state[SDL_SCANCODE_UP];
 		down = key_state[SDL_SCANCODE_DOWN];
 	}
-
-
-	//void check_drawing_area_out() {
-	//	if (robot_collector->rect.x + robot_collector->rect.w > da.right_border) {
-	//		robot_collector->rect.x = da.left_border;
-	//	}
-	//	if (robot_collector->rect.x < da.left_border) {
-	//		robot_collector->rect.x = da.right_border - robot_collector->rect.w;
-	//	}
-	//	if (robot_collector->rect.y + robot_collector->rect.h > da.top_border) {
-	//		robot_collector->rect.y = da.bot_border;
-	//	}
-	//	if (robot_collector->rect.y < da.bot_border) {
-	//		robot_collector->rect.y = da.top_border - robot_collector->rect.h;
-	//	}
-	//}
 };
 
 int main(int argc, char** argv) {
