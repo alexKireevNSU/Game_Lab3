@@ -48,9 +48,6 @@
     <None Include="zlib1.dll">
       <Filter>DLL</Filter>
     </None>
-    <None Include="SDL_ttf.dll">
-      <Filter>DLL</Filter>
-    </None>
     <None Include="libfreetype-6.dll">
       <Filter>DLL</Filter>
     </None>
@@ -108,9 +105,6 @@
     </ClInclude>
     <ClInclude Include="Context.h">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SDL\SDL2_ttf_2.0.9\include\SDL_ttf.h">
-      <Filter>Заголовки SDL</Filter>
     </ClInclude>
     <ClInclude Include="..\SDL\SDL2_image\include\SDL_image.h">
       <Filter>Заголовки SDL</Filter>
@@ -394,9 +388,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\SDL\SDL2_ttf_2.0.9\lib\SDL_ttf.lib">
-      <Filter>LIB\x86</Filter>
-    </Library>
     <Library Include="..\SDL\SDL2_image\lib\x86\SDL2_image.lib">
       <Filter>LIB\x86</Filter>
     </Library>
