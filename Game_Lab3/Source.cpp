@@ -69,14 +69,12 @@ class Main_Controller : public Game::Sprite_Controller {
 	};
 
 public:
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context) {
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Robot_Controller* robot_controller, Text_Sprite* scores) {
+	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores) {
 		this->robot_collector = robot_collector;
 		this->background = background;
 		this->da = da;
 		this->controller = controller;
 		this->context = context;
-		this->robot_controller = robot_controller;
 		this->scores = scores;
 	}
 
@@ -216,13 +214,13 @@ int main(int argc, char** argv) {
 
 	Text_Sprite* scores = new Text_Sprite("Hello", 20, SDL_Color_(0, 0, 0), SDL_Rect_(0, 0, 400, 200));
 
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller, scores);
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores);
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, scores);
 	g.mainloop(main_controller);
 
 	TTF_Quit();
 	delete main_controller;
-	delete robot_collector, apple, bomb, rock, unknown, robot_controller, scores;
+	delete robot_collector, apple, bomb, rock, unknown, controller, context, scores;
 
 	return 0;
 }
