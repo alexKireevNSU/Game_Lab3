@@ -193,13 +193,6 @@ int main(int argc, char** argv) {
 		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2, // center x
 		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2); // center y
 
-	//std::vector<Sprite*> sprites;
-	/*int size = sprite_size;
-	for (int i = da.bot_border; i < da.top_border; i += size) {
-		for (int j = da.left_border; j < da.right_border; j += size) {
-			sprites.push_back(new Sprite("jd.jpg", SDL_Rect_(j, i, size, size), visible));
-		}
-	}*/
 	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
 	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
