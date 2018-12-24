@@ -85,7 +85,11 @@ public:
 			cout << n << endl;
 		}
 
-		scores->Change_Text("Jopaopop");
+		if (key_state[SDL_SCANCODE_G]) {
+			this->controller->grab(this->context);
+		}
+
+		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
@@ -212,7 +216,7 @@ int main(int argc, char** argv) {
 
 	TTF_Init();
 
-	Text_Sprite* scores = new Text_Sprite("Hello", 20, SDL_Color_(0, 0, 0), SDL_Rect_(0, 0, 400, 200));
+	Text_Sprite* scores = new Text_Sprite("Hello", 100, SDL_Color_(0, 0, 0), SDL_Rect_(da.center_x, 0, 100, 100));
 
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores);
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, scores);
