@@ -86,6 +86,9 @@
     <ClCompile Include="Context.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Robot.h">
@@ -363,6 +366,9 @@
     </ClInclude>
     <ClInclude Include="..\SDL\SDL2\include\SDL_vulkan.h">
       <Filter>Заголовки SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

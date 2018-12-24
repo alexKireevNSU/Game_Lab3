@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Context.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main_map.cpp" />
     <ClCompile Include="Playgrounds.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="..\SDL\SDL2\include\SDL_vulkan.h" />
     <ClInclude Include="..\SDL\SDL2_image\include\SDL_image.h" />
     <ClInclude Include="..\SDL\SDL2_ttf_2.0.9\include\SDL_ttf.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Context.h" />

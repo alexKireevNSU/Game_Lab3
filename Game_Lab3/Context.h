@@ -9,11 +9,11 @@ using namespace std;
 using namespace Robots;
 
 class Context {
-private:
+public:
 	Main_map* map;
 	Robot_Collector* RC;
 	Robot_Sapper* RS;
-public:
 	Context(const char* path);
+	Context();
 	~Context();
 };

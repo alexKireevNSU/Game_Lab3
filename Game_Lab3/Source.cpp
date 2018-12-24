@@ -9,7 +9,7 @@
 
 #include "Game.h"
 #include "Robot.h"
-#include "test.cpp"
+#include "Controller.h"
 
 using namespace Game;
 using namespace std;
@@ -41,7 +41,8 @@ struct Drawing_Area {
 
 
 class Main_Controller : public Game::Sprite_Controller {
-	Robot_Controller* robot_controller = new Robot_Controller();
+	Controller* controller = new Manual_Controller();
+	Context* context;
 	Sprite* robot_collector;
 	Sprite* background;
 	Drawing_Area da;
@@ -64,11 +65,12 @@ class Main_Controller : public Game::Sprite_Controller {
 	};
 
 public:
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Robot_Controller* robot_controller) {
+	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context) {
 		this->robot_collector = robot_collector;
 		this->background = background;
 		this->da = da;
-		this->robot_controller = robot_controller;
+		this->controller = controller;
+		this->context = context;
 	}
 
 	std::vector<std::vector<block>> handle_sprites() {
@@ -81,7 +83,8 @@ public:
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
-		return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size );
+		return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
+		//return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size );
 	}
 
 	int get_only_digit(char ch) {
@@ -121,34 +124,29 @@ public:
 
 	inline void controll_robot_collector(const Uint8* key_state) {
 		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
-			if (!robot_controller->move_collector(movement::right)) {
-				return;
-			}
+			this->controller->move_collector(this->context, movement::right);
+			this->controller->scan(this->context);
 			background->rect.x -= sprite_size;
 			if (robot_collector->flip != SDL_FLIP_NONE) {
 				robot_collector->flip = SDL_FLIP_NONE;
 			}
 		}
 		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
-			if(!robot_controller->move_collector(movement::left)){
-				return;
-			}
-
+			this->controller->move_collector(this->context, movement::left);
+			this->controller->scan(this->context);
 			background->rect.x += sprite_size;
 			if (robot_collector->flip != SDL_FLIP_HORIZONTAL) {
 				robot_collector->flip = SDL_FLIP_HORIZONTAL;
 			}
 		}
 		if (key_state[SDL_SCANCODE_UP] && !up) {
-			if(!robot_controller->move_collector(movement::up)) {
-				return;
-			}
+			this->controller->move_collector(this->context, movement::up);
+			this->controller->scan(this->context);
 			background->rect.y += sprite_size;
 		}
 		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
-			if(!robot_controller->move_collector(movement::down)) {
-				return;
-			}
+			this->controller->move_collector(this->context, movement::down);
+			this->controller->scan(this->context);
 			background->rect.y -= sprite_size;
 		}
 		if (key_state[SDL_SCANCODE_ESCAPE]) {
@@ -203,19 +201,22 @@ int main(int argc, char** argv) {
 	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	//FILE * mappp = fopen("map1.txt", "r");
 
-	Robot_Controller* robot_controller = new Robot_Controller();
-		robot_controller->main_map = new Main_map("map1.txt");
-	robot_controller->create_RC();
-	robot_controller->main_map->create_robot_collector();
-	robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
+	//Robot_Controller* robot_controller = new Robot_Controller();
+	Controller* controller = new Manual_Controller();
+	Context* context = new Context("map1.txt");
+	controller->scan(context);
+	//robot_controller->main_map = new Main_map("map1.txt");
+	//robot_controller->create_RC();
+	//robot_controller->main_map->create_robot_collector();
+	//robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
 	//robot_controller->scan(2);
 
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller);
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context);
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
 	g.mainloop(main_controller);
 
 	delete main_controller;
-	delete robot_collector, apple, bomb, rock, unknown, robot_controller;
+	delete robot_collector, apple, bomb, rock, unknown, controller;
 
 	return 0;
 }

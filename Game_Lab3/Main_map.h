@@ -20,7 +20,7 @@ public:
 	bool robot_collector_exist();
 	bool robot_sapper_exist();
 
-	std::vector<block> get_robot_collector_neibourhood();
+	block get_robot_collector_block(int shift_x, int shift_y);
 	void create_robot_collector();
 	void create_robot_sapper(int x, int y);
 

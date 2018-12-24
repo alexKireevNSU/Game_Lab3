@@ -1,5 +1,6 @@
 #include "Main_map.h"
 #include <time.h>
+#include <iostream>
 
 //----------------------------------------------------------------------------
 //----------------------Main_map methods--------------------------------------
@@ -44,62 +45,29 @@ void Main_map::update_robot_sapper_existence(bool flag) {
 }
 
 
-std::vector<block> Main_map::get_robot_collector_neibourhood() {
-	std::vector<block> neibourhood = {};
-	neibourhood.push_back(this->map->get_data(this->robot_collector_x - 1, robot_collector_y));
-	neibourhood.push_back(this->map->get_data(this->robot_collector_x, robot_collector_y + 1));
-	neibourhood.push_back(this->map->get_data(this->robot_collector_x + 1, robot_collector_y));
-	neibourhood.push_back(this->map->get_data(this->robot_collector_x, robot_collector_y - 1));
-	neibourhood.push_back(this->map->get_data(this->robot_collector_x, robot_collector_y));
-	return neibourhood;
+block Main_map::get_robot_collector_block(int shift_x, int shift_y) {
+	block result = this->map->get_data(this->robot_collector_x + shift_x, this->robot_collector_y + shift_y);
+	return result;
 }
 
 void Main_map::move_robot_collector(movement m) {
 	switch (m) {
-	case up: {
-		++this->robot_collector_y;
-		return;
-	}
-	case down: {
-		--this->robot_collector_y;
-		return;
-	}
-	case right: {
-		++this->robot_collector_x;
-		return;
-	}
-	case left: {
-		--this->robot_collector_x;
-		return;
-	}
-	default: {
-		return;
-	}
+		case up: {		++this->robot_collector_y;	return;	}
+		case down: {	--this->robot_collector_y;	return;	}
+		case right: {	++this->robot_collector_x;	return;	}
+		case left: {	--this->robot_collector_x;	return;	}
+		default: {									return;	}
 	}
 	return;
 }
 
 void Main_map::move_robot_sapper(movement m) {
 	switch (m) {
-	case up: {
-		++this->robot_sapper_y;
-		return;
-	}
-	case down: {
-		--this->robot_sapper_y;
-		return;
-	}
-	case right: {
-		++this->robot_sapper_x;
-		return;
-	}
-	case left: {
-		--this->robot_sapper_x;
-		return;
-	}
-	default: {
-		return;
-	}
+		case up: {		++this->robot_sapper_y;	return;	}
+		case down: {	--this->robot_sapper_y;	return;	}
+		case right: {	++this->robot_sapper_x;	return;	}
+		case left: {	--this->robot_sapper_x; return;	}
+		default: {								return;	}
 	}
 	return;
 }
@@ -110,15 +78,17 @@ void Main_map::create_robot_collector() {
 	int length = this->map->get_length();
 	int width = this->map->get_width();
 	while (true) {
-		int x = (rand() % (length));
-		int y = (rand() % (width));
+		int x = (rand() % (width - 1)) + 1;
+		int y = (rand() % (length - 1)) + 1;
 		block b = this->map->get_data(x, y);
-		if (b != bomb && b != rock) {
+		if (b != block::bomb && b != block::rock) {
 			this->robot_collector_x = x;
 			this->robot_collector_y = y;
+			std::cout << x << ' ' << y << std::endl;
 			break;
 		}
 	}
+	return;
 }
 
 void Main_map::create_robot_sapper(int x, int y) {
