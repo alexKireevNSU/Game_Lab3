@@ -84,10 +84,11 @@ namespace Game {
 		Sprite* unknown;
 		Sprite* bomb;
 		Sprite* background;
+		Sprite* scores;
 	public:
 		Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags);
 		~Renderer_Handler();
-		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background);
+		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, Sprite* scores);
 		void Add_Sprites(Sprite* sprite);
 		void Update_Render(std::vector<std::vector<block>> render_map);
 	};
@@ -114,7 +115,7 @@ namespace Game {
 
 		void Create_Renderer(int driver_index, Uint32 renderer_flags);
 
-		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background) noexcept;
+		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, Sprite* scores) noexcept;
 
 		void Add_Sprite(Sprite* sprite);
 
