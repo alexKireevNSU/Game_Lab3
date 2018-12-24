@@ -147,6 +147,13 @@
     <None Include="SDL2_ttf.dll" />
     <None Include="zlib1.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\SDL\SDL2\lib\x86\SDL2.lib" />
+    <Library Include="..\SDL\SDL2\lib\x86\SDL2main.lib" />
+    <Library Include="..\SDL\SDL2\lib\x86\SDL2test.lib" />
+    <Library Include="..\SDL\SDL2_image\lib\x86\SDL2_image.lib" />
+    <Library Include="..\SDL\SDL2_ttf\lib\x86\SDL2_ttf.lib" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9b50a57d-ccf7-4923-84d8-8785270663a5}</ProjectGuid>
