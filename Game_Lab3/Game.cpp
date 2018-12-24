@@ -88,13 +88,14 @@ Renderer_Handler::~Renderer_Handler()
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
 }
-void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background) {
+void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, Sprite* scores) {
 	this->player = player;
 	this->apple = apple;
 	this->rock = rock;
 	this->unknown = unknown;
 	this->bomb = bomb;
 	this->background = background;
+	this->scores = scores;
 
 	this->player->Load_Texture(renderer);
 	this->apple->Load_Texture(renderer);
@@ -102,6 +103,7 @@ void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, 
 	this->unknown->Load_Texture(renderer);
 	this->bomb->Load_Texture(renderer);
 	this->background->Load_Texture(renderer);
+	this->scores->Load_Texture(renderer);
 
 }
 void Renderer_Handler::Add_Sprites(Sprite* sprite) {
@@ -150,7 +152,9 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 	if (player != nullptr)
 		SDL_RenderCopyEx(renderer, player->texture, NULL,
 			&player->rect, player->angle, &player->point, player->flip);
-
+	if(scores != nullptr)
+		SDL_RenderCopyEx(renderer, scores->texture, NULL,
+			&scores->rect, scores->angle, &scores->point, scores->flip);
 	SDL_RenderPresent(renderer);
 }
 
@@ -184,8 +188,8 @@ void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags) {
 	}
 	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags); //TODO
 }
-void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background) noexcept {
-	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background);
+void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, Sprite* scores) noexcept {
+	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background, scores);
 }
 void Game_Handler::Add_Sprite(Sprite* sprite) {
 	renderer_handler->Add_Sprites(sprite);
@@ -205,8 +209,8 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 
 			render_map = sprite_controller->handle_sprites();
 			//_sleep(1000);
+			renderer_handler->Update_Render(render_map);
 		}
-		renderer_handler->Update_Render(render_map);
 	}
 }
 

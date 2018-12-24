@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
 #include <exception>
@@ -9,6 +10,8 @@
 
 #include "Game.h"
 #include "Robot.h"
+#include "Text_Sprite.h"
+#include "test.cpp"
 #include "Controller.h"
 
 using namespace Game;
@@ -45,6 +48,7 @@ class Main_Controller : public Game::Sprite_Controller {
 	Context* context;
 	Sprite* robot_collector;
 	Sprite* background;
+	Text_Sprite* scores;
 	Drawing_Area da;
 	Uint8 right = 0;
 	Uint8 left = 0;
@@ -66,11 +70,14 @@ class Main_Controller : public Game::Sprite_Controller {
 
 public:
 	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context) {
+	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Robot_Controller* robot_controller, Text_Sprite* scores) {
 		this->robot_collector = robot_collector;
 		this->background = background;
 		this->da = da;
 		this->controller = controller;
 		this->context = context;
+		this->robot_controller = robot_controller;
+		this->scores = scores;
 	}
 
 	std::vector<std::vector<block>> handle_sprites() {
@@ -80,6 +87,7 @@ public:
 			cout << n << endl;
 		}
 
+		scores->Change_Text("Jopaopop");
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 
 		controll_robot_collector(key_state);
@@ -186,13 +194,6 @@ int main(int argc, char** argv) {
 		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2, // center x
 		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2); // center y
 
-	//std::vector<Sprite*> sprites;
-	/*int size = sprite_size;
-	for (int i = da.bot_border; i < da.top_border; i += size) {
-		for (int j = da.left_border; j < da.right_border; j += size) {
-			sprites.push_back(new Sprite("jd.jpg", SDL_Rect_(j, i, size, size), visible));
-		}
-	}*/
 	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
 	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
@@ -211,12 +212,17 @@ int main(int argc, char** argv) {
 	//robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
 	//robot_controller->scan(2);
 
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context);
-	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background);
+	TTF_Init();
+
+	Text_Sprite* scores = new Text_Sprite("Hello", 20, SDL_Color_(0, 0, 0), SDL_Rect_(0, 0, 400, 200));
+
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, robot_controller, scores);
+	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, scores);
 	g.mainloop(main_controller);
 
+	TTF_Quit();
 	delete main_controller;
-	delete robot_collector, apple, bomb, rock, unknown, controller;
+	delete robot_collector, apple, bomb, rock, unknown, robot_controller, scores;
 
 	return 0;
 }
