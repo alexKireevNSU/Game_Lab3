@@ -42,12 +42,6 @@
     <ClCompile Include="Context.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Text_Sprite.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Сontrollers.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Robot.h">
@@ -325,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="..\SDL\SDL2_ttf\include\SDL_ttf.h">
       <Filter>SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
