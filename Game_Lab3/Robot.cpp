@@ -53,6 +53,10 @@ void Robot_Collector::grab() {
 	return;
 }
 
+int Robot_Collector::get_apples() {
+	return this->apples;
+}
+
 Robot_Playground* Robot_Collector::get_map() {
 	return this->map;
 }

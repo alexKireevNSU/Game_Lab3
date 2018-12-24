@@ -24,6 +24,7 @@ namespace Robots {
 		void move(movement m);
 		void scan(std::vector<block> neighbourhood);
 		void grab();
+		int get_apples();
 		std::pair<int, int> get_coord_on_his_own_map();
 		Robot_Playground* get_map();
 		//virtual ~Robot_Collector();
