@@ -15,7 +15,7 @@ public:
 class Controller {
 public:
 	//virtual Controller() = 0;
-	virtual void move_collector(Context * context, movement m) = 0;
+	virtual bool move_collector(Context * context, movement m) = 0;
 	virtual void move_sapper(Context * context, movement m) = 0;
 	virtual void grab(Context * context) = 0;
 	virtual void scan(Context* context) = 0;
@@ -28,7 +28,7 @@ class Manual_Controller : public Controller {
 private:
 	Scaner* scaner;
 public:
-	void move_collector(Context * context, movement m);
+	bool move_collector(Context * context, movement m);
 	void move_sapper(Context * context, movement m);
 	void grab(Context * context);
 	void scan(Context* context);
@@ -41,7 +41,7 @@ class Scan_Controller : public Controller {
 private:
 	Scaner* scaner;
 public:
-	void move_collector(Context * context, movement m);
+	bool move_collector(Context * context, movement m);
 	void move_sapper(Context * context, movement m);
 	void grab(Context * context);
 	void scan(Context* context);
@@ -56,7 +56,7 @@ private:
 	void demine(Context * context);
 	void find_way(Context * context);
 public:
-	void move_collector(Context * context, movement m);
+	bool move_collector(Context * context, movement m);
 	void move_sapper(Context * context, movement m);
 	void grab(Context * context);
 	void scan(Context* context);

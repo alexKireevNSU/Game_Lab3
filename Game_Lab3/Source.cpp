@@ -134,7 +134,9 @@ public:
 
 	inline void controll_robot_collector(const Uint8* key_state) {
 		if (key_state[SDL_SCANCODE_RIGHT] && !right) {
-			this->controller->move_collector(this->context, movement::right);
+			if (this->controller->move_collector(this->context, movement::right) == false) {
+				return;
+			}
 			this->controller->scan(this->context);
 			background->rect.x -= sprite_size;
 			if (robot_collector->flip != SDL_FLIP_NONE) {
@@ -142,7 +144,9 @@ public:
 			}
 		}
 		else if (key_state[SDL_SCANCODE_LEFT] && !left) {
-			this->controller->move_collector(this->context, movement::left);
+			if (this->controller->move_collector(this->context, movement::left) == false) {
+				return;
+			}
 			this->controller->scan(this->context);
 			background->rect.x += sprite_size;
 			if (robot_collector->flip != SDL_FLIP_HORIZONTAL) {
@@ -150,12 +154,16 @@ public:
 			}
 		}
 		if (key_state[SDL_SCANCODE_UP] && !up) {
-			this->controller->move_collector(this->context, movement::up);
+			if (this->controller->move_collector(this->context, movement::up) == false) {
+				return;
+			}
 			this->controller->scan(this->context);
 			background->rect.y += sprite_size;
 		}
 		else if (key_state[SDL_SCANCODE_DOWN] && !down) {
-			this->controller->move_collector(this->context, movement::down);
+			if (this->controller->move_collector(this->context, movement::down) == false) {
+				return;
+			}
 			this->controller->scan(this->context);
 			background->rect.y -= sprite_size;
 		}

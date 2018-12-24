@@ -8,7 +8,7 @@
 //----------------------Manual_Controller methods-----------------------------
 //----------------------------------------------------------------------------
 
-void Manual_Controller::move_collector(Context* context, movement m) {
+bool Manual_Controller::move_collector(Context* context, movement m) {
 
 	//dadad
 	//context->RC->scan(context->map->get_robot_collector_block(0, 0);
@@ -16,7 +16,7 @@ void Manual_Controller::move_collector(Context* context, movement m) {
 	switch (m) {
 		case movement::up: {
 			if (context->map->get_robot_collector_block(0, 1) == block::rock) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -26,7 +26,7 @@ void Manual_Controller::move_collector(Context* context, movement m) {
 		}
 		case movement::right: {
 			if (context->map->get_robot_collector_block(1, 0) == block::rock) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -36,7 +36,7 @@ void Manual_Controller::move_collector(Context* context, movement m) {
 		}
 		case movement::down: {
 			if (context->map->get_robot_collector_block(0, -1) == block::rock) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -46,7 +46,7 @@ void Manual_Controller::move_collector(Context* context, movement m) {
 		}
 		case movement::left: {
 			if (context->map->get_robot_collector_block(-1, 0) == block::rock) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -54,12 +54,12 @@ void Manual_Controller::move_collector(Context* context, movement m) {
 				break;
 			}
 		}
-		default: {	return; }
+		default: {	return false; }
 	}
 
 	//this->scan(context);
 
-	return;
+	return true;
 }
 
 void Manual_Controller::move_sapper(Context * context, movement m) {
@@ -125,8 +125,8 @@ std::vector<std::vector<block>> Manual_Controller::get_render_map(Context * cont
 //----------------------Scan_Controller methods-------------------------------
 //----------------------------------------------------------------------------
 
-void Scan_Controller::move_collector(Context * context, movement m) {
-	return;
+bool Scan_Controller::move_collector(Context * context, movement m) {
+	return false;
 }
 
 void Scan_Controller::move_sapper(Context * context, movement m) {
@@ -197,12 +197,12 @@ void Auto_Controller::find_way(Context * context) {
 
 }
 
-void Auto_Controller::move_collector(Context * context, movement m) {
+bool Auto_Controller::move_collector(Context * context, movement m) {
 	switch (m) {
 		case movement::up: {
 			block b = context->map->get_robot_collector_block(0, 1);
 			if (b == block::rock || b == block::bomb) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -212,7 +212,7 @@ void Auto_Controller::move_collector(Context * context, movement m) {
 		case movement::right: {
 			block b = context->map->get_robot_collector_block(1, 0);
 			if (b == block::rock || b == block::bomb) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -222,7 +222,7 @@ void Auto_Controller::move_collector(Context * context, movement m) {
 		case movement::down: {
 			block b = context->map->get_robot_collector_block(0, -1);
 			if (b == block::rock || b == block::bomb) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
@@ -232,16 +232,16 @@ void Auto_Controller::move_collector(Context * context, movement m) {
 		case movement::left: {
 			block b = context->map->get_robot_collector_block(-1, 0);
 			if (b == block::rock || b == block::bomb) {
-				return;
+				return false;
 			}
 			else {
 				context->RC->move(m);
 				context->map->move_robot_collector(m);
 			}
 		}
-		default: {	return; }
+		default: {	return false; }
 	}
-	return;
+	return true;
 }
 
 void Auto_Controller::move_sapper(Context * context, movement m) {
