@@ -205,8 +205,8 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 
 			render_map = sprite_controller->handle_sprites();
 			//_sleep(1000);
+			renderer_handler->Update_Render(render_map);
 		}
-		renderer_handler->Update_Render(render_map);
 	}
 }
 
