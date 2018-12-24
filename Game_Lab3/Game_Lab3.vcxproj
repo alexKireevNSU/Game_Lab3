@@ -28,7 +28,6 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="Text_Sprite.cpp" />
-    <ClCompile Include="Сontrollers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SDL\SDL2\include\begin_code.h" />
