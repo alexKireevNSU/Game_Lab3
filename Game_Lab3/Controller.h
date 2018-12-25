@@ -40,6 +40,7 @@ public:
 class Scan_Controller : public Controller {
 private:
 	Scaner* scaner;
+	bool check_move(Context* context, movement m);
 public:
 	bool move_collector(Context * context, movement m);
 	void move_sapper(Context * context, movement m);

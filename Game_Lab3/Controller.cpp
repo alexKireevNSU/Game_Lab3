@@ -122,8 +122,61 @@ std::vector<std::vector<block>> Manual_Controller::get_render_map(Context * cont
 //----------------------Scan_Controller methods-------------------------------
 //----------------------------------------------------------------------------
 
+bool Scan_Controller::check_move(Context* context, movement m) {
+	switch (m) {
+		case movement::left:{ 
+			//std::cout << "check_left" << std::endl;
+			block b = context->map->get_robot_collector_block(-1, 0);// ->get_data(robot_coords.first - 1, robot_coords.second);
+			return (b != bomb && b != rock); 
+		}
+		case movement::up: {
+			//std::cout << "check_up" << std::endl;
+			block b = context->map->get_robot_collector_block(0, 1);
+			return (b != bomb && b != rock);
+		}
+		case movement::right: {
+			//std::cout << "check_right" << std::endl;
+			block b = context->map->get_robot_collector_block(1, 0);
+			return (b != bomb && b != rock);
+		}
+		case movement::down: {
+			//std::cout << "check_down" << std::endl;
+			block b = context->map->get_robot_collector_block(0, -1);
+			return (b != bomb && b != rock);
+		}
+		default: {return false; }
+	}
+	return true;
+}
+
 bool Scan_Controller::move_collector(Context * context, movement m) {
-	return false;
+	switch (m) {
+		case movement::up: {
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
+		}
+		case movement::right: {
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
+		}
+		case movement::down: {
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
+		}
+		case movement::left: {
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
+		}
+		default: {	return false; }
+	}
+
+	context->map->update_robot_collector_existence();
+
+	return true;
 }
 
 void Scan_Controller::move_sapper(Context * context, movement m) {
@@ -135,7 +188,33 @@ void Scan_Controller::grab(Context * context) {
 }
 
 void Scan_Controller::scan(Context * context, int N) {
-	//auto_scan N func;
+	int counter = 0;
+	if (!this->check_move(context, movement::up) && !this->check_move(context, movement::right) && !this->check_move(context, movement::down) && !this->check_move(context, movement::left)) {
+		return;
+	}
+	while (counter < N) {
+		while (this->check_move(context, movement::up) && (counter < N)) {
+			this->move_collector(context, movement::up);
+			this->scan(context);
+			++counter;
+		}
+		while (this->check_move(context, movement::right) && (counter < N)) {
+			this->move_collector(context, movement::right);
+			this->scan(context);
+			++counter;
+		}
+		while (this->check_move(context, movement::down) && (counter < N)) {
+			this->move_collector(context, movement::down);
+			this->scan(context);
+			++counter;
+		}
+		while (this->check_move(context, movement::left) && (counter < N)) {
+			this->move_collector(context, movement::left);
+			this->scan(context);
+			++counter;
+		}
+	}
+	return;
 }
 
 void Scan_Controller::scan(Context* context) {
