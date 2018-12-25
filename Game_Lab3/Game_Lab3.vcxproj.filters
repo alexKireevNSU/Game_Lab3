@@ -352,6 +352,9 @@
     <Image Include="plan.jpg">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="death_screen.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="map1.txt">

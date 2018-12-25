@@ -156,7 +156,7 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 			&player->rect, player->angle, &player->point, player->flip);
 
 	for (unsigned int i = 0; i < other_sprites.size(); ++i) {
-		if (other_sprites[i] != nullptr) {
+		if (other_sprites[i] != nullptr && other_sprites[i]->sprite_state == visible) {
 			SDL_RenderCopyEx(renderer, other_sprites[i]->texture, NULL,
 				&other_sprites[i]->rect, other_sprites[i]->angle, &other_sprites[i]->point, other_sprites[i]->flip);
 		}

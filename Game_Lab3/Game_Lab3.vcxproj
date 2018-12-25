@@ -127,6 +127,7 @@
   <ItemGroup>
     <Image Include="apple.png" />
     <Image Include="bomb.png" />
+    <Image Include="death_screen.png" />
     <Image Include="janitor.PNG" />
     <Image Include="plan.jpg" />
     <Image Include="robot1.png" />

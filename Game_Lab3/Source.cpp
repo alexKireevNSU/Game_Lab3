@@ -48,6 +48,7 @@ class Main_Controller : public Game::Sprite_Controller {
 	Context* context;
 	Sprite* robot_collector;
 	Sprite* background;
+	Sprite* death_screen;
 	Text_Sprite* scores;
 	Text_Sprite* autoscan_depth;
 	Drawing_Area da;
@@ -70,7 +71,7 @@ class Main_Controller : public Game::Sprite_Controller {
 	};
 
 public:
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores, Text_Sprite* autoscan_depth) {
+	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores, Text_Sprite* autoscan_depth, Sprite* death_screen) {
 		this->robot_collector = robot_collector;
 		this->background = background;
 		this->da = da;
@@ -78,6 +79,7 @@ public:
 		this->context = context;
 		this->scores = scores;
 		this->autoscan_depth = autoscan_depth;
+		this->death_screen = death_screen;
 	}
 
 	std::vector<std::vector<block>> handle_sprites() {
@@ -110,9 +112,19 @@ public:
 
 		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
+		if (death_screen->sprite_state == visible) {
+			bool is_quit = false;
+			while (!is_quit) {
+				const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
+				if (t_key_state[SDL_SCANCODE_ESCAPE]) {
+					is_quit = true;
+					exit(0);
+				}
+			}
+		}
 		if (context->map->robot_collector_exist() == false) {
-			scores->Change_Text("TOBI PIZDA");
-			exit(0);
+			death_screen->Show();
+			//exit(0);
 		}
 
 		controll_robot_collector(key_state);
@@ -247,18 +259,20 @@ int main(int argc, char** argv) {
 
 	TTF_Init();
 
-	Text_Sprite* scores = new Text_Sprite("Hello", 24, SDL_Color_(0, 0, 0), SDL_Rect_(da.center_x, 0, 100, 100));
+	Text_Sprite* scores = new Text_Sprite("Hello", 24, SDL_Color_(100, 100, 0), SDL_Rect_(da.center_x, 0, 100, 100));
 	Text_Sprite* autoscan_depth = new Text_Sprite("", 24, SDL_Color_(0, 0, 0), SDL_Rect_(da.right_border - 400, 0, 200, 100));
 
-	vector<Sprite*> other_sprites = { scores, autoscan_depth };
+	Sprite* death_screen = new Sprite("death_screen.png", SDL_Rect_(da.left_border, da.bot_border, da.right_border, da.top_border), invisible);
 
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores, autoscan_depth);
+	vector<Sprite*> other_sprites = { scores, autoscan_depth, death_screen };
+
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores, autoscan_depth, death_screen);
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, other_sprites);
 	g.mainloop(main_controller);
 
 	TTF_Quit();
 	delete main_controller;
-	delete robot_collector, apple, bomb, rock, unknown, controller, context, scores;
+	delete robot_collector, apple, bomb, rock, unknown, controller, context, scores, autoscan_depth;
 
 	return 0;
 }
