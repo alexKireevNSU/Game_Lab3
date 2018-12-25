@@ -57,6 +57,7 @@ bool Manual_Controller::move_collector(Context* context, movement m) {
 		default: {	return false; }
 	}
 
+	context->map->update_robot_collector_existence();
 	//this->scan(context);
 
 	return true;

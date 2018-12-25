@@ -1,6 +1,5 @@
 #include "Main_map.h"
 #include <time.h>
-#include <iostream>
 
 //----------------------------------------------------------------------------
 //----------------------Main_map methods--------------------------------------
@@ -84,7 +83,6 @@ void Main_map::create_robot_collector() {
 		if (b != block::bomb && b != block::rock) {
 			this->robot_collector_x = x;
 			this->robot_collector_y = y;
-			std::cout << x << ' ' << y << std::endl;
 			break;
 		}
 	}

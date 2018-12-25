@@ -91,6 +91,10 @@ public:
 
 		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
+		if (context->map->robot_collector_exist() == false) {
+			scores->Change_Text("TOBI PIZDA");
+			exit(0);
+		}
 
 		controll_robot_collector(key_state);
 		return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
