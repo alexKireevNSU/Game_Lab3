@@ -96,7 +96,7 @@ public:
 		if (key_state[SDL_SCANCODE_S]) {
 			cout << "SCAN_CONTROLLER" << endl;
 			this->controller = new Scan_Controller;
-			
+
 			unsigned int n = get_in_number();
 			this->autoscan_depth->Change_Text(to_string(n).data());
 			this->controller->scan(this->context, n);
@@ -114,20 +114,25 @@ public:
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 		if (death_screen->sprite_state == visible) {
 			bool is_quit = false;
+			SDL_Event Event;
 			while (!is_quit) {
-				const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
-				if (t_key_state[SDL_SCANCODE_ESCAPE]) {
-					is_quit = true;
-					exit(0);
+				while (SDL_PollEvent(&Event)) {
+					SDL_PumpEvents();
+					const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
+					if (t_key_state[SDL_SCANCODE_ESCAPE]) {
+						is_quit = true;
+						exit(0);
+					}
 				}
 			}
 		}
+
+
+		controll_robot_collector(key_state);
 		if (context->map->robot_collector_exist() == false) {
 			death_screen->Show();
 			//exit(0);
 		}
-
-		controll_robot_collector(key_state);
 		return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
 		//return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size );
 	}
@@ -236,8 +241,8 @@ int main(int argc, char** argv) {
 		-(wp.w % sprite_size) / 2,						// left
 		wp.h + sprite_size - (wp.w % sprite_size) / 2,	// top
 		-(wp.h % sprite_size) / 2,						// bot
-		(wp.w + sprite_size)/2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2, // center x
-		(wp.h + sprite_size)/2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2); // center y
+		(wp.w + sprite_size) / 2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2, // center x
+		(wp.h + sprite_size) / 2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2); // center y
 
 	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
