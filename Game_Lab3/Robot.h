@@ -41,6 +41,7 @@ namespace Robots {
 		void update_collector_coords(movement m);
 		std::pair<int, int> get_coord_on_his_own_map();
 		block get_block(int shift_x, int shift_y);
+		Robot_Playground* get_map();
 		void demine();
 		//virtual ~Robot_Sapper();
 	};

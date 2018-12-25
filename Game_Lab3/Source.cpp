@@ -228,7 +228,7 @@ int main(int argc, char** argv) {
 		throw Game_Exception("SDL_Init_error");
 	}
 
-	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP);
+	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
 	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
 
 	g.Create_Window(wp);

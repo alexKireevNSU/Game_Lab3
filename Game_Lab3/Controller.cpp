@@ -3,6 +3,8 @@
 #include "Main_map.h"
 #include "Context.h"
 #include "Controller.h"
+#include <vector>
+#include <queue>
 
 //----------------------------------------------------------------------------
 //----------------------Manual_Controller methods-----------------------------
@@ -264,56 +266,215 @@ std::vector<std::vector<block>> Scan_Controller::get_render_map(Context * contex
 //----------------------Auto_Controller methods-------------------------------
 //----------------------------------------------------------------------------
 
-void Auto_Controller::demine(Context * context) {
 
+
+void Auto_Controller::demine(Context * context) {
+	context->RS->demine();
+	context->map->demine();
+	Robot_Playground* rpg = context->RC->get_map();
+	//std::pair<int, int> = get
+	//rpg->put()
 }
 
 
-void Auto_Controller::find_way(Context * context) {
 
+struct node {
+	int x, y;
+	movement unmove;
+	node* prev;
+	node(int x, int y, movement m = movement(4), node* prev = nullptr) : x(x), y(y), unmove(m), prev(prev) {	};
+};
+
+bool Auto_Controller::check_collector_move(std::vector<std::vector<block>> map, int x, int y, int length, int width) {
+	if (x < 0 || x > length - 2 || y < 0 || y > width - 2) {
+		return false;
+	}
+	if (map[x][y] == block::rock || map[x][y] == block::bomb || map[x][y] == block::unknown) {
+		return false;
+	}
+	return true;
+}
+
+bool Auto_Controller::check_sapper_move(std::vector<std::vector<block>> map, int x, int y, int length, int width) {
+	if (x < 0 || x > length - 1 || y < 0 || y > width - 1) {
+		return false;
+	}
+	if (map[x][y] == block::rock || map[x][y] == block::unknown) {
+		return false;
+	}
+	return true;
+}
+
+std::vector<movement> Auto_Controller::find_way_controller(Context * context) {
+	if (context->map->get_robot_collector_block(0, 0) == block::apple) {
+		return std::vector<movement> { };
+	}
+
+	Robot_Playground* rpg = context->RC->get_map();
+	std::pair<int, int> robot_coords = context->RC->get_coord_on_his_own_map();
+	std::vector<std::vector<block>> pg = rpg->get_renderer_map();
+	std::pair<int, int> shift = rpg->get_shift();
+	int length = rpg->get_length();
+	int width = rpg->get_width();
+
+	node * begin = new node(robot_coords.first + shift.first, robot_coords.second + shift.second);
+	node * result;
+	std::queue<node*>* q = new std::queue<node*>();
+	q->push(begin);
+	while (true) {
+		node * n = (q->front());
+		if (pg[n->x][n->y] == block::apple) {
+			result = n;
+			break;
+		}
+		q->pop();
+		if (n->unmove != movement::up && this->check_collector_move(pg, n->x, n->y + 1, length, width) == true) {
+			node * tmp = new node(n->x, n->y + 1, movement::up, n);
+			q->push(tmp);
+		}
+		if (n->unmove != movement::right && this->check_collector_move(pg, n->x + 1, n->y, length, width) == true) {
+			node * tmp = new node(n->x + 1, n->y, movement::right, n);
+			q->push(tmp);
+		}
+		if (n->unmove != movement::down && this->check_collector_move(pg, n->x, n->y - 1, length, width) == true) {
+			node * tmp = new node(n->x, n->y - 1, movement::down, n);
+			q->push(tmp);
+		}
+		if (n->unmove != movement::left && this->check_collector_move(pg, n->x - 1, n->y, length, width) == true) {
+			node * tmp = new node(n->x - 1, n->y, movement::left, n);
+			q->push(tmp);
+		}
+	}
+	std::vector<movement> way = {};
+	while (result->prev != nullptr) {
+		way.push_back(result->unmove);
+		result = result->prev;
+	}
+	std::cout << "________________________way___________________________" << std::endl;
+	for (int i = 0; i < way.size(); ++i) {
+		if (way[i] == movement::up) std::cout << "up" << endl;
+		if (way[i] == movement::right) std::cout << "right" << endl;
+		if (way[i] == movement::down) std::cout << "down" << endl;
+		if (way[i] == movement::left) std::cout << "left" << endl;
+	}
+	std::cout << "________________________way___________________________" << std::endl << std::endl;
+	//system("pause");
+	way.reserve(way.size());
+
+	delete q;
+	delete result;
+	//delete begin;
+	return way;
+}
+
+std::vector<movement> Auto_Controller::find_way_sapper(Context * context) {
+
+	Robot_Playground* rpg = context->RS->get_map();
+	std::pair<int, int> robot_coords = context->RS->get_coord_on_his_own_map();
+	std::vector<std::vector<block>> pg = rpg->get_renderer_map();
+	std::pair<int, int> shift = rpg->get_shift();
+	int length = rpg->get_length();
+	int width = rpg->get_width();
+
+	node * begin = new node(robot_coords.first + shift.first, robot_coords.second + shift.second);
+	node * result;
+	std::queue<node*>* q = new std::queue<node*>();
+	q->push(begin);
+	while (true) {
+		node * n = (q->front());
+		if (pg[n->x][n->y] == block::apple) {
+			result = n;
+			break;
+		}
+		q->pop();
+		if (this->check_collector_move(pg, n->x, n->y + 1, length, width) == true) {
+			node * tmp = new node(n->x, n->y + 1, movement::down, n);
+			q->push(tmp);
+		}
+		if (this->check_collector_move(pg, n->x + 1, n->y, length, width) == true) {
+			node * tmp = new node(n->x + 1, n->y, movement::left, n);
+			q->push(tmp);
+		}
+		if (this->check_collector_move(pg, n->x, n->y - 1, length, width) == true) {
+			node * tmp = new node(n->x, n->y - 1, movement::up, n);
+			q->push(tmp);
+		}
+		if (this->check_collector_move(pg, n->x - 1, n->y, length, width) == true) {
+			node * tmp = new node(n->x - 1, n->y, movement::right, n);
+			q->push(tmp);
+		}
+	}
+	std::vector<movement> way = {};
+	while (result->prev != nullptr) {
+		way.push_back(result->unmove);
+		result = result->prev;
+	}
+	way.reserve(way.size());
+	delete q;
+	delete result;
+	delete begin;
+	return way;
+}
+
+
+
+bool Auto_Controller::apples_on_map(Context * context) {
+	Robot_Playground* rpg = context->RC->get_map();
+	//std::pair<int, int> robot_coords = context->RC->get_coord_on_his_own_map();
+	std::vector<std::vector<block>> pg = rpg->get_renderer_map();
+	//std::pair<int, int> shift = rpg->get_shift();
+	int length = rpg->get_length();
+	int width = rpg->get_width();
+
+	for (int i = 0; i < length; ++i) {
+		for (int j = 0; j < width; ++j) {
+			if (pg[i][j] == block::apple) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Auto_Controller::bombs_on_map(Context * context) {
+	Robot_Playground* rpg = context->RS->get_map();
+	//std::pair<int, int> robot_coords = context->RC->get_coord_on_his_own_map();
+	std::vector<std::vector<block>> pg = rpg->get_renderer_map();
+	//std::pair<int, int> shift = rpg->get_shift();
+	int length = rpg->get_length();
+	int width = rpg->get_width();
+
+	for (int i = 0; i < length; ++i) {
+		for (int j = 0; j < width; ++j) {
+			if (pg[i][j] == block::bomb) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool Auto_Controller::move_collector(Context * context, movement m) {
 	switch (m) {
 		case movement::up: {
-			block b = context->map->get_robot_collector_block(0, 1);
-			if (b == block::rock || b == block::bomb) {
-				return false;
-			}
-			else {
-				context->RC->move(m);
-				context->map->move_robot_collector(m);
-			}
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
 		}
 		case movement::right: {
-			block b = context->map->get_robot_collector_block(1, 0);
-			if (b == block::rock || b == block::bomb) {
-				return false;
-			}
-			else {
-				context->RC->move(m);
-				context->map->move_robot_collector(m);
-			}
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
 		}
 		case movement::down: {
-			block b = context->map->get_robot_collector_block(0, -1);
-			if (b == block::rock || b == block::bomb) {
-				return false;
-			}
-			else {
-				context->RC->move(m);
-				context->map->move_robot_collector(m);
-			}
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
 		}
 		case movement::left: {
-			block b = context->map->get_robot_collector_block(-1, 0);
-			if (b == block::rock || b == block::bomb) {
-				return false;
-			}
-			else {
-				context->RC->move(m);
-				context->map->move_robot_collector(m);
-			}
+			context->RC->move(m);
+			context->map->move_robot_collector(m);
+			break;
 		}
 		default: {	return false; }
 	}
@@ -323,44 +484,20 @@ bool Auto_Controller::move_collector(Context * context, movement m) {
 void Auto_Controller::move_sapper(Context * context, movement m) {
 	switch (m) {
 		case movement::up: {
-			block b = context->RS->get_block(0, 1);
-			if (b == block::rock || b == block::unknown) {
-				return;
-			}
-			else {
-				context->RS->move(m);
-				context->map->move_robot_sapper(m);
-			}
+			context->RS->move(m);
+			context->map->move_robot_sapper(m);
 		}
 		case movement::right: {
-			block b = context->RS->get_block(1, 0);
-			if (b == block::rock || b == block::unknown) {
-				return;
-			}
-			else {
-				context->RS->move(m);
-				context->map->move_robot_sapper(m);
-			}
+			context->RS->move(m);
+			context->map->move_robot_sapper(m);
 		}
 		case movement::down: {
-			block b = context->RS->get_block(0, -1);
-			if (b == block::rock || b == block::unknown) {
-				return;
-			}
-			else {
-				context->RS->move(m);
-				context->map->move_robot_sapper(m);
-			}
+			context->RS->move(m);
+			context->map->move_robot_sapper(m);
 		}
 		case movement::left: {
-			block b = context->RS->get_block(-1, 0);
-			if (b == block::rock || b == block::unknown) {
-				return;
-			}
-			else {
-				context->RS->move(m);
-				context->map->move_robot_sapper(m);
-			}
+			context->RS->move(m);
+			context->map->move_robot_sapper(m);
 		}
 		default: {	return; }
 	}
@@ -386,6 +523,20 @@ void Auto_Controller::scan(Context * context) {
 }
 
 void Auto_Controller::auto_grab(Context * context) {
+	while (this->apples_on_map(context)) {
+		std::vector<movement> way = this->find_way_controller(context);
+		for (int i = 0; i < way.size(); ++i) {
+			this->move_collector(context, way[i]);
+		}
+		this->grab(context);
+	}
+	//while (this->bombs_on_map(context)) {
+	//	std::vector<movement> way = this->find_way_sapper(context);
+	//	for (int i = 0; i < way.size(); ++i) {
+	//		this->move_sapper(context, way[i]);
+	//	}
+	//	this->demine(context);
+	//}
 	return;
 }
 

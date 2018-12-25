@@ -115,3 +115,7 @@ block Robot_Sapper::get_block(int shift_x, int shift_y) {
 std::pair<int, int> Robot_Sapper::get_coord_on_his_own_map() {
 	return std::pair<int, int> { this->my_x, this->my_y };
 }
+
+Robot_Playground* Robot_Sapper::get_map() {
+	return this->map;
+}
