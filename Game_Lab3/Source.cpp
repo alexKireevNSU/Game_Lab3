@@ -89,6 +89,22 @@ public:
 			this->controller->grab(this->context);
 		}
 
+		if (key_state[SDL_SCANCODE_S]) {
+			cout << "SCAN_CONTROLLER" << endl;
+			this->controller = new Scan_Controller;
+			
+			unsigned int n = check_command();
+			this->controller->scan(this->context, n);
+			this->controller = new Manual_Controller;
+		}
+
+		if (key_state[SDL_SCANCODE_A]) {
+			cout << "AUTO_CONTROLLER" << endl;
+			this->controller = new Auto_Controller;
+			this->controller->auto_grab(this->context);
+			this->controller = new Manual_Controller;
+		}
+
 		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
 		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
 		if (context->map->robot_collector_exist() == false) {

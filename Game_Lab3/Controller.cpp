@@ -9,10 +9,6 @@
 //----------------------------------------------------------------------------
 
 bool Manual_Controller::move_collector(Context* context, movement m) {
-
-	//dadad
-	//context->RC->scan(context->map->get_robot_collector_block(0, 0);
-	//net net
 	switch (m) {
 		case movement::up: {
 			if (context->map->get_robot_collector_block(0, 1) == block::rock) {
@@ -306,8 +302,12 @@ void Auto_Controller::scan(Context * context, int N) {
 	return;
 }
 
-void Auto_Controller::auto_grab(Context * context) {
+void Auto_Controller::scan(Context * context) {
+	return;
+}
 
+void Auto_Controller::auto_grab(Context * context) {
+	return;
 }
 
 
