@@ -103,6 +103,7 @@ void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, 
 	this->unknown->Load_Texture(renderer);
 	this->bomb->Load_Texture(renderer);
 	this->background->Load_Texture(renderer);
+	
 	for (unsigned int i = 0; i < other_sprites.size(); ++i) {
 		this->other_sprites[i]->Load_Texture(renderer);
 	}
@@ -154,9 +155,9 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 	if (player != nullptr)
 		SDL_RenderCopyEx(renderer, player->texture, NULL,
 			&player->rect, player->angle, &player->point, player->flip);
-
+	
 	for (unsigned int i = 0; i < other_sprites.size(); ++i) {
-		if (other_sprites[i] != nullptr && other_sprites[i]->sprite_state == visible) {
+		if (other_sprites[i] != nullptr && (other_sprites[i]->sprite_state == visible)) {
 			SDL_RenderCopyEx(renderer, other_sprites[i]->texture, NULL,
 				&other_sprites[i]->rect, other_sprites[i]->angle, &other_sprites[i]->point, other_sprites[i]->flip);
 		}
@@ -214,9 +215,7 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 		{
 			SDL_PumpEvents();
 			if (event.type == SDL_QUIT) quit = true;
-
 			render_map = sprite_controller->handle_sprites();
-			//_sleep(1000);
 			renderer_handler->Update_Render(render_map);
 		}
 	}

@@ -228,7 +228,7 @@ int main(int argc, char** argv) {
 		throw Game_Exception("SDL_Init_error");
 	}
 
-	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
+	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP);
 	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
 
 	g.Create_Window(wp);
@@ -267,9 +267,14 @@ int main(int argc, char** argv) {
 	Text_Sprite* scores = new Text_Sprite("Hello", 24, SDL_Color_(100, 100, 0), SDL_Rect_(da.center_x, 0, 100, 100));
 	Text_Sprite* autoscan_depth = new Text_Sprite("", 24, SDL_Color_(0, 0, 0), SDL_Rect_(da.right_border - 400, 0, 200, 100));
 
+
+	Sprite* GUI = new Sprite("GUI.png", SDL_Rect_(0, 0, wp.w, wp.h));
+	GUI->Show();
+
 	Sprite* death_screen = new Sprite("death_screen.png", SDL_Rect_(da.left_border, da.bot_border, da.right_border, da.top_border), invisible);
 
-	vector<Sprite*> other_sprites = { scores, autoscan_depth, death_screen };
+
+	vector<Sprite*> other_sprites = { GUI, scores, autoscan_depth, death_screen};
 
 	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores, autoscan_depth, death_screen);
 	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, other_sprites);
@@ -277,7 +282,7 @@ int main(int argc, char** argv) {
 
 	TTF_Quit();
 	delete main_controller;
-	delete robot_collector, apple, bomb, rock, unknown, controller, context, scores, autoscan_depth;
+	delete robot_collector, apple, bomb, rock, unknown, controller, context, scores, autoscan_depth, GUI;
 
 	return 0;
 }
