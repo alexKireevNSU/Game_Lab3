@@ -49,6 +49,7 @@ class Main_Controller : public Game::Sprite_Controller {
 	Sprite* robot_collector;
 	Sprite* background;
 	Text_Sprite* scores;
+	Text_Sprite* autoscan_depth;
 	Drawing_Area da;
 	Uint8 right = 0;
 	Uint8 left = 0;
@@ -69,21 +70,22 @@ class Main_Controller : public Game::Sprite_Controller {
 	};
 
 public:
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores) {
+	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores, Text_Sprite* autoscan_depth) {
 		this->robot_collector = robot_collector;
 		this->background = background;
 		this->da = da;
 		this->controller = controller;
 		this->context = context;
 		this->scores = scores;
+		this->autoscan_depth = autoscan_depth;
 	}
 
 	std::vector<std::vector<block>> handle_sprites() {
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
-		if (key_state[SDL_SCANCODE_N]) {
-			unsigned int n = check_command(); // тут можно вытащить введённое число
-			cout << n << endl;
-		}
+		//if (key_state[SDL_SCANCODE_N]) {
+		//	unsigned int n = check_command(); // тут можно вытащить введённое число
+		//	cout << n << endl;
+		//}
 
 		if (key_state[SDL_SCANCODE_G]) {
 			this->controller->grab(this->context);
@@ -93,7 +95,8 @@ public:
 			cout << "SCAN_CONTROLLER" << endl;
 			this->controller = new Scan_Controller;
 			
-			unsigned int n = check_command();
+			unsigned int n = get_in_number();
+			this->autoscan_depth->Change_Text(to_string(n).data());
 			this->controller->scan(this->context, n);
 			this->controller = new Manual_Controller;
 		}
@@ -130,7 +133,7 @@ public:
 		return -1;
 	}
 
-	inline unsigned int check_command() {
+	inline unsigned int get_in_number() {
 		unsigned int n = 0;
 
 		bool is_return = false;
@@ -140,7 +143,7 @@ public:
 			while (SDL_PollEvent(&Event)) {
 				SDL_PumpEvents();
 				const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
-				if (t_key_state[SDL_SCANCODE_RETURN]) {
+				if (t_key_state[SDL_SCANCODE_RETURN] || t_key_state[SDL_SCANCODE_KP_ENTER]) {
 					is_return = true;
 					return n;
 				}
@@ -244,10 +247,13 @@ int main(int argc, char** argv) {
 
 	TTF_Init();
 
-	Text_Sprite* scores = new Text_Sprite("Hello", 100, SDL_Color_(0, 0, 0), SDL_Rect_(da.center_x, 0, 100, 100));
+	Text_Sprite* scores = new Text_Sprite("Hello", 24, SDL_Color_(0, 0, 0), SDL_Rect_(da.center_x, 0, 100, 100));
+	Text_Sprite* autoscan_depth = new Text_Sprite("", 24, SDL_Color_(0, 0, 0), SDL_Rect_(da.right_border - 400, 0, 200, 100));
 
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores);
-	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, scores);
+	vector<Sprite*> other_sprites = { scores, autoscan_depth };
+
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores, autoscan_depth);
+	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, other_sprites);
 	g.mainloop(main_controller);
 
 	TTF_Quit();

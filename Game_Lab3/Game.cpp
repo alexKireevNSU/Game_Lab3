@@ -88,14 +88,14 @@ Renderer_Handler::~Renderer_Handler()
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
 }
-void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, Sprite* scores) {
+void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) {
 	this->player = player;
 	this->apple = apple;
 	this->rock = rock;
 	this->unknown = unknown;
 	this->bomb = bomb;
 	this->background = background;
-	this->scores = scores;
+	this->other_sprites = other_sprites;
 
 	this->player->Load_Texture(renderer);
 	this->apple->Load_Texture(renderer);
@@ -103,7 +103,9 @@ void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, 
 	this->unknown->Load_Texture(renderer);
 	this->bomb->Load_Texture(renderer);
 	this->background->Load_Texture(renderer);
-	this->scores->Load_Texture(renderer);
+	for (unsigned int i = 0; i < other_sprites.size(); ++i) {
+		this->other_sprites[i]->Load_Texture(renderer);
+	}
 
 }
 void Renderer_Handler::Add_Sprites(Sprite* sprite) {
@@ -152,9 +154,15 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 	if (player != nullptr)
 		SDL_RenderCopyEx(renderer, player->texture, NULL,
 			&player->rect, player->angle, &player->point, player->flip);
-	if(scores != nullptr)
-		SDL_RenderCopyEx(renderer, scores->texture, NULL,
-			&scores->rect, scores->angle, &scores->point, scores->flip);
+
+	for (unsigned int i = 0; i < other_sprites.size(); ++i) {
+		if (other_sprites[i] != nullptr) {
+			SDL_RenderCopyEx(renderer, other_sprites[i]->texture, NULL,
+				&other_sprites[i]->rect, other_sprites[i]->angle, &other_sprites[i]->point, other_sprites[i]->flip);
+		}
+	}
+	
+		
 	SDL_RenderPresent(renderer);
 }
 
@@ -188,8 +196,8 @@ void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags) {
 	}
 	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags); //TODO
 }
-void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, Sprite* scores) noexcept {
-	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background, scores);
+void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept {
+	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background, other_sprites);
 }
 void Game_Handler::Add_Sprite(Sprite* sprite) {
 	renderer_handler->Add_Sprites(sprite);
