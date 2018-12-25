@@ -88,6 +88,21 @@ public:
 		//	unsigned int n = check_command(); // тут можно вытащить введённое число
 		//	cout << n << endl;
 		//}
+		if (death_screen->sprite_state == visible) {
+			if (key_state[SDL_SCANCODE_ESCAPE]) {
+				exit(0);
+			}
+			if (death_screen->rect.h < da.top_border) {
+				death_screen->rect.x -= da.right_border / 200;
+				death_screen->rect.y -= da.top_border / 200;
+				death_screen->rect.w += da.right_border / 100;
+				death_screen->rect.h += da.top_border / 100;
+			}
+			SDL_Event event;
+			event.type = SDL_KEYDOWN;
+			SDL_PushEvent(&event);
+			return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
+		}
 
 		if (key_state[SDL_SCANCODE_G]) {
 			this->controller->grab(this->context);
@@ -111,30 +126,13 @@ public:
 		}
 
 		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
-		//std::vector<std::vector<block>> hz(5, std::vector<block>(5, block::empty));
-		if (death_screen->sprite_state == visible) {
-			bool is_quit = false;
-			SDL_Event Event;
-			while (!is_quit) {
-				while (SDL_PollEvent(&Event)) {
-					SDL_PumpEvents();
-					const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
-					if (t_key_state[SDL_SCANCODE_ESCAPE]) {
-						is_quit = true;
-						exit(0);
-					}
-				}
-			}
-		}
 
 
 		controll_robot_collector(key_state);
 		if (context->map->robot_collector_exist() == false) {
 			death_screen->Show();
-			//exit(0);
 		}
 		return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
-		//return robot_controller->render_map(da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size );
 	}
 
 	int get_only_digit(char ch) {
@@ -271,7 +269,7 @@ int main(int argc, char** argv) {
 	Sprite* GUI = new Sprite("GUI.png", SDL_Rect_(0, 0, wp.w, wp.h));
 	GUI->Show();
 
-	Sprite* death_screen = new Sprite("death_screen.png", SDL_Rect_(da.left_border, da.bot_border, da.right_border, da.top_border), invisible);
+	Sprite* death_screen = new Sprite("death_screen.png", SDL_Rect_(da.center_x-1, da.center_y-1, 2, 2), invisible);
 
 
 	vector<Sprite*> other_sprites = { GUI, scores, autoscan_depth, death_screen};
