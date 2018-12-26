@@ -10,6 +10,8 @@
 
 namespace Game {
 
+
+
 	class Game_Exception : public std::exception {
 		std::string whatStr;
 	public:
@@ -21,6 +23,29 @@ namespace Game {
 		}
 
 		~Game_Exception() noexcept = default;
+	};
+
+	struct Drawing_Area {
+		int right_border;
+		int left_border;
+		int top_border;
+		int bot_border;
+		int center_x;
+		int center_y;
+		Drawing_Area(
+			int right_border,
+			int left_border,
+			int top_border,
+			int bot_border,
+			int center_x,
+			int center_y) :
+			right_border(right_border),
+			left_border(left_border),
+			top_border(top_border),
+			bot_border(bot_border),
+			center_x(center_x),
+			center_y(center_y) {}
+		Drawing_Area() {}
 	};
 
 	struct SDL_Rect_ : public SDL_Rect {
@@ -85,8 +110,10 @@ namespace Game {
 		Sprite* bomb;
 		Sprite* background;
 		std::vector<Sprite*> other_sprites;
+
+		Drawing_Area da;
 	public:
-		Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags);
+		Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags, Drawing_Area da);
 		~Renderer_Handler();
 		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites);
 		void Add_Sprites(Sprite* sprite);
@@ -113,7 +140,7 @@ namespace Game {
 
 		void Create_Window(Window_Properties window_properties);
 
-		void Create_Renderer(int driver_index, Uint32 renderer_flags);
+		void Create_Renderer(int driver_index, Uint32 renderer_flags, Drawing_Area da);
 
 		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept;
 

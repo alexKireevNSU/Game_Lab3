@@ -79,9 +79,10 @@ SDL_Window* Window_Handler::Get_Window() {
 //----------------------Renderer_Handler methods------------------------------
 //----------------------------------------------------------------------------
 
-Renderer_Handler::Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags) {
+Renderer_Handler::Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags, Drawing_Area da) {
 	renderer = SDL_CreateRenderer(window, driver_index, renderer_flags);
 	if (renderer == nullptr) throw Game_Exception("SDL_CreateRenderer error");
+	this->da = da;
 }
 Renderer_Handler::~Renderer_Handler()
 {
@@ -191,11 +192,11 @@ void Game_Handler::Create_Window(Window_Properties window_properties) {
 	this->window_properties = window_properties;
 	this->window_handler = new Window_Handler(display_mode, window_properties);
 }
-void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags) {
+void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags, Drawing_Area da) {
 	if (window_handler == nullptr) {
 		throw Game_Exception("Render_Handler_init error: no window_handler");
 	}
-	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags); //TODO
+	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags, da); //TODO
 }
 void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept {
 	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background, other_sprites);

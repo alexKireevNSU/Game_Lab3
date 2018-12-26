@@ -18,31 +18,6 @@ using namespace Game;
 using namespace std;
 using namespace Robots;
 
-struct Drawing_Area {
-	int right_border;
-	int left_border;
-	int top_border;
-	int bot_border;
-	int center_x;
-	int center_y;
-	Drawing_Area(
-		int right_border,
-		int left_border,
-		int top_border,
-		int bot_border,
-		int center_x,
-		int center_y) :
-		right_border(right_border),
-		left_border(left_border),
-		top_border(top_border),
-		bot_border(bot_border),
-		center_x(center_x),
-		center_y(center_y) {}
-	Drawing_Area() {}
-};
-
-
-
 class Main_Controller : public Game::Sprite_Controller {
 	Controller* controller = new Manual_Controller();
 	Context* context;
@@ -256,9 +231,6 @@ int main(int argc, char** argv) {
 	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
 
 	g.Create_Window(wp);
-	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * sprite_size, -512 * sprite_size, 1024 * sprite_size, 1024 * sprite_size), visible);
 
 	Drawing_Area da(
 		wp.w + sprite_size - (wp.w % sprite_size) / 2, // right
@@ -267,6 +239,11 @@ int main(int argc, char** argv) {
 		-(wp.h % sprite_size) / 2,						// bot
 		(wp.w + sprite_size) / 2 - (((wp.w + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2, // center x
 		(wp.h + sprite_size) / 2 - (((wp.h + sprite_size) / 2) % sprite_size) - (wp.w % sprite_size) / 2); // center y
+
+
+	g.Create_Renderer(-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC, da);
+
+	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * sprite_size, -512 * sprite_size, 1024 * sprite_size, 1024 * sprite_size), visible);
 
 	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
