@@ -89,10 +89,10 @@ void Main_map::create_robot_collector() {
 	return;
 }
 
-void Main_map::create_robot_sapper(int x, int y) {
+void Main_map::create_robot_sapper(int shift_x, int shift_y) {
 	this->sapper_exist = true;
-	this->robot_sapper_x = x;
-	this->robot_sapper_y = y;
+	this->robot_sapper_x = this->robot_collector_x + shift_x;
+	this->robot_sapper_y = this->robot_collector_y + shift_y;
 	return;
 }
 

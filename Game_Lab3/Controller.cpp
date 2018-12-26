@@ -57,7 +57,7 @@ void Manual_Controller::sapper_on(Context * context) {
 	context->RS = new Robot_Sapper(context->RC->get_map(), sapper_x, sapper_y, robot_coords.first, robot_coords.second);
 
 
-	context->map->create_robot_sapper(0, 0);
+	context->map->create_robot_sapper(sapper_x - robot_coords.first, sapper_y - robot_coords.second);
 }
 
 void Manual_Controller::sapper_off(Context * context) {
