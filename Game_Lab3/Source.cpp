@@ -82,27 +82,8 @@ public:
 		this->death_screen = death_screen;
 	}
 
-	std::vector<std::vector<block>> handle_sprites() {
+	void handle_sprites(Renderer_Handler* renderer_handler) {
 		const Uint8* key_state = SDL_GetKeyboardState(NULL);
-		//if (key_state[SDL_SCANCODE_N]) {
-		//	unsigned int n = check_command(); // тут можно вытащить введённое число
-		//	cout << n << endl;
-		//}
-		if (death_screen->sprite_state == visible) {
-			if (key_state[SDL_SCANCODE_ESCAPE]) {
-				exit(0);
-			}
-			if (death_screen->rect.h < da.top_border) {
-				death_screen->rect.x -= da.right_border / 200;
-				death_screen->rect.y -= da.top_border / 200;
-				death_screen->rect.w += da.right_border / 100;
-				death_screen->rect.h += da.top_border / 100;
-			}
-			SDL_Event event;
-			event.type = SDL_KEYDOWN;
-			SDL_PushEvent(&event);
-			return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
-		}
 
 		if (key_state[SDL_SCANCODE_G]) {
 			this->controller->grab(this->context);
@@ -114,14 +95,26 @@ public:
 
 			unsigned int n = get_in_number();
 			this->autoscan_depth->Change_Text(to_string(n).data());
-			this->controller->scan(this->context, n);
+			this->controller->scan(this->context, renderer_handler, n);
 			this->controller = new Manual_Controller;
 		}
 
 		if (key_state[SDL_SCANCODE_A]) {
 			cout << "AUTO_CONTROLLER" << endl;
-			this->controller = new Auto_Controller;
-			this->controller->auto_grab(this->context);
+			//this->controller = new Auto_Controller;
+			Auto_Controller* net = new Auto_Controller();
+			//while (net->apples_on_map(this->context)) {
+				//std::vector<movement> way = net->find_way_controller(this->context);
+				//for (int i = 0; i < way.size(); ++i) {
+				//	this->controller->move_collector(this->context, way[i]);
+				//	this->controller->grab(this->context);
+				//	renderer_handler->Update_Render(this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+				//	SDL_Delay(100);
+				//}
+
+			//}
+			
+			//this->controller->auto_grab(this->context);
 			this->controller = new Manual_Controller;
 		}
 
@@ -131,8 +124,33 @@ public:
 		controll_robot_collector(key_state);
 		if (context->map->robot_collector_exist() == false) {
 			death_screen->Show();
+
+			bool quit = false;
+			SDL_Event event;
+			while (!quit) {
+				while (SDL_PollEvent(&event))
+				{
+					const Uint8* t_key_state = SDL_GetKeyboardState(NULL);
+					SDL_PumpEvents();
+					if (t_key_state[SDL_SCANCODE_ESCAPE]) {
+						quit = true;
+						exit(0);
+					}
+
+					
+				}
+				if (death_screen->rect.h < da.top_border) {
+					death_screen->rect.x -= da.right_border / 200;
+					death_screen->rect.y -= da.top_border / 200;
+					death_screen->rect.w += da.right_border / 100;
+					death_screen->rect.h += da.top_border / 100;
+				}
+				renderer_handler->Update_Render(this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+
+			}
 		}
-		return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
+		renderer_handler->Update_Render(this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+		//return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
 	}
 
 	int get_only_digit(char ch) {

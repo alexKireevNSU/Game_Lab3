@@ -209,14 +209,13 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 	bool quit = false;
 	SDL_Event event;
 
-	std::vector<std::vector<block>> render_map;
+	//std::vector<std::vector<block>> render_map;
 	while (!quit) {
 		while (SDL_PollEvent(&event))
 		{
 			SDL_PumpEvents();
 			if (event.type == SDL_QUIT) quit = true;
-			render_map = sprite_controller->handle_sprites();
-			renderer_handler->Update_Render(render_map);
+			sprite_controller->handle_sprites(renderer_handler);
 		}
 	}
 }
@@ -225,5 +224,5 @@ void Game_Handler::mainloop(Sprite_Controller* sprite_controller) {
 //----------------------Sprite_Controller methods-----------------------------
 //----------------------------------------------------------------------------
 
-std::vector<std::vector<block>> Sprite_Controller::handle_sprites() { return std::vector<std::vector<block>>{}; }
+void Sprite_Controller::handle_sprites(Renderer_Handler*) { }
 Sprite_Controller::~Sprite_Controller() {}

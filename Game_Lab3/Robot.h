@@ -36,7 +36,7 @@ namespace Robots {
 		int my_x, my_y;
 		int collector_x, collector_y;
 	public:
-		Robot_Sapper(Robot_Playground & rpg, int my_x, int my_y, int collector_x, int collector_y);
+		Robot_Sapper(Robot_Playground * rpg, int my_x, int my_y, int collector_x, int collector_y);
 		void move(movement m);
 		void update_collector_coords(movement m);
 		std::pair<int, int> get_coord_on_his_own_map();

@@ -95,7 +95,7 @@ namespace Game {
 
 	class Sprite_Controller {
 	public:
-		virtual std::vector<std::vector<block>> handle_sprites();
+		virtual void handle_sprites(Renderer_Handler*);
 		virtual ~Sprite_Controller();
 	};
 
