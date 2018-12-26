@@ -137,6 +137,7 @@
     <Image Include="unknown.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="big_map.txt" />
     <Text Include="map1.txt" />
   </ItemGroup>
   <ItemGroup>

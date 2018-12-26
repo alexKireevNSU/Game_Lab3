@@ -366,6 +366,9 @@
     <Text Include="map1.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="big_map.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="libfreetype-6.dll">
