@@ -111,8 +111,9 @@ namespace Game {
 		Sprite* background;
 		std::vector<Sprite*> other_sprites;
 
-		Drawing_Area da;
+		
 	public:
+		Drawing_Area da;
 		Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags, Drawing_Area da);
 		~Renderer_Handler();
 		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites);
