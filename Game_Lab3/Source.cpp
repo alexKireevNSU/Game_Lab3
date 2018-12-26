@@ -93,6 +93,14 @@ public:
 			this->controller = new Manual_Controller;
 		}
 
+		if (key_state[SDL_SCANCODE_LCTRL] && key_state[SDL_SCANCODE_B]) {
+			this->controller->sapper_on(this->context);
+		}
+
+		if (key_state[SDL_SCANCODE_LALT] && key_state[SDL_SCANCODE_B]) {
+
+		}
+
 		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
 
 
