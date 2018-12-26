@@ -132,6 +132,7 @@
     <Image Include="janitor.PNG" />
     <Image Include="plan.jpg" />
     <Image Include="robot1.png" />
+    <Image Include="robot2.png" />
     <Image Include="rock.png" />
     <Image Include="unknown.png" />
   </ItemGroup>

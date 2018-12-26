@@ -358,6 +358,9 @@
     <Image Include="GUI.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="robot2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="map1.txt">
