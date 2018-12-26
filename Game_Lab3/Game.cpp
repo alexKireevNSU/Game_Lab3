@@ -89,8 +89,9 @@ Renderer_Handler::~Renderer_Handler()
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
 }
-void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) {
+void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* robot_sapper, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) {
 	this->player = player;
+	this->robot_sapper = robot_sapper;
 	this->apple = apple;
 	this->rock = rock;
 	this->unknown = unknown;
@@ -99,6 +100,7 @@ void Renderer_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, 
 	this->other_sprites = other_sprites;
 
 	this->player->Load_Texture(renderer);
+	this->robot_sapper->Load_Texture(renderer);
 	this->apple->Load_Texture(renderer);
 	this->rock->Load_Texture(renderer);
 	this->unknown->Load_Texture(renderer);
@@ -150,6 +152,13 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 				SDL_RenderCopyEx(renderer, bomb->texture, NULL,
 					&rect, bomb->angle, &bomb->point, bomb->flip);
 			}
+			if (render_map[x][y] == block::robot_sapper) {
+				SDL_Rect rect(robot_sapper->rect);
+				rect.x += sprite_size * x;
+				rect.y += sprite_size * y;
+				SDL_RenderCopyEx(renderer, robot_sapper->texture, NULL,
+					&rect, robot_sapper->angle, &robot_sapper->point, robot_sapper->flip);
+			}
 		}
 	}
 
@@ -198,8 +207,8 @@ void Game_Handler::Create_Renderer(int driver_index, Uint32 renderer_flags, Draw
 	}
 	renderer_handler = new Renderer_Handler(window_handler->Get_Window(), driver_index, renderer_flags, da); //TODO
 }
-void Game_Handler::Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept {
-	renderer_handler->Set_Sprites(player, apple, rock, unknown, bomb, background, other_sprites);
+void Game_Handler::Set_Sprites(Sprite* player, Sprite* robot_sapper, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept {
+	renderer_handler->Set_Sprites(player, robot_sapper, apple, rock, unknown, bomb, background, other_sprites);
 }
 void Game_Handler::Add_Sprite(Sprite* sprite) {
 	renderer_handler->Add_Sprites(sprite);

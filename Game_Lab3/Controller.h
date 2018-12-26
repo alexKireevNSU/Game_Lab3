@@ -14,7 +14,6 @@ public:
 
 class Controller {
 public:
-	//virtual Controller() = 0;
 	virtual void sapper_on(Context * context) = 0;
 	virtual void sapper_off(Context * context) = 0;
 	virtual bool move_collector(Context * context, movement m) = 0;

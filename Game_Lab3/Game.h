@@ -104,6 +104,7 @@ namespace Game {
 	class Renderer_Handler {
 		SDL_Renderer* renderer;
 		Sprite* player;
+		Sprite* robot_sapper;
 		Sprite* apple;
 		Sprite* rock;
 		Sprite* unknown;
@@ -116,7 +117,7 @@ namespace Game {
 		Drawing_Area da;
 		Renderer_Handler(SDL_Window* window, int driver_index, Uint32 renderer_flags, Drawing_Area da);
 		~Renderer_Handler();
-		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites);
+		void Set_Sprites(Sprite* player, Sprite* robot_sapper, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites);
 		void Add_Sprites(Sprite* sprite);
 		void Update_Render(std::vector<std::vector<block>> render_map);
 	};
@@ -143,7 +144,7 @@ namespace Game {
 
 		void Create_Renderer(int driver_index, Uint32 renderer_flags, Drawing_Area da);
 
-		void Set_Sprites(Sprite* player, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept;
+		void Set_Sprites(Sprite* player, Sprite* robot_sapper, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites) noexcept;
 
 		void Add_Sprite(Sprite* sprite);
 

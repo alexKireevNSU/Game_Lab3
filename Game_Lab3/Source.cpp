@@ -22,6 +22,7 @@ class Main_Controller : public Game::Sprite_Controller {
 	Controller* controller = new Manual_Controller();
 	Context* context;
 	Sprite* robot_collector;
+	Sprite* robot_sapper;
 	Sprite* background;
 	Sprite* death_screen;
 	Text_Sprite* scores;
@@ -46,8 +47,9 @@ class Main_Controller : public Game::Sprite_Controller {
 	};
 
 public:
-	Main_Controller(Sprite* robot_collector, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores, Text_Sprite* autoscan_depth, Sprite* death_screen) {
+	Main_Controller(Sprite* robot_collector, Sprite* robot_sapper, Sprite* background, Drawing_Area da, Controller* controller, Context* context, Text_Sprite* scores, Text_Sprite* autoscan_depth, Sprite* death_screen) {
 		this->robot_collector = robot_collector;
+		this->robot_sapper = robot_sapper;
 		this->background = background;
 		this->da = da;
 		this->controller = controller;
@@ -95,10 +97,12 @@ public:
 		}
 
 		if (key_state[SDL_SCANCODE_LCTRL] && key_state[SDL_SCANCODE_B]) {
+			this->robot_sapper->Show();
 			this->controller->sapper_on(this->context);
 		}
 
 		if (key_state[SDL_SCANCODE_LALT] && key_state[SDL_SCANCODE_B]) {
+			this->robot_sapper->Hide();
 			this->controller->sapper_off(this->context);
 		}
 
@@ -246,7 +250,7 @@ int main(int argc, char** argv) {
 
 	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * sprite_size, -512 * sprite_size, 1024 * sprite_size, 1024 * sprite_size), visible);
 
-	Sprite* robot_collector = new Sprite("robot2.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
+	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
 	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
@@ -275,11 +279,12 @@ int main(int argc, char** argv) {
 
 	Sprite* death_screen = new Sprite("death_screen.png", SDL_Rect_(da.center_x-1, da.center_y-1, 2, 2), invisible);
 
+	Sprite* robot_sapper = new Sprite("robot2.png", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 
 	vector<Sprite*> other_sprites = { GUI, scores, autoscan_depth, death_screen};
 
-	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, background, da, controller, context, scores, autoscan_depth, death_screen);
-	g.Set_Sprites(robot_collector, apple, rock, unknown, bomb, background, other_sprites);
+	Game::Sprite_Controller* main_controller = new Main_Controller(robot_collector, robot_sapper, background, da, controller, context, scores, autoscan_depth, death_screen);
+	g.Set_Sprites(robot_collector, robot_sapper, apple, rock, unknown, bomb, background, other_sprites);
 	g.mainloop(main_controller);
 
 	TTF_Quit();
