@@ -27,8 +27,8 @@ void Manual_Controller::sapper_on(Context * context) {
 		return;
 		//context->map->update_robot_sapper_existence(true);
 	}
-	Robot_Playground* rpg = context->RS->get_map();
-	std::pair<int, int> robot_coords = context->RS->get_coord_on_his_own_map();
+	Robot_Playground* rpg = context->RC->get_map();
+	std::pair<int, int> robot_coords = context->RC->get_coord_on_his_own_map();
 	std::vector<std::vector<block>> pg = rpg->get_renderer_map();
 	std::pair<int, int> shift = rpg->get_shift();
 	int length = rpg->get_length();
@@ -163,6 +163,10 @@ std::vector<std::vector<block>> Manual_Controller::get_render_map(Context * cont
 			}
 		}
 	}
+	if (context->map->robot_sapper_exist() == true) {
+		std::pair<int, int> rs_coords = context->RS->get_coord_on_his_own_map();
+	}
+
 
 	for (int i = 0; i < render_length; ++i) {
 		for (int j = 0; j < render_width / 2; ++j) {
@@ -257,26 +261,34 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 	if (!this->check_move(context, movement::up) && !this->check_move(context, movement::right) && !this->check_move(context, movement::down) && !this->check_move(context, movement::left)) {
 		return;
 	}
+	Drawing_Area da = renderer_handler->da;
 	while (counter < N) {
 		while (this->check_move(context, movement::up) && (counter < N)) {
 			this->move_collector(context, movement::up);
 			this->scan(context);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 			++counter;
 		}
 		while (this->check_move(context, movement::right) && (counter < N)) {
 			this->move_collector(context, movement::right);
 			this->scan(context);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 			++counter;
 		}
 		while (this->check_move(context, movement::down) && (counter < N)) {
 			this->move_collector(context, movement::down);
 			this->scan(context);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 			++counter;
 		}
 		while (this->check_move(context, movement::left) && (counter < N)) {
 			this->move_collector(context, movement::left);
 			this->scan(context);
-			//renderer_handler->Update_Render()
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 			++counter;
 		}
 	}
@@ -622,12 +634,17 @@ void Auto_Controller::scan(Context * context) {
 }
 
 void Auto_Controller::auto_grab(Context * context, Renderer_Handler* renderer_handler) {
+	Drawing_Area da = renderer_handler->da;
 	while (this->apples_on_map(context)) {
 		std::vector<movement> way = this->find_way_controller(context);
 		for (int i = 0; i < way.size(); ++i) {
 			this->move_collector(context, way[i]);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 		}
 		this->grab(context);
+		SDL_Delay(100);
+		renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 	}
 	//while (this->bombs_on_map(context)) {
 	//	std::vector<movement> way = this->find_way_sapper(context);

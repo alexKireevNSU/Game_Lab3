@@ -76,8 +76,9 @@ public:
 
 		if (key_state[SDL_SCANCODE_A]) {
 			cout << "AUTO_CONTROLLER" << endl;
-			//this->controller = new Auto_Controller;
-			Auto_Controller* net = new Auto_Controller();
+			this->controller = new Auto_Controller;
+			//Auto_Controller* net = new Auto_Controller();
+			this->controller->auto_grab(this->context, renderer_handler);
 			//while (net->apples_on_map(this->context)) {
 				//std::vector<movement> way = net->find_way_controller(this->context);
 				//for (int i = 0; i < way.size(); ++i) {
@@ -89,7 +90,7 @@ public:
 
 			//}
 			
-			//this->controller->auto_grab(this->context);
+			//this->controller->auto_grab(this->context, renderer_handler);
 			this->controller = new Manual_Controller;
 		}
 
@@ -98,7 +99,7 @@ public:
 		}
 
 		if (key_state[SDL_SCANCODE_LALT] && key_state[SDL_SCANCODE_B]) {
-
+			this->controller->sapper_off(this->context);
 		}
 
 		scores->Change_Text(to_string(this->context->RC->get_apples()).data());
