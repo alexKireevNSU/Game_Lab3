@@ -246,7 +246,7 @@ int main(int argc, char** argv) {
 
 	Sprite* background = new Sprite("background.png", SDL_Rect_(-512 * sprite_size, -512 * sprite_size, 1024 * sprite_size, 1024 * sprite_size), visible);
 
-	Sprite* robot_collector = new Sprite("robot1.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
+	Sprite* robot_collector = new Sprite("robot2.PNG", SDL_Rect_(da.center_x, da.center_y, sprite_size, sprite_size), visible);
 
 	Sprite* apple = new Sprite("apple.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
