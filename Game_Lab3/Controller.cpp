@@ -5,6 +5,7 @@
 #include "Controller.h"
 #include <vector>
 #include <queue>
+//#include <time.h>
 
 //----------------------------------------------------------------------------
 //----------------------Manual_Controller methods-----------------------------
@@ -13,7 +14,7 @@
 bool thereis_place_for_spawn_sapper(std::vector<std::vector<block>> pg, int length, int width, int rc_x, int rc_y) {
 	for (int i = 0; i < length; ++i) {
 		for (int j = 0; j < width; ++j) {
-			if (pg[i][j] != block::unknown && pg[i][j] != block::rock && i != rc_x && j != rc_y) {
+			if ((pg[i][j] != block::unknown) && (pg[i][j] != block::rock) && (pg[i][j] != block::bomb) && (i != rc_x) && (j != rc_y)) {
 				return true;
 			}
 		}
@@ -22,6 +23,7 @@ bool thereis_place_for_spawn_sapper(std::vector<std::vector<block>> pg, int leng
 }
 
 void Manual_Controller::sapper_on(Context * context) {
+	//srand(time(NULL));
 	if (context->RS != nullptr) {
 		std::cout << "You have one!" << std::endl;
 		return;
@@ -54,16 +56,20 @@ void Manual_Controller::sapper_on(Context * context) {
 	}
 	sapper_x -= shift.first;
 	sapper_y -= shift.second;
+	std::cout << "spawn sapper:" << sapper_x << ' ' << sapper_y << std::endl << "collector" << robot_coords.first << ' ' << robot_coords.second << std::endl;
+	std::cout << "shift:" << sapper_x - robot_coords.first << ' ' << sapper_y - robot_coords.second << std::endl << std::endl;
 	context->RS = new Robot_Sapper(context->RC->get_map(), sapper_x, sapper_y, robot_coords.first, robot_coords.second);
-
-
 	context->map->create_robot_sapper(sapper_x - robot_coords.first, sapper_y - robot_coords.second);
+	//context->map->update_robot_sapper_existence(true);
+	return;
 }
 
 void Manual_Controller::sapper_off(Context * context) {
 	delete context->RS;
 	context->RS = nullptr;
 	context->map->update_robot_sapper_existence(false);
+	std::cout << "death" << std::endl;
+	return;
 }
 
 bool Manual_Controller::move_collector(Context* context, movement m) {
@@ -164,13 +170,14 @@ std::vector<std::vector<block>> Manual_Controller::get_render_map(Context * cont
 			}
 		}
 	}
-	if (context->map->robot_sapper_exist() == true && context->RS == nullptr) {
+	if (context->map->robot_sapper_exist() == true && context->RS != nullptr) {
 		std::pair<int, int> rs_coords = context->RS->get_coord_on_his_own_map();
-		std::cout << "THEIR CORDS" << std::endl;
-		std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
-		std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
+		//std::cout << "THEIR CORDS" << std::endl;
+		//std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
+		//std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
+		//std::cout << "shift:" << rs_coords.first - rc_coords.first << ' ' << rs_coords.first-rc.;
 		int sapper_x = rs_coords.first - rc_coords.first + robot_screen_x;
-		int sapper_y = rs_coords.second - rs_coords.second + robot_screen_y;
+		int sapper_y = rs_coords.second - rc_coords.second + robot_screen_y;
 		if ((sapper_x >= 0) && (sapper_x <= (render_length - 1)) && (sapper_y >= 0) && (sapper_y <= (render_width - 1))) {
 			result[sapper_x][sapper_y] = block::robot_sapper;
 		}
@@ -335,13 +342,14 @@ std::vector<std::vector<block>> Scan_Controller::get_render_map(Context * contex
 		}
 	}
 
-	if (context->map->robot_sapper_exist() == true && context->RS == nullptr) {
+	if (context->map->robot_sapper_exist() == true && context->RS != nullptr) {
 		std::pair<int, int> rs_coords = context->RS->get_coord_on_his_own_map();
-		std::cout << "THEIR CORDS" << std::endl;
-		std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
-		std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
+		//std::cout << "THEIR CORDS" << std::endl;
+		//std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
+		//std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
+		//std::cout << "shift:" << rs_coords.first - rc_coords.first << ' ' << rs_coords.first-rc.;
 		int sapper_x = rs_coords.first - rc_coords.first + robot_screen_x;
-		int sapper_y = rs_coords.second - rs_coords.second + robot_screen_y;
+		int sapper_y = rs_coords.second - rc_coords.second + robot_screen_y;
 		if ((sapper_x >= 0) && (sapper_x <= (render_length - 1)) && (sapper_y >= 0) && (sapper_y <= (render_width - 1))) {
 			result[sapper_x][sapper_y] = block::robot_sapper;
 		}
@@ -377,7 +385,12 @@ void Auto_Controller::sapper_off(Context * context) {
 void Auto_Controller::demine(Context * context) {
 	context->RS->demine();
 	context->map->demine();
+	//std::pair<int, int> rc_coords = context->RC->get_coord_on_his_own_map();
+	std::pair<int, int> rs_coords = context->RS->get_coord_on_his_own_map();
 	Robot_Playground* rpg = context->RC->get_map();
+	
+	rpg->put(rs_coords.first, rs_coords.second, block::empty);
+	return;
 	//std::pair<int, int> = get
 	//rpg->put()
 }
@@ -424,13 +437,13 @@ std::vector<movement> Auto_Controller::find_way_controller(Context * context) {
 	int width = rpg->get_width();
 
 	node * begin = new node(robot_coords.first + shift.first, robot_coords.second + shift.second);
-	node * result;
+	node * result = nullptr;
 	std::queue<node*>* q = new std::queue<node*>();
 	q->push(begin);
-	while (true) {
+	while (!q->empty()) {
 		node * n = (q->front());
 		if (pg[n->x][n->y] == block::apple) {
-			result = n;
+			result = n;// new node(n->x, n->y, n->unmove, n->prev);
 			break;
 		}
 		q->pop();
@@ -450,9 +463,10 @@ std::vector<movement> Auto_Controller::find_way_controller(Context * context) {
 			node * tmp = new node(n->x - 1, n->y, movement::left, n);
 			q->push(tmp);
 		}
+		//delete n;
 	}
 	std::vector<movement> way = {};
-	while (result->prev != nullptr) {
+	while (result != nullptr && result->prev != nullptr) {
 		way.push_back(result->unmove);
 		result = result->prev;
 	}
@@ -489,12 +503,12 @@ std::vector<movement> Auto_Controller::find_way_sapper(Context * context) {
 	int width = rpg->get_width();
 
 	node * begin = new node(robot_coords.first + shift.first, robot_coords.second + shift.second);
-	node * result;
+	node * result = nullptr;
 	std::queue<node*>* q = new std::queue<node*>();
 	q->push(begin);
-	while (true) {
+	while (!q->empty()) {
 		node * n = (q->front());
-		if (pg[n->x][n->y] == block::apple) {
+		if (pg[n->x][n->y] == block::bomb) {
 			result = n;
 			break;
 		}
@@ -531,9 +545,10 @@ std::vector<movement> Auto_Controller::find_way_sapper(Context * context) {
 			node * tmp = new node(n->x - 1, n->y, movement::left, n);
 			q->push(tmp);
 		}
+		//delete n;
 	}
 	std::vector<movement> way = {};
-	while (result->prev != nullptr) {
+	while (result != nullptr && result->prev != nullptr) {
 		way.push_back(result->unmove);
 		result = result->prev;
 	}
@@ -668,15 +683,26 @@ void Auto_Controller::auto_grab(Context * context, Renderer_Handler* renderer_ha
 		SDL_Delay(100);
 		renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 	}
-	//while (this->bombs_on_map(context)) {
-	//	std::vector<movement> way = this->find_way_sapper(context);
-	//	for (int i = 0; i < way.size(); ++i) {
-	//		this->move_sapper(context, way[i]);
-	//	}
-	//	this->demine(context);
-	//		SDL_Delay(100);
-	//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-	//}
+	//std::cout << "auto demine" << std::endl;
+	//std::cout << (context->RS == nullptr) << std::endl;
+	while ((context->RS != nullptr) && (this->bombs_on_map(context))) {
+		std::vector<movement> way = this->find_way_sapper(context);
+		//for (int i = 0; i < way.size(); ++i) {
+		//	if (way[i] == movement::up) std::cout << "up" << endl;
+		//	if (way[i] == movement::right) std::cout << "right" << endl;
+		//	if (way[i] == movement::down) std::cout << "down" << endl;
+		//	if (way[i] == movement::left) std::cout << "left" << endl;
+		//}
+		for (int i = 0; i < way.size(); ++i) {
+			this->move_sapper(context, way[i]);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+
+		}
+		this->demine(context);
+			SDL_Delay(100);
+		renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+	}
 	return;
 }
 
@@ -704,13 +730,14 @@ std::vector<std::vector<block>> Auto_Controller::get_render_map(Context * contex
 		}
 	}
 
-	if (context->map->robot_sapper_exist() == true && context->RS == nullptr) {
+	if ((context->map->robot_sapper_exist() == true) && (context->RS != nullptr)) {
 		std::pair<int, int> rs_coords = context->RS->get_coord_on_his_own_map();
-		std::cout << "THEIR CORDS" << std::endl;
-		std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
-		std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
+		//std::cout << "THEIR CORDS" << std::endl;
+		//std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
+		//std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
+		//std::cout << "shift:" << rs_coords.first - rc_coords.first << ' ' << rs_coords.first-rc.;
 		int sapper_x = rs_coords.first - rc_coords.first + robot_screen_x;
-		int sapper_y = rs_coords.second - rs_coords.second + robot_screen_y;
+		int sapper_y = rs_coords.second - rc_coords.second + robot_screen_y;
 		if ((sapper_x >= 0) && (sapper_x <= (render_length - 1)) && (sapper_y >= 0) && (sapper_y <= (render_width - 1))) {
 			result[sapper_x][sapper_y] = block::robot_sapper;
 		}

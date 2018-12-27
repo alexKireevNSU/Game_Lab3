@@ -7,11 +7,11 @@
 #include <exception>
 #include <vector>
 #include <map>
+#include <time.h>
 
 #include "Game.h"
 #include "Robot.h"
 #include "Text_Sprite.h"
-#include "test.cpp"
 #include "Controller.h"
 
 using namespace Game;
@@ -97,12 +97,12 @@ public:
 		}
 
 		if (key_state[SDL_SCANCODE_LCTRL] && key_state[SDL_SCANCODE_B]) {
-			this->robot_sapper->Show();
+			//this->robot_sapper->Show();
 			this->controller->sapper_on(this->context);
 		}
 
 		if (key_state[SDL_SCANCODE_LALT] && key_state[SDL_SCANCODE_B]) {
-			this->robot_sapper->Hide();
+			//this->robot_sapper->Hide();
 			this->controller->sapper_off(this->context);
 		}
 
@@ -223,6 +223,7 @@ public:
 };
 
 int main(int argc, char** argv) {
+	srand(time(NULL));
 	Game_Handler g;
 
 	SDL_DisplayMode display_mode;
@@ -260,7 +261,7 @@ int main(int argc, char** argv) {
 
 	//Robot_Controller* robot_controller = new Robot_Controller();
 	Controller* controller = new Manual_Controller();
-	Context* context = new Context("big_map.txt");
+	Context* context = new Context("map1.txt");
 	controller->scan(context);
 	//robot_controller->main_map = new Main_map("map1.txt");
 	//robot_controller->create_RC();

@@ -1,5 +1,5 @@
 #include "Main_map.h"
-#include <time.h>
+//#include <time.h>
 
 //----------------------------------------------------------------------------
 //----------------------Main_map methods--------------------------------------
@@ -72,7 +72,7 @@ void Main_map::move_robot_sapper(movement m) {
 }
 
 void Main_map::create_robot_collector() {
-	srand(time(NULL));
+	//srand(time(NULL));
 	this->collector_exist = true;
 	int length = this->map->get_length();
 	int width = this->map->get_width();
