@@ -99,6 +99,12 @@ void Robot_Sapper::update_collector_coords(movement m) {
 	return;
 }
 
+void Robot_Sapper::update_map(Robot_Playground * rpg) {
+	delete this->map;
+	this->map = new Robot_Playground(*rpg);
+	return;
+}
+
 //Robot_Sapper::~Robot_Sapper() {
 //	
 //}

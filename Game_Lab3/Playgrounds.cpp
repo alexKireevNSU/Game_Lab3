@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Playgrounds.h"
 #include "enums.h"
-
+#include <iostream>
 
 //----------------------------------------------------------------------------
 //----------------------Playground methods------------------------------------
@@ -230,7 +230,7 @@ Robot_Playground::Robot_Playground() {
 }
 
 Robot_Playground::Robot_Playground(Robot_Playground & pg) {
-	this->map = pg.map;
+	this->map = new Playground(*pg.map);
 	this->shift_x = pg.shift_x;
 	this->shift_y = pg.shift_y;
 }
