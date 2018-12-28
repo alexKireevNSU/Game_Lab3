@@ -189,6 +189,26 @@ std::vector<std::vector<block>> Manual_Controller::get_render_map(Context * cont
 //----------------------Scan_Controller methods-------------------------------
 //----------------------------------------------------------------------------
 
+movement rotate_right(movement move) {
+	switch (move) {
+		case movement::up: {	return movement::right;	}
+		case movement::right: {	return movement::down;	}
+		case movement::down: {	return movement::left;	}
+		case movement::left: {	return movement::up;	}
+		default: {				return movement::up; }
+	}
+}
+
+movement rotate_left(movement move) {
+	switch (move) {
+	case movement::up: {	return movement::left;	}
+	case movement::left: {	return movement::down;	}
+	case movement::down: {	return movement::right;	}
+	case movement::right: {	return movement::up;	}
+	default: {				return movement::up; }
+	}
+}
+
 void Scan_Controller::sapper_on(Context * context) {
 	return;
 }
@@ -264,36 +284,116 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 		return;
 	}
 	Drawing_Area da = renderer_handler->da;
-	while (counter < N) {
-		while (this->check_move(context, movement::up) && (counter < N)) {
-			this->move_collector(context, movement::up);
-			this->scan(context);
-			SDL_Delay(100);
-			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-			++counter;
-		}
-		while (this->check_move(context, movement::right) && (counter < N)) {
-			this->move_collector(context, movement::right);
-			this->scan(context);
-			SDL_Delay(100);
-			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-			++counter;
-		}
-		while (this->check_move(context, movement::down) && (counter < N)) {
-			this->move_collector(context, movement::down);
-			this->scan(context);
-			SDL_Delay(100);
-			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-			++counter;
-		}
-		while (this->check_move(context, movement::left) && (counter < N)) {
-			this->move_collector(context, movement::left);
-			this->scan(context);
-			SDL_Delay(100);
-			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-			++counter;
-		}
+	movement def = movement::up;
+	if (!this->check_move(context, movement::up)) {
+		def = movement::left;
 	}
+	else if (!this->check_move(context, movement::left)) {
+		def = movement::down;
+	}
+	else if (!this->check_move(context, movement::down)) {
+		def = movement::right;
+	}
+	else if (!this->check_move(context, movement::right)) {
+		def = movement::up;
+	}
+	else {
+		while (counter < N && this->check_move(context, def)) {
+			this->move_collector(context, def);
+			this->scan(context);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+			++counter;
+		}
+		def = rotate_left(def);
+	}
+	
+
+	while (counter < N) {
+		if (!this->check_move(context, rotate_right(def))) {
+			if (!this->check_move(context, def)) {
+				if (!this->check_move(context, rotate_left(def))) {
+					def = rotate_left(def);
+					def = rotate_left(def);
+					this->move_collector(context, def);
+					this->scan(context);
+					SDL_Delay(100);
+					renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+					++counter;
+					continue;
+				}
+				else {
+					def = rotate_left(def);
+					this->move_collector(context, def);
+					this->scan(context);
+					SDL_Delay(100);
+					renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+					++counter;
+					continue;
+				}
+			}
+			else {
+				this->move_collector(context, def);
+				this->scan(context);
+				SDL_Delay(100);
+				renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+				++counter;
+				continue;
+			}
+		}
+		else {
+			def = rotate_right(def);
+			this->move_collector(context, def);
+			this->scan(context);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+			++counter;
+			continue;
+		}
+
+	}
+
+
+	/*	if (this->check_move(context, def)){
+			this->move_collector(context, def);
+			this->scan(context);
+			SDL_Delay(100);
+			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+			++counter;
+		}
+		else {
+			
+			}
+		}*/
+		//while (this->check_move(context, movement::up) && (counter < N)) {
+		//	this->move_collector(context, movement::up);
+		//	this->scan(context);
+		//	SDL_Delay(100);
+		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+		//	++counter;
+		//}
+		//while (this->check_move(context, movement::right) && (counter < N)) {
+		//	this->move_collector(context, movement::right);
+		//	this->scan(context);
+		//	SDL_Delay(100);
+		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+		//	++counter;
+		//}
+		//while (this->check_move(context, movement::down) && (counter < N)) {
+		//	this->move_collector(context, movement::down);
+		//	this->scan(context);
+		//	SDL_Delay(100);
+		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+		//	++counter;
+		//}
+		//while (this->check_move(context, movement::left) && (counter < N)) {
+		//	this->move_collector(context, movement::left);
+		//	this->scan(context);
+		//	SDL_Delay(100);
+		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
+		//	++counter;
+		//}
+	//}
 	return;
 }
 
