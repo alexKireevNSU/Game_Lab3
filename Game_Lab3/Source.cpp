@@ -74,6 +74,7 @@ public:
 			this->autoscan_depth->Change_Text(to_string(n).data());
 			this->controller->scan(this->context, renderer_handler, n);
 			this->controller = new Manual_Controller;
+			cout << "END OF SCAN CONTROLLER" << endl;
 		}
 
 		if (key_state[SDL_SCANCODE_A]) {
@@ -81,19 +82,8 @@ public:
 			this->controller = new Auto_Controller;
 			//Auto_Controller* net = new Auto_Controller();
 			this->controller->auto_grab(this->context, renderer_handler);
-			//while (net->apples_on_map(this->context)) {
-				//std::vector<movement> way = net->find_way_controller(this->context);
-				//for (int i = 0; i < way.size(); ++i) {
-				//	this->controller->move_collector(this->context, way[i]);
-				//	this->controller->grab(this->context);
-				//	renderer_handler->Update_Render(this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-				//	SDL_Delay(100);
-				//}
-
-			//}
-			
-			//this->controller->auto_grab(this->context, renderer_handler);
 			this->controller = new Manual_Controller;
+			cout << "END OF AUTO CONTOLLER" << endl;
 		}
 
 		if (key_state[SDL_SCANCODE_LCTRL] && key_state[SDL_SCANCODE_B]) {

@@ -5,7 +5,6 @@
 #include "Controller.h"
 #include <vector>
 #include <queue>
-//#include <time.h>
 
 //----------------------------------------------------------------------------
 //----------------------Manual_Controller methods-----------------------------
@@ -57,7 +56,6 @@ void Manual_Controller::sapper_on(Context * context) {
 	context->map->create_robot_sapper(sapper_x - robot_coords.first, sapper_y - robot_coords.second);
 	return;
 }
-
 void Manual_Controller::sapper_off(Context * context) {
 	delete context->RS;
 	context->RS = nullptr;
@@ -116,7 +114,6 @@ bool Manual_Controller::move_collector(Context* context, movement m) {
 
 	return true;
 }
-
 void Manual_Controller::move_sapper(Context * context, movement m) {
 	return;
 }
@@ -129,15 +126,12 @@ void Manual_Controller::grab(Context * context) {
 	}
 	return;
 }
-
 void Manual_Controller::scan(Context * context, Renderer_Handler* renderer_handler, int N) {
 	return;
 }
-
 void Manual_Controller::scan(Context* context) {
 	this->scaner->scanning(context->RC, context->map);
 }
-
 void Manual_Controller::auto_grab(Context * context, Renderer_Handler* renderer_handler) {
 	return;
 }
@@ -198,7 +192,6 @@ movement rotate_right(movement move) {
 		default: {				return movement::up; }
 	}
 }
-
 movement rotate_left(movement move) {
 	switch (move) {
 	case movement::up: {	return movement::left;	}
@@ -212,11 +205,9 @@ movement rotate_left(movement move) {
 void Scan_Controller::sapper_on(Context * context) {
 	return;
 }
-
 void Scan_Controller::sapper_off(Context * context) {
 	return;
 }
-
 bool Scan_Controller::check_move(Context* context, movement m) {
 	switch (m) {
 		case movement::left:{ 
@@ -239,7 +230,6 @@ bool Scan_Controller::check_move(Context* context, movement m) {
 	}
 	return true;
 }
-
 bool Scan_Controller::move_collector(Context * context, movement m) {
 	switch (m) {
 		case movement::up: {
@@ -269,15 +259,12 @@ bool Scan_Controller::move_collector(Context * context, movement m) {
 
 	return true;
 }
-
 void Scan_Controller::move_sapper(Context * context, movement m) {
 	return;
 }
-
 void Scan_Controller::grab(Context * context) {
 	return;
 }
-
 void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler, int N) {
 	int counter = 0;
 	if (!this->check_move(context, movement::up) && !this->check_move(context, movement::right) && !this->check_move(context, movement::down) && !this->check_move(context, movement::left)) {
@@ -285,6 +272,7 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 	}
 	Drawing_Area da = renderer_handler->da;
 	movement def = movement::up;
+
 	if (!this->check_move(context, movement::up)) {
 		def = movement::left;
 	}
@@ -301,7 +289,7 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 		while (counter < N && this->check_move(context, def)) {
 			this->move_collector(context, def);
 			this->scan(context);
-			SDL_Delay(100);
+			SDL_Delay(50);
 			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 			++counter;
 		}
@@ -317,7 +305,7 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 					def = rotate_left(def);
 					this->move_collector(context, def);
 					this->scan(context);
-					SDL_Delay(100);
+					SDL_Delay(50);
 					renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 					++counter;
 					continue;
@@ -326,7 +314,7 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 					def = rotate_left(def);
 					this->move_collector(context, def);
 					this->scan(context);
-					SDL_Delay(100);
+					SDL_Delay(50);
 					renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 					++counter;
 					continue;
@@ -335,7 +323,7 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 			else {
 				this->move_collector(context, def);
 				this->scan(context);
-				SDL_Delay(100);
+				SDL_Delay(50);
 				renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 				++counter;
 				continue;
@@ -345,62 +333,18 @@ void Scan_Controller::scan(Context * context, Renderer_Handler* renderer_handler
 			def = rotate_right(def);
 			this->move_collector(context, def);
 			this->scan(context);
-			SDL_Delay(100);
+			SDL_Delay(50);
 			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 			++counter;
 			continue;
 		}
 
 	}
-
-
-	/*	if (this->check_move(context, def)){
-			this->move_collector(context, def);
-			this->scan(context);
-			SDL_Delay(100);
-			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-			++counter;
-		}
-		else {
-			
-			}
-		}*/
-		//while (this->check_move(context, movement::up) && (counter < N)) {
-		//	this->move_collector(context, movement::up);
-		//	this->scan(context);
-		//	SDL_Delay(100);
-		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-		//	++counter;
-		//}
-		//while (this->check_move(context, movement::right) && (counter < N)) {
-		//	this->move_collector(context, movement::right);
-		//	this->scan(context);
-		//	SDL_Delay(100);
-		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-		//	++counter;
-		//}
-		//while (this->check_move(context, movement::down) && (counter < N)) {
-		//	this->move_collector(context, movement::down);
-		//	this->scan(context);
-		//	SDL_Delay(100);
-		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-		//	++counter;
-		//}
-		//while (this->check_move(context, movement::left) && (counter < N)) {
-		//	this->move_collector(context, movement::left);
-		//	this->scan(context);
-		//	SDL_Delay(100);
-		//	renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-		//	++counter;
-		//}
-	//}
 	return;
 }
-
 void Scan_Controller::scan(Context* context) {
 	this->scaner->scanning(context->RC, context->map);
 }
-
 void Scan_Controller::auto_grab(Context * context, Renderer_Handler* renderer_handler) {
 	return;
 }
@@ -454,15 +398,12 @@ std::vector<std::vector<block>> Scan_Controller::get_render_map(Context * contex
 //----------------------Auto_Controller methods-------------------------------
 //----------------------------------------------------------------------------
 
-
 void Auto_Controller::sapper_on(Context * context) {
 	return;
 }
-
 void Auto_Controller::sapper_off(Context * context) {
 	return;
 }
-
 void Auto_Controller::demine(Context * context) {
 	context->RS->demine();
 	context->map->demine();
@@ -473,14 +414,13 @@ void Auto_Controller::demine(Context * context) {
 	return;
 }
 
-
-
+typedef
 struct node {
 	int x, y;
 	movement unmove;
 	node* prev;
 	node(int x, int y, movement m = movement(5), node* prev = nullptr) : x(x), y(y), unmove(m), prev(prev) {	};
-};
+} node;
 
 bool Auto_Controller::check_collector_move(std::vector<std::vector<block>> map, int x, int y, int length, int width) {
 	if (x < 0 || x > (length - 1) || y < 0 || y > (width - 1)) {
@@ -491,7 +431,6 @@ bool Auto_Controller::check_collector_move(std::vector<std::vector<block>> map, 
 	}
 	return true;
 }
-
 bool Auto_Controller::check_sapper_move(std::vector<std::vector<block>> map, int x, int y, int length, int width) {
 	if (x < 0 || x > length - 1 || y < 0 || y > width - 1) {
 		return false;
@@ -514,7 +453,11 @@ std::vector<movement> Auto_Controller::find_way_controller(Context * context) {
 	int length = rpg->get_length();
 	int width = rpg->get_width();
 
+	std::vector<std::vector<bool>> check(length, std::vector<bool>(width, true));
+
 	node * begin = new node(robot_coords.first + shift.first, robot_coords.second + shift.second);
+	check[robot_coords.first + shift.first][robot_coords.second + shift.second] = false;
+
 	node * result = nullptr;
 	std::queue<node*>* q = new std::queue<node*>();
 	q->push(begin);
@@ -525,20 +468,24 @@ std::vector<movement> Auto_Controller::find_way_controller(Context * context) {
 			break;
 		}
 		q->pop();
-		if (n->unmove != movement::down && this->check_collector_move(pg, n->x, n->y + 1, length, width) == true) {
+		if (n->unmove != movement::down && this->check_collector_move(pg, n->x, n->y + 1, length, width) == true && check[n->x][n->y + 1] == true) {
 			node * tmp = new node(n->x, n->y + 1, movement::up, n);
+			check[n->x][n->y + 1] = false;
 			q->push(tmp);
 		}
-		if (n->unmove != movement::left && this->check_collector_move(pg, n->x + 1, n->y, length, width) == true) {
+		if (n->unmove != movement::left && this->check_collector_move(pg, n->x + 1, n->y, length, width) == true && check[n->x + 1][n->y] == true) {
 			node * tmp = new node(n->x + 1, n->y, movement::right, n);
+			check[n->x + 1][n->y] = false;
 			q->push(tmp);
 		}
-		if (n->unmove != movement::up && this->check_collector_move(pg, n->x, n->y - 1, length, width) == true) {
+		if (n->unmove != movement::up && this->check_collector_move(pg, n->x, n->y - 1, length, width) == true && check[n->x][n->y - 1] == true) {
 			node * tmp = new node(n->x, n->y - 1, movement::down, n);
+			check[n->x][n->y - 1] = false;
 			q->push(tmp);
 		}
-		if (n->unmove != movement::right && this->check_collector_move(pg, n->x - 1, n->y, length, width) == true) {
+		if (n->unmove != movement::right && this->check_collector_move(pg, n->x - 1, n->y, length, width) == true && check[n->x - 1][n->y] == true) {
 			node * tmp = new node(n->x - 1, n->y, movement::left, n);
+			check[n->x - 1][n->y] = false;
 			q->push(tmp);
 		}
 	}
@@ -557,8 +504,6 @@ std::vector<movement> Auto_Controller::find_way_controller(Context * context) {
 	delete result;
 	return result2;
 }
-
-
 std::vector<movement> Auto_Controller::find_way_sapper(Context * context) {
 	Robot_Playground* rpg = context->RS->get_map();
 	std::pair<int, int> robot_coords = context->RS->get_coord_on_his_own_map();
@@ -567,7 +512,11 @@ std::vector<movement> Auto_Controller::find_way_sapper(Context * context) {
 	int length = rpg->get_length();
 	int width = rpg->get_width();
 
+	std::vector<std::vector<bool>> check(length, std::vector<bool>(width, true));
+
 	node * begin = new node(robot_coords.first + shift.first, robot_coords.second + shift.second);
+	check[robot_coords.first + shift.first][robot_coords.second + shift.second] = false;
+
 	node * result = nullptr;
 	std::queue<node*>* q = new std::queue<node*>();
 	q->push(begin);
@@ -578,20 +527,24 @@ std::vector<movement> Auto_Controller::find_way_sapper(Context * context) {
 			break;
 		}
 		q->pop();
-		if (n->unmove != movement::down && this->check_sapper_move(pg, n->x, n->y + 1, length, width) == true) {
+		if (n->unmove != movement::down && this->check_sapper_move(pg, n->x, n->y + 1, length, width) == true && check[n->x][n->y + 1] == true) {
 			node * tmp = new node(n->x, n->y + 1, movement::up, n);
+			check[n->x][n->y + 1] = false;
 			q->push(tmp);
 		}
-		if (n->unmove != movement::left && this->check_sapper_move(pg, n->x + 1, n->y, length, width) == true) {
+		if (n->unmove != movement::left && this->check_sapper_move(pg, n->x + 1, n->y, length, width) == true && check[n->x + 1][n->y] == true) {
 			node * tmp = new node(n->x + 1, n->y, movement::right, n);
+			check[n->x + 1][n->y] = false;
 			q->push(tmp);
 		}
-		if (n->unmove != movement::up && this->check_sapper_move(pg, n->x, n->y - 1, length, width) == true) {
+		if (n->unmove != movement::up && this->check_sapper_move(pg, n->x, n->y - 1, length, width) == true && check[n->x][n->y - 1] == true) {
 			node * tmp = new node(n->x, n->y - 1, movement::down, n);
+			check[n->x][n->y - 1] = false;
 			q->push(tmp);
 		}
-		if (n->unmove != movement::right && this->check_sapper_move(pg, n->x - 1, n->y, length, width) == true) {
+		if (n->unmove != movement::right && this->check_sapper_move(pg, n->x - 1, n->y, length, width) == true && check[n->x - 1][n->y] == true) {
 			node * tmp = new node(n->x - 1, n->y, movement::left, n);
+			check[n->x - 1][n->y] = false;
 			q->push(tmp);
 		}
 	}
@@ -626,7 +579,6 @@ bool Auto_Controller::apples_on_map(Context * context) {
 	}
 	return false;
 }
-
 bool Auto_Controller::bombs_on_map(Context * context) {
 	Robot_Playground* rpg = context->RS->get_map();
 	std::vector<std::vector<block>> pg = rpg->get_renderer_map();
@@ -657,7 +609,6 @@ bool Auto_Controller::move_collector(Context * context, movement m) {
 	}
 	return true;
 }
-
 void Auto_Controller::move_sapper(Context * context, movement m) {
 	if (context->RS == nullptr) {
 		return;
@@ -676,7 +627,6 @@ void Auto_Controller::move_sapper(Context * context, movement m) {
 	return;
 }
 
-
 void Auto_Controller::grab(Context * context) {
 	block b = context->map->get_robot_collector_block(0, 0);
 	if (b == block::apple) {
@@ -685,26 +635,24 @@ void Auto_Controller::grab(Context * context) {
 	}
 	return;
 }
-
 void Auto_Controller::scan(Context * context, Renderer_Handler* renderer_handler, int N) {
 	return;
 }
-
 void Auto_Controller::scan(Context * context) {
 	return;
 }
-
+//fix phase effect
 void Auto_Controller::auto_grab(Context * context, Renderer_Handler* renderer_handler) {
 	Drawing_Area da = renderer_handler->da;
 	while (this->apples_on_map(context)) {
 		std::vector<movement> way = this->find_way_controller(context);
 		for (int i = 0; i < way.size(); ++i) {
 			this->move_collector(context, way[i]);
-			SDL_Delay(100);
+			SDL_Delay(50);
 			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 		}
 		this->grab(context);
-		SDL_Delay(100);
+		SDL_Delay(50);
 		renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 	}
 	if (context->RS == nullptr) {
@@ -717,17 +665,16 @@ void Auto_Controller::auto_grab(Context * context, Renderer_Handler* renderer_ha
 		std::vector<movement> way = this->find_way_sapper(context);
 		for (int i = 0; i < way.size(); ++i) {
 			this->move_sapper(context, way[i]);
-			SDL_Delay(100);
+			SDL_Delay(50);
 			renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 
 		}
 		this->demine(context);
-			SDL_Delay(100);
+			SDL_Delay(50);
 		renderer_handler->Update_Render(this->get_render_map(context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
 	}
 	return;
 }
-
 
 std::vector<std::vector<block>> Auto_Controller::get_render_map(Context * context, int render_length, int render_width, int robot_screen_x, int robot_screen_y) {
 	Robot_Playground* rpg = context->RC->get_map();
@@ -754,10 +701,6 @@ std::vector<std::vector<block>> Auto_Controller::get_render_map(Context * contex
 
 	if ((context->map->robot_sapper_exist() == true) && (context->RS != nullptr)) {
 		std::pair<int, int> rs_coords = context->RS->get_coord_on_his_own_map();
-		//std::cout << "THEIR CORDS" << std::endl;
-		//std::cout << "rc:" << rc_coords.first << ' ' << rc_coords.second << std::endl;
-		//std::cout << "rs:" << rs_coords.first << ' ' << rs_coords.second << std::endl;
-		//std::cout << "shift:" << rs_coords.first - rc_coords.first << ' ' << rs_coords.first-rc.;
 		int sapper_x = rs_coords.first - rc_coords.first + robot_screen_x;
 		int sapper_y = rs_coords.second - rc_coords.second + robot_screen_y;
 		if ((sapper_x >= 0) && (sapper_x <= (render_length - 1)) && (sapper_y >= 0) && (sapper_y <= (render_width - 1))) {
@@ -777,6 +720,9 @@ std::vector<std::vector<block>> Auto_Controller::get_render_map(Context * contex
 	return result;
 }
 
+//----------------------------------------------------------------------------
+//-------------------------------SCANNER--------------------------------------
+//----------------------------------------------------------------------------
 void Scaner::scanning(Robot_Collector* RC, Main_map* main_map) {
 		std::pair<int, int> rc_coords = RC->get_coord_on_his_own_map();
 		Robot_Playground* rpg = RC->get_map();
@@ -791,6 +737,6 @@ void Scaner::scanning(Robot_Collector* RC, Main_map* main_map) {
 		rpg->put(rc_coords.first, rc_coords.second - 1, b);
 		b = main_map->get_robot_collector_block(-1, 0);
 		rpg->put(rc_coords.first - 1, rc_coords.second, b);
-		//
+		// end of whatever you want
 		return;
 	}
