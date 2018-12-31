@@ -64,8 +64,8 @@ private:
 	std::vector<movement> find_way_sapper(Context * context);
 	bool bombs_on_map(Context * context);
 	bool apples_on_map(Context * context);
-	bool check_collector_move(std::vector<std::vector<block>> map, int x, int y, int length, int width);
-	bool check_sapper_move(std::vector<std::vector<block>> map, int x, int y, int length, int width);
+	//bool check_collector_move(std::vector<std::vector<block>> map, int x, int y, int length, int width);
+	//bool check_sapper_move(std::vector<std::vector<block>> map, int x, int y, int length, int width);
 public:
 	//std::vector<movement> find_way_controller(Context * context);
 	//bool apples_on_map(Context * context);
