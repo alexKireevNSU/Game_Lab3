@@ -60,14 +60,14 @@ class Auto_Controller : public Controller {
 private:
 	Scaner* scaner;
 	void demine(Context * context);
-	std::vector<movement> find_way_controller(Context * context);
+	std::vector<movement> find_way_collector(Context * context);
 	std::vector<movement> find_way_sapper(Context * context);
 	bool bombs_on_map(Context * context);
 	bool apples_on_map(Context * context);
-	//bool check_collector_move(std::vector<std::vector<block>> map, int x, int y, int length, int width);
-	//bool check_sapper_move(std::vector<std::vector<block>> map, int x, int y, int length, int width);
+	bool check_collector_move(std::vector<std::vector<block>> map, int x, int y, int sapper_x, int sapper_y, int length, int width, bool sapper_exist);
+	bool check_sapper_move(std::vector<std::vector<block>> map, int x, int y, int collector_x, int collector_y, int length, int width);
 public:
-	//std::vector<movement> find_way_controller(Context * context);
+	//std::vector<movement> find_way_collector(Context * context);
 	//bool apples_on_map(Context * context);
 	void sapper_on(Context * context);
 	void sapper_off(Context * context);

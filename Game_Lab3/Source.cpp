@@ -80,19 +80,16 @@ public:
 		if (key_state[SDL_SCANCODE_A]) {
 			cout << "AUTO_CONTROLLER" << endl;
 			this->controller = new Auto_Controller;
-			//Auto_Controller* net = new Auto_Controller();
 			this->controller->auto_grab(this->context, renderer_handler);
 			this->controller = new Manual_Controller;
 			cout << "END OF AUTO CONTOLLER" << endl;
 		}
 
 		if (key_state[SDL_SCANCODE_LCTRL] && key_state[SDL_SCANCODE_B]) {
-			//this->robot_sapper->Show();
 			this->controller->sapper_on(this->context);
 		}
 
 		if (key_state[SDL_SCANCODE_LALT] && key_state[SDL_SCANCODE_B]) {
-			//this->robot_sapper->Hide();
 			this->controller->sapper_off(this->context);
 		}
 
@@ -251,7 +248,7 @@ int main(int argc, char** argv) {
 
 	//Robot_Controller* robot_controller = new Robot_Controller();
 	Controller* controller = new Manual_Controller();
-	Context* context = new Context("big_map.txt");
+	Context* context = new Context("bombmap.txt");
 	controller->scan(context);
 	//robot_controller->main_map = new Main_map("map1.txt");
 	//robot_controller->create_RC();

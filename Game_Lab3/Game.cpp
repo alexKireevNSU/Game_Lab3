@@ -177,6 +177,16 @@ void Renderer_Handler::Update_Render(std::vector<std::vector<block>> render_map)
 	SDL_RenderPresent(renderer);
 }
 
+void Renderer_Handler::move_background(movement m) {
+	switch (m) {
+	case movement::up:	{	this->background->rect.y += sprite_size; return; }
+	case movement::right: {	this->background->rect.x -= sprite_size; return; }
+	case movement::down: {	this->background->rect.y -= sprite_size; return; }
+	case movement::left: {	this->background->rect.x += sprite_size; return; }
+	default: { return; }
+	}
+}
+
 //----------------------------------------------------------------------------
 //----------------------Game_Handler methods----------------------------------
 //----------------------------------------------------------------------------

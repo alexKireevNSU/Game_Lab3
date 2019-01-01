@@ -120,6 +120,7 @@ namespace Game {
 		void Set_Sprites(Sprite* player, Sprite* robot_sapper, Sprite* apple, Sprite* rock, Sprite* unknown, Sprite* bomb, Sprite* background, std::vector<Sprite*> other_sprites);
 		void Add_Sprites(Sprite* sprite);
 		void Update_Render(std::vector<std::vector<block>> render_map);
+		void move_background(movement m);
 	};
 
 	class Sprite_Controller {
