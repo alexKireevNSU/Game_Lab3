@@ -138,8 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="big_map.txt" />
+    <Text Include="big_map2.txt" />
     <Text Include="bombmap.txt" />
     <Text Include="map1.txt" />
+    <Text Include="test.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="libfreetype-6.dll" />

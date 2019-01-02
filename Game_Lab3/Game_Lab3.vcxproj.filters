@@ -372,6 +372,12 @@
     <Text Include="bombmap.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="big_map2.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="test.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="libfreetype-6.dll">

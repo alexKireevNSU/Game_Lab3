@@ -248,7 +248,7 @@ int main(int argc, char** argv) {
 
 	//Robot_Controller* robot_controller = new Robot_Controller();
 	Controller* controller = new Manual_Controller();
-	Context* context = new Context("bombmap.txt");
+	Context* context = new Context("test.txt");
 	controller->scan(context);
 	//robot_controller->main_map = new Main_map("map1.txt");
 	//robot_controller->create_RC();

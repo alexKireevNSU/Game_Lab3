@@ -1,0 +1,129 @@
+128 128
+################################################################################################################################
+#b  a##bab b##ba   ab#aaab#b#a#aaa bbabbb##a#baba#abbaa### bba#aabab  b aab#b #a# b#abb#bbaab##baab# b # b#ab b  ####aa#b#### b#
+# bba  baa# b #b #  aa ##aab b###a aa#b # #a#  #  ### a#ab a  a#abbbabb##bbb ##a #bba  b #  b# #ab##baa ba ba b#a## a#a#bb #b###
+#b###aab  ##b #b   b b  b  aabb#b b### #b #### aa##b bb # ##a#b b # a# ##aa#aab #a#a a####  #bbb b##  aba #aabb#b#  #a# ab  b# #
+##  ##a a# b b baaabb b# #a##  a b## b#a### # # aab##a## ba#b#b # b#b #b#b##ba# aa##ab bbaaaaa##a b  ba# aaba b#a## aa b b#bb a#
+#b  ### b##aaaab #a ba# ##b# a#a# #b#a# #b# aabb abaabb aa  b#  b#baa# bbba #baaaabb b#b   ##a b b  # aba## ##aa a  baa aba bb##
+#b  aaa#bba#bbb bbba# b ab### #a aa# b##  bbbaa # aab ######b#a# bbabb##   b#b   #ba b# b#ab  b##bab#babbba#aaaa#bbaaabb# bba  #
+#ab    aa #    a #aa#ab a a## ba# aa##b#b ab a#b# # ba##b#a#  a##bb ##ababb# # aa## aa aa #bb#ba#b aba##a#b# b#ababb#aababbbb#a#
+#   b# b#a#aa aa  b #ba##b  #a abbbab bb b # #  abb # a#ba  a ##b a## a  ba ##ab# b a## a # #bbb a# b b# a#aaba bab# aa #b#a#aa#
+#a ab#b#a###aa#babb#abb ab# #bba#bab#a a###b#a ab #a#aba#a # b a#abab#abaaa## ab ba ba##aa a a#bab#a  ##aaaababba   #b  b# #a ##
+#b aab###  abbba ##b##b#  #  #a# aab#aaabb#a b aba#   # # bb  b aa#aaaa #a#aaa  a##b# abb ba#aabba#b# bb## ab# # ba  ab b#a##ba#
+## b##aba ba#a#bb##b aa# # ab a ##  aaa a##a#ab#b a#aba#  #  bb###bab  a#b bba#a#a#a## b b#aba #ab#ba# a a#  abb b ##a a  ##  a#
+# a#ab#baba#ba #ababab# abb#a  bbbb#b#  a##aa#b# b abba#a#ab#bba### a##a##b ab  ba#bba b###b#b# bbaa# aaaa b b  a b bbabaabba ##
+#b#  bb# ####aaabbaab aa### #  # #b#  ##a#a#abaa b#b#ab ##a babaaba##b#b#b#bb bb a#   # ab####  ba  ###b#baabb# b#  # #bbbb a#a#
+#aa bb## aa#aaba###    b  ##b ba# baa# #a b#  ba#b#b b ab b##abb#b  ab  b #a  b b# b##ab#aab## aabba# aababaa#aaa #a#babababb# #
+#a#b# ##aabbb bb #ab# a  aaab  bba#b#a #baaabb#ab#ba bb#b #b  abb a #   a   b#a #aaaaa # # baab aa #ba#bba# # #ab aba###a#####a#
+#a abbbb#a#a#abaaa#bbb# b a aa a abab#a#a #a#b##abab##ba b aa# abb#b#b aa#b ba#bbabb bb#a# bab#b##ba a# baa## #abbb# #ab a#a bb#
+#a## # # # ab#a##b#   ab abb #a##bbb####aba#a bbba#  b#a  #b#ababbbaaa #b b baa #bb b #aba bbbb#b #aa bab##b#b#  a ab#aa##aabaa#
+#bbba bb b#bb##baabbaaa  a#b#####b b bbba## #aaaba abb b b # b aaaaa# ab#b##bba  ##ba#bb# ab  #abb b#a####baabb baaab## bab#b# #
+##bbbaa#  b  b a# aa ababaa abb##ba#aa#abba b b##bb b# # aaa #b#b###b#b## aba#a b  #ba ##a # ab b#a  ab b#b b##ab## b aaaaa#  b#
+#b bb## #a# # aa#b#  a #a#b a#aa #b#b#  # ab## b   aa#ab#abbb#ab b aabbb #bb#b#b       b# bb#a### ba bab a #b##   b ## # ba #bb#
+#ba b aab#b##babb  bbb# ba# a#a     #aa  # a#aaa## a## a   a# ba ##b#ba a bb#a # ##  aba# ##bba#abbaaa#a  #b ba#b####a  ba#aa b#
+# a   ## bba  b#a# #aa ####ab# # ba#aaaa#abaaaa ba aba#b##  a#abbb a b aa  ba##b#baa#abb#b   abbab#bbb ## #b ab # baa#bbbb#### #
+#bb   #ba  ab####a#aba  #a#aa#b## ##a# ba#bba#b#b b aa#a b#b b b#a#bbab#b# b#a a  abb#bb# #ababaa###bba a  ##ab## aab#a  b  a  #
+#b##bb# ##aa #ab #aaba## # ab#abb##aaaa #a ab bbbba aab#b#ab  b     a#a# b a### #aab#ab # ab##   #bab# # ba#b  b ba ab#  bba##a#
+###baaa##a a#bbab a### #bbb#a# b# #b b#a#a##abbbb a  bbbbababaa ##b a abbb#b#baa # #ba ##aabaa b#  b b   ba### ba # aa#bb#a a# #
+##a#ab#aba baabb#b #bb b bb a  b #b b ab  abbbbb##b  #a# aababbbbb##abb #bbb b a#aa bbbb#abbaa b#   b ba ab aab# #ab b#b bbaa b#
+#abb #a#b# aa b# aaab b#a b a#b# bb#  b#b##abb# aaba#b# a# # b ba b## b#babbbbb#b#b#bb# b ab a#ba a bb#ba b #b#b bbaaaaabb##b#a#
+#b a ##b#b#b #bbbb  a#aab#a #b  babba  ab bb#bbbab# bba##aa#bb#a##  aa aba#  ##a b a#bb## #b#a #bbbbab  aaba# baba# ###b   b#a##
+#b## #####bb##abb#a b# ab ##abaaaabaaabbbb#aa #b###ab#baba b  #b# #baa a#bbab##bb #b#b# aa#baa  ab bb#####a  aabbb   #a b   b###
+#ab#aaab # #bb #  #b  ##ab  ab##a ab##b b #bb   baba    a aaabaa#b # ba ##ab##   bb# b b   a #ab#a b #aba# ###baaaa ##a aa b  a#
+#ab#b#ba #b b baa   bb#ba ba ba#aa###bbbb#a aa  #b#b aa#bbb# #baaa#aa#ab### aaa  baba#b#b#bba #a# aa#bab bb#abb#a  b b aba#abaa#
+#b a bb#b# # # bab a b a##aab#a###bab#bbb b#  a bb### b#b a# #abb##a bb  ab  #  b#a#b##  b b #aaaabbaa#a b#bb  # bb#ab#aa# bbaa#
+#b  #a ##b#   #a     bb# # a#baa bb b#  ##a # aa##a# a  abab ab#a aa #a ba b ba#a#a# #bba##b#b a#ba##a  bb#a ##a a # aba# bbb  #
+##   ##  #b#b#ba #b##bbb abaaabb b b#b#b a#a#bbaabbabba#bbb ###aab# ba#bababb  #b b   ##abba b b abb b#baa# ##bbbb #bab#b#    ##
+#b b#b # #a b#b# bb #  aaa#a#ab# a a a# b  b aa bb#  # bb     ba     b #abaa b# b#babb#a#b#baab#b#a  #a   aaa  a#b ba #aabaab b#
+##a# b#aaba#bab#b #b ababbb ##aabb   #a  #  aba#a#abbb bbaba## b #ba  ## b#b# #aaa##ab##ab #aa # b bba bb aba#abaaaa # aa# # a #
+#a# bbab bb#b  b#baa#b ab # b#bba a b#ba aa bbba  a##a#ab a#ab #a#b #b  #ab# ab # a a  bba#b#aabab#b b bb abba    baa#ab aab ###
+#a  aaabba#  abbbbb#bbb# aa a aa# ##  ###b#abba#b  #  a #b   a#ba  aaaabaa a###b   ## ba#a abaa## a  b bbb# #  ba#a#b #a   a#b #
+# # b#bb ab abbaa #bb# b#aa   aa##a aa#ba aa #   aa b#aaa# b#b aaa a#a b#a bb#a # bba#b aa# b## a bbabb#aa#aaab#b aab##abb# a#b#
+#bab ## a ##a aaa   a#b# b#a a#a  ab# b###aaa#bbb# a  # aba#ab## aa  a a#a b#b baa# a b #b a #ab#### a a b bb a  ##ba#bbba a bb#
+#a#a  a#ab baa  # ba#bba#ba### baba a  abb a#  a ##  ##bba#b bb# ba ## ab  #a  a  #bbb #ba# ##aa   #ba b# #b  b###b aa ba# #b#b#
+## b#  #a#a ###a#bb  b#aaab  a   a# b a aba#aab aa##aabb##b  a## aab #b a###bba b#  b # ##ab ##ab#  b ba  a# b ba#b#aaaba#ba  a#
+#a#aba #  aba#aab##   babb #b# a##a#bbba bab #b# bba# a    aa # aabbba a bbb### ab aab b## b ba# bbb b ab ab##b#aa#    b# a# ab#
+## aa#a#a aa#   #b   #ba###b#bb  #a# a aa ##aa# bb #b bba # aa#b# #a#ab  # #  # ab###ab# # #b##abbaba b  baabab  b baa # b ba# #
+# ###a# bbbb  b##bba #a#a bbaaa##bbb#  b b #aa# #ba baaa#   #bb#a## b#a a#abbabbba#ab### abab #a# b#b#  ## b bbb###b  ab a a#a #
+#bbaa##  a bb#    ##   #b   bba###b    a b b  #aa#    #a a# #ab#bbaabb#bba # ##aaa#b  b#b ba#a #a# #a#bb#b##ab#aa #a b babaab ##
+#ba  bab aabbbaa b a ###a# ## bb#ab b## aba#ab bbab#a #ba##a#b# #aa #b### aa# ##a#b aba#b ####aa#aa a# #b ### b# # b#ab#aa ab# #
+##  a##a #aaabaa ababba# abbba#a#aba#ab # a  bb#b   b a ##ab  ba  aa   a#a#  ##b  abb##ab aa##bba  a ab a #bba ababaaab# b  # b#
+#a##aba ##a#aaaabb## b# bba#b #a  b  ##babbaab bbb#####aaa a# ba#ba ###b#  abb#   bb#bb   ab b# b  #b#aabaa#aa#a#bba#ba  b#b  a#
+##ab# ba#b bb a #   #a# abb#bbb#a # b    bb #b # baba  #bb#baab #aab a b####b# ###a   bb#ba### a aa a# abaaa#aa a#ab##ab# #  b #
+# ## bba ba # bb##b b  b ba#ba  # aaa b b#ab ##baaaa#a#ba  bb b# baa#a bab # a b#a##bb#  ab#a#ba ## #bb  bb# aba# a aaaba#b  bb#
+##aab #a#bb b#aba bab #aabb##b##b#aa#baa#b## #b #ababba# # aba bbb #a  #b aba#b# b ab#b#    baa# #bba a#bb b#a##  b ##  b  b ab#
+#a b  #a# ab#ba aa # #bbb ba baba # abbb# a a  aaa  a#  aaa# ba  #a ba#a#a#baab  b ba# baabab#aa#bb # #baaa aabb#b a bb#a a ab #
+#   #b  #b  #aaa#a# #   a#b#b #bbaa#aaa  #b b#abbab ### bb#bb#bb #bb  #aaaaaaa# ba  aa b   b b### a aa#  #aa   b b  bb    b  bb#
+#bb  # b   ba   aba a  ab#bab a  ab #abb b bb a#  a#  a#a#aababb#b ##b#ba#ba#abba#abb    bb##a#ba aab  b#a#b ##b   #a #ab# abba#
+##baa  #b#aababba## b b b  a a#b  b#aab#a ##b ba#ba bbb a#b#b # ##b#  aa##abb   a b# ba  #bba # #ba#bbbb#a  ab#b##b bbbba###bb##
+##aaabbaa  b    b#a  ba bb# ##  b ab a a   b#b# a a#bbb#aa bb   #ab#baaa## a# aaa# bb #abab#aabb #b##aab## ###aaa  bab  b#babb##
+#bba#ab b  ##b ###a#ab#a#aa#ab#bbab#a##a###a## bba  babaa#b a #ab  a #aa b aaaa  aa##a#a# bba b b ###aba#ababba#  # abb #baaabb#
+##aa a #  a  a b   ######babb#aa # bb##a#a#  aaabab # a#ab#   a b aaaa  ###baab#bb#aa##bbb #abbab#a a #b #abba# a a#bbba ##a a #
+#baaa b##b a  babaaba a ba  b  ##ba##b#bbab  #aa#b #a##a   baab abb b b b#ab ababbba   b#b ba##abbb## aa#a#ba b#ab##aa##b b#  ##
+#### ###ab# b #aa# b   aaabaabab  b b##aa#  #aa#b ba a  b aa#aabaa##bb # ##aa b b a abb#a bbbab a#ba# aa# b   a ab#aaaa##aa#ab##
+# #b#b# ba  ### a bb#  # b#ab#ba#ab# bbb  ba a#ab ba  ba#b# ab# abb aaa#b ba##a ##a#   b#aa  #a b#aa##baabb #aa  bb   ba#b a #b#
+##a     #a ## b # # b  b  bbbaab bab#ab#####a#bb##abab##aa##a aa a a  bbbaab###  b## a#b#aa#a  b #aaaabbbb#  baabba   a#b#a b###
+##baaba ab a b a a#bb bbbaabaa #b bbbb#aabb#a # #bb #  a ab  aab #aa##b ba ab a  ##a# ##### a #abb # a #b abbb ###b a#  b#abb# #
+#b#bba# bbbaaab b  b   b#a bb b  b  #bab#  b  abaaaa##b a#a#b#a## abb##aaa#  a #a#aa#b a#b a ###ab#b  ###ba #a##ba  a###aaabbba#
+#   b # b#b# bb## ## ba#  b #  #b#b  ba### a#a b #baab##  aabba#b b#abbb#abbb#a b#a#b##b#bb#aaa#bab b#ba#b###ba #b#a## #   b## #
+#b#a  # bab#aab  aab##aab b#b# bb b##ba#abbbab##b aaaa# ## a#b ###bab #ba#b#  b# ##b #a baa ##b#b b#abbb b  ##a#a# ba#a## #a#bb#
+#a abbababbbbb a# bba## b ab# a#baab# aa a#bbbab a##ba##b bbbbbab#ababbb ab# bbbb  #b##b#a  aba bbbab ##ab#ba b aaa#aaa ###aaa #
+#a ab b baaabba###aa#b#a a ###bb#  bb#aaa #a bbba#aba b#aa b# #b ## a #aa #b    aaaa  b###ba## #aba aba#aa a#a b aa# b ### b b##
+#ab b  #bb b#b## a#ba aaba#bb#b#b a##  #bb## ######bba#b#abb #a#ab baa##a# #a  a #bbbbbab# # a #aa#    b abb##b  # b  ## ab## a#
+#bb# #aa# ##bbbbab##  ##ab #ab#  #a#ba bb#abb bb#bbab a   bbabba# a#bbb b ab# # b a       # b   a bab #b#a##baaa##ba  aaaaba  a#
+##b##b## b#bba#a ab   a b #   aabab   aabaab a#b#  bbbbb#aa  b ### b#aaba #a#b#b a# babb b# b# baa aa#  ### # # #ba##aabab#a#a #
+#aa bb# # #bb# ab   a babb bb b## bba##b # bb#a ### abbababab baaba # bbb# b# bbb # ab baaa# bba   a  #b a a #b#b#ba# a b##bb#a#
+# bb aa #bba ##abab#ba#a#ab### a##a ab a# ab#  #a# a#bb###a  abaa abbaa babb##   a##a#a#bbbb ab#b#b #ab b bbaaa##aba # aaaba a##
+#bb##ba   ba#bbbaaa a##aa aaa# #  a b #a####a  bb###a#   bba #  a  #abab# b a abab  a ###b#a   a#a# # ###bb   b#b a#b# aab#bbb##
+# # aaaba #b  ab# a b## a#a### #a# #aabba## b abbaab bb a#bbba  b#  ## a b aa# b#b #b abbbbba#bb ##bbaba ab#bb#bbbbaa abbabbbb##
+#a###  #a#ab#####ba  a #aaaba# a# bba #b##aaba b a bb###baa##bba b#a   bab###b a#aba b# # ## abaaabb#abab #bbaa###a ab##b#aaaa #
+#aa # bb#b#a # a # ##aabb#ab#  bab#ab#bbbbbaaa#a ## #  a#aaba a## b#a# ab#a #ba ###b  bbaba##a  aabb  b baa aaaaba b   bba #b ##
+#   b#bb ###baabaabbaa  bbababb#a#bb baab#ba a #aab#a# bb##a b#aabba###bbb#aa   #b#b# #a#aa b ##ba # b#####  ba### aab#b#bb#b b#
+#ab#b#a####a##b#bbb  #aaa#ba   a  aab#ab #a#b b##ba ####baa b###ab#bbaa# ## #a aa  # #bb ab#a#bbb  aabbb# a#ba#a#aab #ba#a##bba#
+#aaab### ##a ab#bbaaba aa#b##b  # baaa#bba#  #a#ab# #aabb  bb# b#bbb bb## a#ab##a bbaba# aa#ba #a #a##a a#ba# bbabbba#abb# b aa#
+##b  ab a #b aa# ba ##ab a babb  ba#ab  b b aa#  a  # abb####  a#   ba###  ab#aa ba#b#abb   bbaa#  ##a#b##bb#b baa#  b##  aaaba#
+#a #  a aaaaa b# b   #aa#ba a ##  aa## b#a ba##a#####bbbbaa##a bb#  a # #bb#aabb#ba # a#abbab  # a###  a #b  b#b# ##bbb#     ab#
+#ab### baabb#b#  b b ## baaa ab ba b bb #bab a #ba a#b a #b# ##abaa abbab# b abaa a ab b # ## # b#a  a bb#a##abb#aa aa #ab#a b #
+#ab bb#ba##a bbbbb  bba #aaaa  bab aa##b a###ba #   aa  b #aab#bb# bb# #   #abb#a# #bbaa### aab aa# a#aab  ab #ba#  abbb b b#bb#
+##  a#a  # bb# a # a  aaba b# ##bb##b  # a#b a #  #a a  a ## a b## b#  a ab#b b#a #a# b## a##aab ba aa##b####bba b b#a #ab b#b##
+#b ab# #  ## b  a  b#baab b aba#b aabaaa##b# baa#b#  bbb abb##a# b ##  bbaba##aa bb#bb aaba### baa aa#b b#baa# babaa baaab##ab##
+##ba#a#a# #ba# a## #b  bb b#a baba bbbbb b   aaab#a #bab#abbb##  b #b# bbaa a#a  bbb # bb  bb#  aa  bb  a  bababba   # b##ababb#
+##bb  ##a##a##aba# a### aa #b##bb b# #  ba#bba#a  b #b  baa##aaa a  bb bba bbabba# b#bb#b## #bb ##b#aa#b#b b#  b## b#b aa# baab#
+#bba# ##bbab b a## aa#  abb b## aaaa#bbab a  ##b## #a#ba##b bba# a#bb #  #  #  ab #a aa#ababa ##a#aa baaaa# ## #a#a#  ##ba aa ##
+# ababab a# ##abaab##ab baa# aa baab ab##a#bb#bbaabbb# ## a#a#abab##aba abba # bbab bab abb#  aabbba##b a#a# #aba abb#   aa# ba#
+# a##a#aaaa#a b#bab# # #b##b#abababb#b##b#a#b# ## ####a # ##ab # b#b# aaba#a## #baa #b #  ab ## #b#b ab # # #aa##bba# bbaaabbb #
+#aabb#aba##bbb#b  b bbbbb aa#bba##bbabbb#bb abb#  a  b##ba#a# ### #abb ##bbb ba a  bbaa# a#  bb  ab aa ##aaba#babbba  b a#  aab#
+# a###b#b aaa    #bba#a a# ####a #abbb#a##  #b# b#aa#aa # bb bbbaa#a#b aa#a aba a# ## bababb#b##abb  ba#ab#aa baba #  b  a # #a#
+# a# aab#bab#abbb aba  #   ###ab   bb###a #aa b bb#  b  b  abba  #b##b  #bb b #ab aa a bbaaa#b ##bb ##ba#a  #a##a#b b##a#b  ## #
+# ###  bbbb #ababa#bab  # #b##  a###b a#aba# bb b  aaa ba#aa# #abb#ab bbab  babba ba #baba## #aa#a b #a abbb# b#b##ba### aaab# #
+#babbaaa aaab a # a b#aa# #a###bbb##a##b  b a aabab   ba ab## a a a# #aa abaa ab##a## # a# bbaababaaabb ab b a#a#a  a# #aba#bb##
+##b# # #aba## bba #a  ba# #a b a ## b#a aaaaa  b  abaab#aab abb##bb##ab  a    ba bbaa#b###bb# bba a a# #aa ##bb#b #b ab###a#bba#
+#bab## # bab ab#a#a  a  aaa# babab### #b aa ab#b## a bbb#### ###b# #a#ba a ab b b #a a     ab  bbaa    b bb aa##aa###bbaa #b#a #
+## aa#a#b#b  a bb#bb aa# a ab#a babaa## ##ab### a#aaba a ba ab#abab aa   a#b ## # a## b##a ba#bbba## b#ba bb  b# a aa#b##a#b  b#
+##b####aaba ###  ab  ba b b a b bbb b abba #bbb#bbaa#a#a  bbaaa ## aa#abaa   abaabab # #ababb   #a bba####b #b  b ab#a# #ba#a a#
+### # #a # #baa #aa#aabaa# ## a##ab#a#a## #ba#aa  ##aa #a b#a##aabbbb  aaaabb#a##ba#a #baa  #b # #b # bbaa #aba#aa#aba#  a# abb#
+# b ##aa#a# a# aaa#a ab a a baa ##bb#b # #b##bbb#  a#a ##bb##ababa a# aa a  #b## b#b#a####b##bba##bab# bba#aa###ab  baa# aab b##
+# b ba ab ba#ab#ba#bb# a   # b##ab   bbb# #   #bb b#bb a#a# aaa# b #a a  b #a# aa   ##bab #abb a# #b#aa#ba##b#b baab   a#aaabab#
+#ab #aabaaa    bbba#b  b abb aa ab  #aba a#a#a b #b#b#abaaab#  #ab a ba##b#bbbaa# ab b b # bb#a b #a #a #  bbb#bbaba b b #baaaa#
+##   ab b b  b #aaa#babb# a a# #a#a#a##ba  # b ba #a# b ba  #bbb#b# a   a# # ## a#### aaa  b##    ## aa#aaa## bb# aab###aaab aa#
+# #b#   b  bba## ab# #bbb#   a aaba#a#b #b #baabab #aaabaab  # a #a#b  aa  b#abb#b#b##b b bbb  # a#b##b#a##aba bbb   aab#b b b #
+# ##b    #bb #aaaba#bb #bbaaa  a a   b #bbbb ##ababa# #aa bba#b## #a## b abb##aa# #aa b  b #aa# a#ba###  ba  aaaba##bb##b  b  ##
+#bb#bab baa##abb#a#bbba  b## bba a ## a##ba  #  aab b #b  ## b  # ## ab  # #b aaa#a   b  a #b #babb #aba a  ###  # bbb ##b  ab #
+#b#a#a #bb  b bb#ba bab  bb#bb#a ba b  ba## b# abaa a#a#  a#   a#bbb##a# bbba a##a b#ba#a #bbbabb a#b#a##a#bb ba#aab# bb a b a #
+##a#bba#  a ##b#bbaaaa #b##a#ab # bb a #baa# # # a b## # #a#a##ba ##b b  a  #b # #  a   a##a b#bb#  #aaaaaa#ababba aa  bbb abba#
+#  b b# # b# #  aabba #b#a# # a#bb ##a a## b  b  ba##baa# # a a##  # aa  # b  aa ## #ab#a#abbbaa#a ababa ##ba a#b#b aaabba##a# #
+#a #bb ba  # # #bb a###aba aaa# a #aa#a  a  #b## bb#bb ab##a#aab b  ##aa b#abba a  ##a#ba b###bb  # b#a  ## bb###bbaaab  a bbbb#
+#b  ###b baba###   ###bbba #a#a b  #b b#baa ba#aaa  ##  b bb b b# a a   b#a# aaaba##bb b#b#aa aabb # ##  # baa##b#a ba a a# # b#
+#b  b## a#a#  b##bba ##b b # ab #  baab#bbaa ##bb ##b ##b ##a#ababb#a# ababbabb#b bbb#  abbabb##ba##b#aaba# b #a#b  b ###abaa# #
+#bbbbb# baaa aa#bb # b #  bab  b # b #b#a a  # a#b##  # #b#b## #baaa  a   #ba #b b #a   ##ba#bbbbab#baa#b#ba#b# ba   abbab ##a##
+##ba#a#aab#bab bb#a#a##ba aba#a#abb##ab#b #b  ab ##a#a#aba #aa# # b a  b#ab #b   a  b##b b  bb# ba aaa abbbbbab#ab #abbb##b baa#
+# b  bbbb a#ab a abb #b### #baba #b## #b##a#a## a a  ###aab a#bb a#ba##aa ab# #a#b#   # a#b baa   # b#bbbab a ####a# aba#bbaa ##
+#baa### b b##a#a##b#a## bb b ab  a##bbab ba  ab# a#  ##a b#aa b#ab#b   #ba #b aa  ###aabbaab#     bbb#aa ba b   bba##abbb aa a #
+#baa#b#a bbba#b#  #a aba b# #  aa#ba#babb baa# #a#bbb  aaa#    bb  aaba #  ## aba ## # ab bb#bab# #b # # b ab##b# bba ba#ba a b#
+##aaa#ba#aba#a#   a# b#b #b b#a a  #a    ba  ##a  # #b#a ###a #a#a##a aaa #a b#a##a a#a#b# #ab b## b####b #bb  #a##aab # #a#  ##
+##abab b##b# bbbaa aa#aa a  #   ab a#bb#a ## b abab#a#ab#ba  ba ababbaa# #aa bb   aa ba b  bb##a## ab# a #aa a    ba b#aaa bab##
+#bba b#bab#a b# b abbba  #b baa  b## b## ab #b#aba ##aaaa# b #a  a#a#  ###aa#bab# a bb#a aba  a a #aaa#baaa  bbb# abaaaba bab a#
+#ba  ##bbabb b#  babab#b#a a a baab aaba#ab#ba# abaa#aa#aa#aba#aa ab #bb    bab baabb ba#bababb#baa# bba#bb  a  # #b   #bab b ##
+#b b## b a# baaa bba#a ab#abbb#a#a# ##b#a#baa abbb#bb  b#  #ba   #a ab#a #b##aa# bb a#aa#   bb ba bba aab #aba a ba  #  abb a a#
+#aaa#ab#b b ##abb#ba ba # bbbb#a a##b a b ba # #   abab#ab #aa a ab #aaaab b a# #b #a##a# babbaa#ababb b  a#b#ab ab##b#a ba aa #
+################################################################################################################################
