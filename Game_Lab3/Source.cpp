@@ -125,7 +125,6 @@ public:
 			}
 		}
 		renderer_handler->Update_Render(this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size));
-		//return this->controller->get_render_map(this->context, da.right_border / sprite_size, da.top_border / sprite_size, (da.center_x) / sprite_size + 1, (da.center_y) / sprite_size);
 	}
 
 	int get_only_digit(char ch) {
@@ -220,8 +219,7 @@ int main(int argc, char** argv) {
 		throw Game_Exception("SDL_Init_error");
 	}
 
-	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/);
-	//Window_Properties wp("LOL", 50, 50, 1000, 800, SDL_WINDOW_SHOWN);
+	Window_Properties wp("LOL", 0, 0, display_mode.w, display_mode.h, SDL_WINDOW_SHOWN );
 
 	g.Create_Window(wp);
 
@@ -244,17 +242,10 @@ int main(int argc, char** argv) {
 	Sprite* bomb = new Sprite("bomb.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	Sprite* rock = new Sprite("rock.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
 	Sprite* unknown = new Sprite("unknown.PNG", SDL_Rect_(da.left_border, da.bot_border, sprite_size, sprite_size), visible);
-	//FILE * mappp = fopen("map1.txt", "r");
 
-	//Robot_Controller* robot_controller = new Robot_Controller();
 	Controller* controller = new Manual_Controller();
 	Context* context = new Context("test.txt");
 	controller->scan(context);
-	//robot_controller->main_map = new Main_map("map1.txt");
-	//robot_controller->create_RC();
-	//robot_controller->main_map->create_robot_collector();
-	//robot_controller->RC->scan(robot_controller->main_map->get_robot_collector_neibourhood());
-	//robot_controller->scan(2);
 
 	TTF_Init();
 

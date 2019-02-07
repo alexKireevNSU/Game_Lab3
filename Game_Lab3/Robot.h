@@ -10,7 +10,6 @@ namespace Robots {
 	class Robot{
 	public:
 		Robot();
-		//virtual ~Robot() = 0;
 	};
 
 	class Robot_Collector : public Robot {
@@ -27,7 +26,6 @@ namespace Robots {
 		int get_apples();
 		std::pair<int, int> get_coord_on_his_own_map();
 		Robot_Playground* get_map();
-		//virtual ~Robot_Collector();
 	};
 
 	class Robot_Sapper : public Robot {
@@ -44,6 +42,5 @@ namespace Robots {
 		block get_block(int shift_x, int shift_y);
 		Robot_Playground* get_map();
 		void demine();
-		//virtual ~Robot_Sapper();
 	};
 }

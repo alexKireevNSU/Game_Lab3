@@ -10,8 +10,6 @@
 
 namespace Game {
 
-
-
 	class Game_Exception : public std::exception {
 		std::string whatStr;
 	public:

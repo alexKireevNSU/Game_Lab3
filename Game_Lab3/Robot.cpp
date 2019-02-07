@@ -105,9 +105,6 @@ void Robot_Sapper::update_map(Robot_Playground * rpg) {
 	return;
 }
 
-//Robot_Sapper::~Robot_Sapper() {
-//	
-//}
 
 void Robot_Sapper::demine() {
 	this->map->put(this->my_x, this->my_y, empty);
